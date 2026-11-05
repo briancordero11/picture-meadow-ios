@@ -9,7 +9,7 @@ This project starts from the recovered project brief and the supplied wish-disco
 - **Native app:** SwiftUI iPad app source, reusable picture tiles using the supplied artwork, offline wish journey, speech, a 34-concept core-word drawer, local draft, and caregiver controls.
 - **Backend:** dependency-free Node service with a catalog and illustrated wish-preview endpoint; Docker packaging and automated API tests.
 - **Image preview:** original illustrations assembled from selected choices. These are illustrative, not photographs, AI-generated images, bookings, or wish approvals.
-- **Distribution:** Xcode project generation, simulator checks, and a TestFlight release checklist. Native compilation, signing, device testing, and submission require a Mac and Apple developer access and have not been completed on this Windows computer.
+- **Distribution:** U.S. first release under the owner's business, with a future white-label plan. Xcode project generation, simulator checks, and a TestFlight release checklist are included. Native compilation, signing, device testing, and submission require a Mac and Apple developer access and have not been completed on this Windows computer.
 
 The working name is **Wish Explorer**. This is an independent development prototype; the supplied organization materials inform the experience. Branding and publication details can be finalized with the project owner before release.
 
@@ -44,10 +44,11 @@ Follow [ios/README.md](ios/README.md). Generate the project using XcodeGen, sele
 | `assets/` | Original source picture assets and the reusable picture catalog |
 | `backend/docs/ux-components.md` | Current components and the archived six-panel concept with screenshot |
 | `docs/apple-requirements-review.md` | Current Apple privacy/submission review and remaining release decisions |
-| `config/release-metadata.example.json` | Required publisher, privacy, audience, and launch-region decisions, intentionally unset |
+| `docs/white-label-distribution.md` | Business-published first release and options for later client distribution |
+| `config/release-metadata.example.json` | U.S. launch recorded; publisher, privacy, and age decisions remain unset |
 
 Run `node scripts/check-contracts.cjs` from the project folder to check that the native app and backend use matching selections and that the source board's 54 concepts are retained across the 20 topic tiles and 34 core communication choices. This does not compile or test SwiftUI.
 
 Source PDFs remain in the user's Downloads folder. They are not copied into the Git repository.
 
-The default app build is offline, with no child identity fields, accounts, advertising, or analytics. Privacy improvements include a native notice, adult gates, local forget controls, and per-request confirmation before optional online descriptions. Public privacy/support details, release audience/regions, distribution rights, and Mac/device verification remain open; this project is not submission-ready yet. See the release checklist before enabling a service or preparing an upload.
+The default app build is offline, with no child identity fields, accounts, advertising, or analytics. Privacy improvements include a native notice, adult gates, local forget controls, and per-request confirmation before optional online descriptions. The owner confirmed a U.S. launch and business publishing account; the exact legal publisher, public privacy/support details, target ages, distribution rights, and Mac/device verification remain open. This project is not submission-ready yet. See the release checklist before enabling a service or preparing an upload.

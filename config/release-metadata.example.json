@@ -10,7 +10,7 @@
     "kidsAgeBand": "",
     "minimumAge": null,
     "maximumAge": null,
-    "launchCountries": []
+    "launchCountries": ["US"]
   },
   "reviewed": {
     "privacyPolicy": false,

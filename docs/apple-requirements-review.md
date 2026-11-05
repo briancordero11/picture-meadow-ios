@@ -2,7 +2,7 @@
 
 Reviewed November 5, 2026 against current primary Apple documentation. This is an engineering readiness review, not an approval or legal-compliance determination. Source implementation was inspected while privacy improvements were being developed; final behavior still needs native verification.
 
-Publisher/legal entity, support contact, public privacy-policy URL, intended ages, Kids Category selection, and launch countries remain **pending user decisions**. Do not invent those values or present a placeholder as a published policy.
+The owner confirmed a **U.S. first release under their business account**, with future white-label intent. Exact publisher/legal entity, support contact, public privacy-policy URL, intended ages, and Kids Category selection remain **pending user decisions**. Apple business enrollment has not been verified. Do not invent those values or present a placeholder as a published policy. See [white-label distribution](white-label-distribution.md) for the single-business starting point and later client options.
 
 ## Requirements and implementation matrix
 
@@ -31,7 +31,7 @@ Keep the optional service disabled until its operator, endpoint, vendor access, 
 
 Native code now uses a temporary session without shared cookies, credentials, or a cache, rejects cross-origin/non-HTTPS redirects, and cancels adult authorization/requests on session exit or inactivity. A native notice explains local storage, clearing choices, online request contents, and connection metadata. These are inspected code changes; their compilation and runtime behavior remain unverified on Windows. See `backend-privacy-review.md` for the service audit, and `privacy-policy-draft.html` for the explicitly incomplete policy draft.
 
-`config/release-metadata.example.json` intentionally contains unset publisher, contact, audience, and regional decisions. `scripts/check-release-metadata.py` rejects that record until completed. It checks the record, not the App Store Connect account or compiled app, and does not certify approval.
+`config/release-metadata.example.json` records the confirmed `US` launch and intentionally leaves publisher, contact, and age decisions unset. `scripts/check-release-metadata.py` rejects that record until completed. It checks the record, not App Store Connect availability, the account, or the compiled app, and does not certify approval.
 
 ## Regional age assurance: conditional release dependency
 
@@ -39,14 +39,14 @@ Declared Age Range is not a universal instruction to collect dates of birth. App
 
 | Region / timing | Current Apple evidence | App action |
 | --- | --- | --- |
-| Texas, new Apple Accounts; changes from June 4, 2026 | June 3 notice supersedes the older injunction/pause announcement. It covers age assurance, parental consent for minors, significant changes, and revocation tooling. [Texas update](https://developer.apple.com/news/?id=sg176nne) | Pending country/region scope: evaluate the Declared Age Range, significant-change, StoreKit, and notification requirements before distribution. |
+| Texas, new Apple Accounts; changes from June 4, 2026 | June 3 notice supersedes the older injunction/pause announcement. It covers age assurance, parental consent for minors, significant changes, and revocation tooling. [Texas update](https://developer.apple.com/news/?id=sg176nne) | Included in the planned U.S. scope: evaluate the Declared Age Range, significant-change, StoreKit, and notification requirements before distribution. |
 | Utah / Louisiana, new Apple Accounts | Age categories are available through the API for Utah from May 6, 2026 and Louisiana from July 1, 2026. [February 24 regional update](https://developer.apple.com/news/?id=f5zj08ey) | Test applicable regulatory signals and consent states; do not infer exemption from a low content rating. |
-| Brazil | The regional update describes age-category sharing subject to the person's or guardian's agreement. [February 24 regional update](https://developer.apple.com/news/?id=f5zj08ey) | Resolve local launch requirements; do not invent mandatory birthdate collection. |
-| Australia, Singapore, Brazil: 18+ downloads | Apple describes App Store adult confirmation for 18+ apps, alongside possible separate developer obligations. [February 24 regional update](https://developer.apple.com/news/?id=f5zj08ey) | The intended app is not an 18+ product, so this particular download restriction is not the assumed trigger; regional review remains pending. |
+| Brazil | The regional update describes age-category sharing subject to the person's or guardian's agreement. [February 24 regional update](https://developer.apple.com/news/?id=f5zj08ey) | Outside the confirmed first-release scope. Reassess before expansion; do not invent mandatory birthdate collection. |
+| Australia, Singapore, Brazil: 18+ downloads | Apple describes App Store adult confirmation for 18+ apps, alongside possible separate developer obligations. [February 24 regional update](https://developer.apple.com/news/?id=f5zj08ey) | Outside the confirmed first-release scope; the intended app is also not an 18+ product. Reassess if scope changes. |
 | Worldwide framework availability | Capability/entitlement is needed to use Declared Age Range. [Declared Age Range](https://developer.apple.com/documentation/declaredagerange) | No integration is currently present. If required for the chosen release scope, implement availability handling, denied/unavailable responses, required regulatory features, and sandbox tests. |
 
 **Upcoming rather than already effective:** Apple announced new Shared Location and Dating and Relationships questionnaire descriptors beginning November 16, 2026; declarations are due for all apps by January 12, 2027, and when submitting updates/changing the questionnaire as specified. Neither feature exists here. Answer the actual questionnaire truthfully when available. [November 2, 2026 announcement](https://developer.apple.com/news/?id=yxkh08us)
 
 ## Release decision still pending
 
-Select target ages, Kids Category, countries, publisher/contact, privacy URL, and whether the first release is offline-only. Then recheck the final native archive, public policy, App Privacy answers, source-art rights, age-assurance scope, gate behavior, and network data flow. No App Store approval, regional legal compliance, or suitability for real-world AAC/clinical use has been established by this review.
+Select target ages, Kids Category, exact publisher/contact, privacy URL, and whether the first release is offline-only. The first-release country is the United States; confirm that selection in App Store Connect when a real app record is created. Then recheck the final native archive, public policy, App Privacy answers, source-art rights, U.S. age-assurance scope, gate behavior, and network data flow. No App Store approval, regional legal compliance, or suitability for real-world AAC/clinical use has been established by this review.

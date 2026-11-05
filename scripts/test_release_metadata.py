@@ -25,7 +25,8 @@ class ReleaseMetadataTests(unittest.TestCase):
         problems = module.validate(example)
         self.assertGreaterEqual(len(problems), 12)
         self.assertTrue(any("publisher" in problem for problem in problems))
-        self.assertTrue(any("launch countries" in problem for problem in problems))
+        self.assertEqual(example["audience"]["launchCountries"], ["US"])
+        self.assertFalse(any("launch countries" in problem for problem in problems))
 
     def test_offline_record_still_requires_completed_reviews(self):
         record = self.valid_record()
@@ -48,6 +49,9 @@ class ReleaseMetadataTests(unittest.TestCase):
         self.assertTrue(any("API origin" in problem for problem in module.validate(record)))
 
     def test_audience_and_boolean_decisions_are_explicit(self):
+        record = self.valid_record()
+        record["audience"]["launchCountries"] = []
+        self.assertTrue(any("launch countries" in problem for problem in module.validate(record)))
         record = self.valid_record()
         record["audience"]["maximumAge"] = 18
         self.assertTrue(any("above age 11" in problem for problem in module.validate(record)))
