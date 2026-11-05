@@ -1,0 +1,19 @@
+{
+  "description": "Unchanged visual reference copies only; exclude this directory from native/inline preview bundles.",
+  "files": [
+    {
+      "file": "interest-atlas.png",
+      "source": "C:\\Users\\BRIANC~1\\AppData\\Local\\Temp\\codex-clipboard-c25898a5-69cc-445c-98f5-df068852da40.png",
+      "sha256": "61352994f88a6ff958719dd7f4371e29ecdf0af10661dc37217671b0241a197a",
+      "width": 439,
+      "height": 598
+    },
+    {
+      "file": "communication-atlas.png",
+      "source": "Rendered WishImages.pdf page 1 at 110 dpi",
+      "sha256": "b2d49390cc1b2d4607c684ba8ff3ab8d23045e7bcf3c8e7c3158407df0a51596",
+      "width": 1210,
+      "height": 935
+    }
+  ]
+}

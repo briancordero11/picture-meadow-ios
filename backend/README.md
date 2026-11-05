@@ -2,6 +2,22 @@
 
 A small, dependency-free Node service for the native app prototype. The complete preview works without storing a wish, opening an account, or sending a child's name, photo, location, or health information. The provider is `illustrated-demo`: it draws a deterministic SVG postcard from fixed choices. It does not call a generative AI service or verify a park's attractions.
 
+The current child-facing design starts with **20 picture tiles for interests** and a centered bottom drawer containing **34 core communication concepts**. The earlier six-panel verb menu is archived documentation, not the current home screen. See [UX components and design history](docs/ux-components.md) for the picture-tile layout, drawer behavior, reusable components, and archived screenshot. There is no separate “My voice” quick toolbar or duplicate category menu in the revised design.
+
+## Archived six-panel idea
+
+The original six-panel concept is retained here as design history. The current app uses the illustrated picture board documented above.
+
+![Archived six-panel concept](docs/six-panel-concept.png)
+
+The revised picture board and its open drawer:
+
+![Current picture board concept with centered drawer tab](docs/picture-board-home.png)
+
+![Current core communication drawer concept](docs/picture-board-open.png)
+
+These screenshots show the interactive browser concept. They do not represent a verified native iPad build.
+
 ## Run locally
 
 Requires Node 22 or newer. From this folder:
@@ -18,7 +34,7 @@ The native app can use an HTTPS deployment URL later. A device cannot reach the 
 
 `GET /health` returns `{ "status": "ok", "service": "wish-explorer", "version": "0.1.0" }`.
 
-`GET /v1/catalog` returns supported choices and five wish verbs. The sixth tile, `explore` / **Help me choose**, is app navigation, not another official wish category. Only the `go` path currently supports a preview. Destination choices are examples of interests and do not establish availability or eligibility. Animal choices express imagination, not a claim that a specific animal lives at a selected park.
+`GET /v1/catalog` returns supported API choices and the earlier five-verb taxonomy plus the `explore` helper. That response is retained for client compatibility; it is **not the current 20-tile home-screen definition**. `explore` / **Help me choose** is navigation, not another official wish category. The current `amusement-park` picture tile enters the existing `go` demo path. Only `go` supports this API's preview. Destination choices are examples of interests and do not establish availability or eligibility. Animal choices express imagination, not a claim that a specific animal lives at a selected park.
 
 `POST /v1/wish-preview` requires `Content-Type: application/json` and exactly these four fields:
 
@@ -78,4 +94,4 @@ The image runs as the `node` user and has a health check. Keep a reverse proxy o
 
 No wish payloads are written to disk or application request logs. The limiter retains connection addresses and counts only in process memory until expiry. A hosting provider/reverse proxy can log addresses, paths, and headers independently: configure retention and redact logs before a real pilot. Health checks do not consume rate limits. Public usage still needs ingress abuse protection, monitoring, dependency/image updates, organizational approval, accessibility testing with users, a privacy review, and an operational owner. Nothing here is a booking, medical, eligibility, or Make-A-Wish submission service.
 
-The supplied Make-A-Wish guides are reference material. This prototype is not affiliated with, approved by, or a fulfillment promise from Make-A-Wish. Licensed source illustrations and PDFs are not distributed in the server.
+The supplied Make-A-Wish guides inform the prototype. Source picture artwork may be reused in the current local prototype at the user's direction. This API still draws its own SVG postcard and does not serve the original PDFs or a source-art asset endpoint. The prototype is not affiliated with, approved by, or a fulfillment promise from Make-A-Wish.

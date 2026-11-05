@@ -2,11 +2,11 @@
 
 A native iPad prototype for helping a child explore and communicate a wish, at their own pace.
 
-This project starts from the recovered project brief and the supplied wish-discovery materials. The first complete path explores an amusement park, a rollercoaster color, and animals, then creates a personalized illustrated wish card. The communication board remains accessible throughout.
+This project starts from the recovered project brief and the supplied wish-discovery materials. The home screen now uses the 20 illustrated topic tiles from the supplied reference. The first complete path explores an amusement park, a rollercoaster color, and animals, then creates a personalized illustrated wish card. Core communication words sit in a bottom drawer opened by a small centered tab.
 
 ## Project status
 
-- **Native app:** SwiftUI iPad app source, offline wish journey, speech, communication board, local draft, and caregiver controls.
+- **Native app:** SwiftUI iPad app source, reusable picture tiles using the supplied artwork, offline wish journey, speech, a 34-concept core-word drawer, local draft, and caregiver controls.
 - **Backend:** dependency-free Node service with a catalog and illustrated wish-preview endpoint; Docker packaging and automated API tests.
 - **Image preview:** original illustrations assembled from selected choices. These are illustrative, not photographs, AI-generated images, bookings, or wish approvals.
 - **Distribution:** Xcode project generation, simulator checks, and a TestFlight release checklist. Native compilation, signing, device testing, and submission require a Mac and Apple developer access and have not been completed on this Windows computer.
@@ -41,7 +41,9 @@ Follow [ios/README.md](ios/README.md). Generate the project using XcodeGen, sele
 | `docs/architecture.md` | Data flow and boundaries |
 | `docs/release-checklist.md` | Work required for TestFlight and public release |
 | `scripts/check-contracts.cjs` | Check native/server choice IDs and source-board vocabulary together |
+| `assets/` | Original source picture assets and the reusable picture catalog |
+| `backend/docs/ux-components.md` | Current components and the archived six-panel concept with screenshot |
 
-Run `node scripts/check-contracts.cjs` from the project folder to check that the native app and backend use matching selections and that the source board's 54 concepts are retained. This does not compile or test SwiftUI.
+Run `node scripts/check-contracts.cjs` from the project folder to check that the native app and backend use matching selections and that the source board's 54 concepts are retained across the 20 topic tiles and 34 core communication choices. This does not compile or test SwiftUI.
 
 Source PDFs remain in the user's Downloads folder. They are not copied into the Git repository.

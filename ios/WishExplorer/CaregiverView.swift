@@ -16,7 +16,7 @@ struct CaregiverView: View {
                 }
                 Section("Choices on this iPad") {
                     Toggle("Remember choices on this iPad", isOn: $store.rememberChoices)
-                    Text("Off by default. This saves only the wish category, park, color, and animal ideas. Names, photographs, contact details, and medical information are not requested. The talking-board sentence is not saved.")
+                    Text("Off by default. This saves only the chosen interest picture, park, color, and animal ideas. Names, photographs, contact details, and medical information are not requested. The talking-board sentence is not saved.")
                     Button("Start a fresh wish", role: .destructive) { confirmingReset = true }
                 }
                 Section("Optional online description") {
@@ -41,7 +41,7 @@ struct CaregiverView: View {
                 }
                 Section("About this prototype") {
                     Text("Wish Explorer is an independent exploration prototype inspired by the reference wish materials. It is not an official Make-A-Wish app and does not submit a wish, determine eligibility, promise a trip, or arrange care.")
-                    Text("The amusement park journey is the complete demo. Other wish cards open a conversation with the talking board. Park pictures are original illustrations, not attraction listings. The board is a starting point for communication support and needs review with children, caregivers, and an AAC professional before real-world use.")
+                    Text("The amusement park journey is the complete demo. The other interest pictures open an exploration conversation. The main screen holds 20 interest pictures; the drawer holds the other 34 communication pictures. Open or close it using the small center tab, or drag the tab up or down. Stop, break, and finished remain inside the drawer. Park pictures are imaginary illustrations, not attraction listings. Communication support needs review with children, caregivers, and an AAC professional before real-world use.")
                 }
             }
             .navigationTitle("For grown-ups")

@@ -4,109 +4,82 @@ struct CommunicationBoardView: View {
     @EnvironmentObject private var store: WishStore
 
     var body: some View {
-        VStack(spacing: 14) {
-            ViewThatFits(in: .horizontal) {
-                HStack(spacing: 14) {
-                    boardToggle
-                    Spacer(minLength: 0)
-                    HStack(spacing: 8) { quickButtonContents }.fixedSize(horizontal: true, vertical: false)
-                }
-                VStack(alignment: .leading, spacing: 8) {
-                    boardToggle
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 110), spacing: 8)], spacing: 8) { quickButtonContents }
-                }
+        VStack(spacing: 0) {
+            HStack(spacing: 0) {
+                Spacer(minLength: 0)
+                drawerTab
+                Spacer(minLength: 0)
             }
             if store.boardExpanded {
-                ScrollView(.horizontal, showsIndicators: true) {
-                    HStack(spacing: 10) {
-                        ForEach(CommunicationWord.Group.allCases) { group in
-                            Button { store.boardGroup = group } label: {
-                                Text(group.rawValue).font(.headline).padding(.horizontal, 18).padding(.vertical, 14)
-                                    .foregroundStyle(store.boardGroup == group ? .white : WishTheme.ink)
-                                    .background(store.boardGroup == group ? WishTheme.blue : WishTheme.sky, in: Capsule())
-                            }.buttonStyle(.plain)
-                                .accessibilityAddTraits(store.boardGroup == group ? [.isSelected] : [])
-                        }
-                    }.padding(.horizontal, 2)
-                }.fixedSize(horizontal: false, vertical: true)
-                phraseBar
-                ScrollView {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 125), spacing: 12)], spacing: 12) {
-                        ForEach(CommunicationWord.all.filter { $0.group == store.boardGroup }) { word in
-                            Button { store.addWord(word) } label: {
-                                VStack(spacing: 8) {
-                                    Image(systemName: word.symbol).font(.title).accessibilityHidden(true)
-                                    Text(word.label).font(.headline).multilineTextAlignment(.center)
+                VStack(spacing: 14) {
+                    phraseBar
+                    ScrollView {
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 125), spacing: 12)], spacing: 12) {
+                            ForEach(CommunicationWord.all) { word in
+                                PictureTile(label: word.label, selected: false, compact: true) {
+                                    store.addWord(word)
                                 }
-                                .padding(14).frame(maxWidth: .infinity, minHeight: 94)
-                                .foregroundStyle(WishTheme.ink)
-                                .background(word.group == .feelings ? WishTheme.mint : WishTheme.sky, in: RoundedRectangle(cornerRadius: 18))
-                            }.buttonStyle(.plain).accessibilityHint("Say \(word.speech) and add it to the sentence")
-                        }
-                    }.padding(.bottom, 10)
+                                .accessibilityHint("Say \(word.speech) and add it to the sentence")
+                            }
+                        }.padding(.bottom, 14)
+                    }
                 }
+                .padding(.horizontal, 22).padding(.top, 14).padding(.bottom, 10)
+                .background(WishTheme.boardBackground)
             }
         }
-        .padding(.horizontal, 22).padding(.top, 8).padding(.bottom, 10)
-        .background(.white.shadow(.drop(color: WishTheme.ink.opacity(0.09), radius: 14, y: -4)))
-        .foregroundStyle(WishTheme.blue)
     }
 
-    private var boardToggle: some View {
+    /// A single visible handle is kept on screen while every word tile is tucked away.
+    private var drawerTab: some View {
         Button { store.boardExpanded.toggle() } label: {
-            HStack(spacing: 10) {
-                Image(systemName: "bubble.left.and.bubble.right.fill").accessibilityHidden(true)
-                Text("Talking board").font(.headline)
-                Image(systemName: store.boardExpanded ? "chevron.down" : "chevron.up").accessibilityHidden(true)
-            }.padding(.vertical, 14).padding(.horizontal, 12)
+            VStack(spacing: 7) {
+                Capsule().fill(WishTheme.ink.opacity(0.35)).frame(width: 38, height: 4)
+                Image(systemName: store.boardExpanded ? "chevron.down" : "chevron.up")
+                    .font(.system(size: 13, weight: .bold)).foregroundStyle(WishTheme.ink)
+            }
+            .frame(width: 96, height: 32)
+            .background(WishTheme.boardBackground, in: RoundedRectangle(cornerRadius: 18))
+            .overlay(RoundedRectangle(cornerRadius: 18).stroke(WishTheme.ink.opacity(0.18), lineWidth: 1))
+            .frame(width: 120, height: 48, alignment: .bottom)
+            .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .accessibilityLabel(store.boardExpanded ? "Close talking board" : "Open talking board")
-        .accessibilityHint("Words and pictures you can use at any time")
-    }
-
-    @ViewBuilder private var quickButtonContents: some View {
-        quickButton("No", symbol: "xmark.circle.fill", tint: WishTheme.peach) {
-            store.quickMessage("No")
+        .accessibilityHint("Tap to toggle, or drag up to open and down to close")
+        .accessibilityValue(store.boardExpanded ? "Open" : "Closed")
+        .simultaneousGesture(DragGesture(minimumDistance: 12).onEnded { value in
+            if value.translation.height < -20 { store.boardExpanded = true }
+            else if value.translation.height > 20 { store.boardExpanded = false }
+        })
+        .accessibilityAction(named: Text(store.boardExpanded ? "Close board" : "Open board")) {
+            store.boardExpanded.toggle()
         }
-        quickButton("Stop", symbol: "stop.circle.fill", tint: WishTheme.peach) {
-            store.quickMessage("Stop")
-        }
-        quickButton("Think", symbol: "clock.fill", tint: WishTheme.sky) {
-            store.quickMessage("I need time to think")
-        }
-        quickButton("Break", symbol: "pause.circle.fill", tint: WishTheme.lavender) {
-            store.quickMessage("I need a break")
-        }
-        quickButton("Finished", symbol: "flag.checkered", tint: WishTheme.mint) {
-            store.finishSession()
-        }
-    }
-
-    private func quickButton(_ title: String, symbol: String, tint: Color, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            Label(title, systemImage: symbol).font(.subheadline.weight(.bold))
-                .padding(.horizontal, 14).padding(.vertical, 13).frame(minHeight: 48)
-                .background(tint, in: RoundedRectangle(cornerRadius: 14))
-                .foregroundStyle(WishTheme.ink)
-        }.buttonStyle(.plain)
-            .accessibilityLabel(title == "Break" ? "I need a break" : title == "Think" ? "I need time to think" : title)
     }
 
     private var phraseBar: some View {
-        HStack(spacing: 12) {
-            Text(store.phrase.isEmpty ? "Tap words to make a sentence" : store.phrase.joined(separator: " "))
-                .font(.body.weight(.medium)).foregroundStyle(WishTheme.ink)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .accessibilityLabel("Sentence: \(store.phrase.joined(separator: " "))")
-            Button { store.say(store.phrase.joined(separator: " "), explicit: true) } label: {
-                Image(systemName: "speaker.wave.2.fill").font(.title2).padding(12)
-            }.disabled(store.phrase.isEmpty).accessibilityLabel("Speak sentence")
-            Button { if !store.phrase.isEmpty { store.phrase.removeLast() } } label: {
-                Image(systemName: "delete.left").font(.title2).padding(12)
-            }.disabled(store.phrase.isEmpty).accessibilityLabel("Remove last word")
-            Button("Clear") { store.phrase = [] }.font(.headline).padding(12).disabled(store.phrase.isEmpty)
-        }.padding(.horizontal, 14).padding(.vertical, 6)
-            .background(WishTheme.background, in: RoundedRectangle(cornerRadius: 16))
+        ViewThatFits(in: .horizontal) {
+            HStack(spacing: 12) { phraseText; phraseActions }
+            VStack(alignment: .leading, spacing: 10) { phraseText; HStack { Spacer(); phraseActions } }
+        }
+        .padding(.horizontal, 14).padding(.vertical, 6)
+        .background(.white, in: RoundedRectangle(cornerRadius: 16))
+    }
+
+    private var phraseText: some View {
+        Text(store.phrase.isEmpty ? "Tap pictures to say something" : store.phrase.joined(separator: " "))
+            .font(.body.weight(.medium)).foregroundStyle(.black)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .accessibilityLabel("Sentence: \(store.phrase.joined(separator: " "))")
+    }
+
+    @ViewBuilder private var phraseActions: some View {
+        Button { store.say(store.phrase.joined(separator: " "), explicit: true) } label: {
+            Image(systemName: "speaker.wave.2.fill").font(.title2).padding(12)
+        }.disabled(store.phrase.isEmpty).accessibilityLabel("Speak sentence")
+        Button { if !store.phrase.isEmpty { store.phrase.removeLast() } } label: {
+            Image(systemName: "delete.left").font(.title2).padding(12)
+        }.disabled(store.phrase.isEmpty).accessibilityLabel("Remove last word")
+        Button("Clear") { store.phrase = [] }.font(.headline).padding(12).disabled(store.phrase.isEmpty)
     }
 }

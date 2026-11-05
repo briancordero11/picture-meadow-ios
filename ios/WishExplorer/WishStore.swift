@@ -6,7 +6,6 @@ final class WishStore: ObservableObject {
     @Published var draft: WishDraft { didSet { saveDraft() } }
     @Published var step: WishStep = .welcome
     @Published var boardExpanded = false
-    @Published var boardGroup: CommunicationWord.Group = .people
     @Published var phrase: [String] = []
     @Published var isPaused = false
     @Published var caregiverPresented = false
@@ -51,17 +50,13 @@ final class WishStore: ObservableObject {
 
     func stopSpeaking() { synthesizer.stopSpeaking(at: .immediate) }
 
-    func choose(_ category: WishCategory) {
-        if category == .helpChoose {
-            boardExpanded = true
-            boardGroup = .wishes
-            say("Let's explore together")
-            return
-        }
-        draft.selectCategory(category)
+    func chooseInterest(_ interest: InterestChoice) {
+        draft.selectInterest(interest)
         invalidatePreview()
-        say(category.title)
-        if category == .go { step = .destination }
+        say(interest.label)
+        if phrase.count < 12 { phrase.append(interest.label) }
+        boardExpanded = false
+        if interest == .amusementPark { step = .destination }
         else { step = .otherWish }
     }
 
@@ -96,11 +91,6 @@ final class WishStore: ObservableObject {
         if word.label == "Finished" { finishSession(); return }
         say(word.speech, explicit: true)
         if word.label == "I need a break" || word.label == "Stop" { isPaused = true }
-    }
-
-    func quickMessage(_ message: String) {
-        say(message, explicit: true)
-        if message == "I need a break" || message == "Stop" { isPaused = true }
     }
 
     func finishSession() {

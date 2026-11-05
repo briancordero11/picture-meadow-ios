@@ -17,7 +17,7 @@ struct WishRootView: View {
                     Group {
                         switch store.step {
                         case .welcome: WelcomeView()
-                        case .categories: CategoryView()
+                        case .interests: InterestView()
                         case .destination: DestinationView()
                         case .color: CoasterColorView()
                         case .animals: AnimalChoiceView()
@@ -85,36 +85,35 @@ struct WelcomeView: View {
             Text("Tap a picture. Explore an idea.\nTake all the time you need.")
                 .font(.title2).multilineTextAlignment(.center).foregroundStyle(WishTheme.secondary)
             PrimaryWishButton(title: "Create your wish", symbol: "sparkles") {
-                store.step = .categories
+                store.step = .interests
                 store.say("What would you like to wish for?")
             }.padding(.top, 8)
-            if store.draft.category != nil {
-                Button("See my choices so far") { store.step = .postcard }
+            if store.draft.interest != nil || store.draft.category != nil {
+                Button("See my choices so far") { store.step = store.draft.category == .go ? .postcard : .otherWish }
                     .font(.headline).padding(16)
             }
-            Label("You can tell us yes, no, or take a break anytime.", systemImage: "hand.wave.fill")
+            Label("Open the little tab to tell us something.", systemImage: "chevron.up")
                 .font(.body).foregroundStyle(WishTheme.secondary).padding(.top, 8)
         }.frame(maxWidth: .infinity).padding(.vertical, 10)
     }
 }
 
-struct CategoryView: View {
+struct InterestView: View {
     @EnvironmentObject private var store: WishStore
-    private let columns = [GridItem(.adaptive(minimum: 220), spacing: 20)]
+    @Environment(\.horizontalSizeClass) private var sizeClass
+    private var columns: [GridItem] { Array(repeating: GridItem(.flexible(), spacing: 8), count: sizeClass == .compact ? 2 : 4) }
     var body: some View {
-        VStack(spacing: 28) {
-            ScreenHeading(eyebrow: "A little imagination", title: "Create your wish", subtitle: "What sounds wonderful to you?")
-            LazyVGrid(columns: columns, spacing: 20) {
-                ForEach(WishCategory.allCases) { category in
-                    ChoiceCard(selected: store.draft.category == category, background: WishTheme.categoryColor(category)) {
-                        store.choose(category)
-                    } content: {
-                        VStack(alignment: .leading, spacing: 14) {
-                            Image(systemName: category.symbol).font(.system(size: 43)).foregroundStyle(WishTheme.blue).accessibilityHidden(true)
-                            Text(category.title).font(.title2.weight(.bold)).foregroundStyle(WishTheme.ink)
-                            Text(category.subtitle).font(.body).foregroundStyle(WishTheme.secondary)
-                        }.frame(maxWidth: .infinity, alignment: .leading)
-                    }.accessibilityHint(category == .go ? "Explore an amusement park idea" : "Explore this wish idea with a grown-up")
+        VStack(spacing: 22) {
+            VStack(spacing: 9) {
+                Text("Create your wish").font(.system(.largeTitle, design: .rounded, weight: .bold)).foregroundStyle(.black).accessibilityAddTraits(.isHeader)
+                Text("What would you like? Choose a picture.").font(.title3).foregroundStyle(WishTheme.secondary)
+            }.frame(maxWidth: .infinity)
+            LazyVGrid(columns: columns, spacing: 8) {
+                ForEach(InterestChoice.allCases) { interest in
+                    PictureTile(label: interest.label, selected: store.draft.interest == interest) {
+                        store.chooseInterest(interest)
+                    }
+                    .accessibilityHint(interest == .amusementPark ? "Explore an amusement park adventure" : "Explore this idea and tell a grown-up more")
                 }
             }
         }
@@ -219,16 +218,13 @@ struct OtherWishView: View {
     @EnvironmentObject private var store: WishStore
     var body: some View {
         VStack(spacing: 28) {
-            ScreenHeading(eyebrow: "Your idea matters", title: store.draft.category?.title ?? "My wish", subtitle: "Let's tell a grown-up more about this idea.")
-            Image(systemName: store.draft.category?.symbol ?? "star.fill")
-                .font(.system(size: 100)).foregroundStyle(WishTheme.blue).padding(35).accessibilityHidden(true)
-            Text("Use the talking board below. You can say what you like, what you don't like, or ask for more time.")
-                .font(.title2).multilineTextAlignment(.center).foregroundStyle(WishTheme.ink)
-            PrimaryWishButton(title: "Open talking board", symbol: "bubble.left.and.bubble.right.fill") {
-                store.boardExpanded = true
-                store.boardGroup = .wishes
+            ScreenHeading(eyebrow: "Your idea matters", title: store.draft.interest?.label ?? "My wish idea", subtitle: "Let's tell a grown-up more about this picture.")
+            if let interest = store.draft.interest {
+                PictureSymbol(label: interest.label).frame(height: 230).accessibilityLabel(interest.label)
             }
-            Button("Explore an amusement park idea") { store.choose(.go) }.font(.headline).padding(18)
+            Text("Open the little tab below. You can say what you like, what you don't like, or ask for more time.")
+                .font(.title2).multilineTextAlignment(.center).foregroundStyle(WishTheme.ink)
+            Button("Choose a different picture") { store.step = .interests }.font(.headline).padding(18)
         }
     }
 }

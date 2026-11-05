@@ -47,9 +47,14 @@ final class WishDraftTests: XCTestCase {
         XCTAssertTrue(WishDraft(category: .go, destinationID: "disney-world", coasterColor: .blue).canRequestRemotePreview)
     }
 
-    func testVocabularyRetainsAll54SourceConceptsWithoutDuplicateLabels() {
-        XCTAssertEqual(CommunicationWord.all.count, 54)
-        XCTAssertEqual(Set(CommunicationWord.all.map(\.id)).count, 54)
+    func testVocabularySplits20InterestsAnd34CoreWithoutDuplicatingTopics() {
+        XCTAssertEqual(CommunicationWord.all.count, 34)
+        XCTAssertEqual(Set(CommunicationWord.all.map(\.id)).count, 34)
+        XCTAssertEqual(InterestChoice.allCases.count, 20)
+        let core = Set(CommunicationWord.all.map { PictureCatalog.normalized($0.label) })
+        let interests = Set(InterestChoice.allCases.map { PictureCatalog.normalized($0.label) })
+        XCTAssertTrue(core.isDisjoint(with: interests))
+        XCTAssertEqual(core.union(interests).count, 54)
         for concept in ["Watch", "Wish", "More", "Wet", "Dry", "I need time to think", "I need a break", "Thank you!", "Finished"] {
             XCTAssertTrue(CommunicationWord.all.contains { $0.label == concept })
         }
@@ -87,17 +92,42 @@ final class WishDraftTests: XCTestCase {
     }
 
     @MainActor
-    func testHelpMeChooseDoesNotReplaceAnExistingWish() throws {
+    func testChoosingAnotherInterestClearsParkChoicesAndOpensExploration() throws {
         let suite = "WishExplorerTests.\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
         defer { defaults.removePersistentDomain(forName: suite) }
         let store = WishStore(defaults: defaults)
         store.readChoicesAloud = false
-        store.draft = WishDraft(category: .go, coasterColor: .blue)
-        store.choose(.helpChoose)
+        store.draft = WishDraft(category: .go, interestID: "amusement-park", coasterColor: .blue)
+        store.chooseInterest(.art)
+        XCTAssertNil(store.draft.category)
+        XCTAssertNil(store.draft.coasterColor)
+        XCTAssertEqual(store.draft.interest, .art)
+        XCTAssertEqual(store.step, .otherWish)
+        XCTAssertFalse(store.boardExpanded)
+    }
+
+    @MainActor
+    func testAmusementParkPictureOpensExistingJourneyAndUsesGoAPIContract() throws {
+        let suite = "WishExplorerTests.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = WishStore(defaults: defaults)
+        store.readChoicesAloud = false
+        store.chooseInterest(.amusementPark)
         XCTAssertEqual(store.draft.category, .go)
-        XCTAssertEqual(store.draft.coasterColor, .blue)
-        XCTAssertTrue(store.boardExpanded)
+        XCTAssertEqual(store.draft.interest, .amusementPark)
+        XCTAssertEqual(store.step, .destination)
+    }
+
+    func testEveryPictureHasTheOriginalBundledSymbol() {
+        XCTAssertEqual(PictureCatalog.shared.items.count, 54)
+        for interest in InterestChoice.allCases {
+            XCTAssertNotNil(PictureCatalog.shared.image(label: interest.label), interest.label)
+        }
+        for word in CommunicationWord.all {
+            XCTAssertNotNil(PictureCatalog.shared.image(label: word.label), word.label)
+        }
     }
 
     @MainActor

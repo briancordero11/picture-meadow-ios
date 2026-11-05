@@ -27,9 +27,10 @@ struct PostcardView: View {
                             .font(.body).foregroundStyle(WishTheme.secondary).multilineTextAlignment(.center)
                     }
                 } else {
-                    Image(systemName: store.draft.category?.symbol ?? "star.fill")
-                        .font(.system(size: 90)).foregroundStyle(WishTheme.blue).padding(35)
-                    Text(store.draft.category?.title ?? "There is time to find my wish")
+                    if let interest = store.draft.interest {
+                        PictureSymbol(label: interest.label).frame(height: 200).accessibilityLabel(interest.label)
+                    }
+                    Text(store.draft.interest?.label.capitalized ?? "There is time to find my wish")
                         .font(.largeTitle.weight(.bold)).foregroundStyle(WishTheme.ink)
                     Text("A grown-up can help explore your ideas using the talking board.")
                         .font(.title3).foregroundStyle(WishTheme.secondary)
@@ -51,10 +52,10 @@ struct PostcardView: View {
 
     @ViewBuilder private var actions: some View {
         PrimaryWishButton(title: "Read my wish", symbol: "speaker.wave.2.fill") {
-            store.say(store.draft.category == .go ? (store.remoteDescription ?? store.draft.postcardDescription) : (store.draft.category?.title ?? "I am still thinking"), explicit: true)
+            store.say(store.draft.category == .go ? (store.remoteDescription ?? store.draft.postcardDescription) : (store.draft.interest?.label ?? "I am still thinking"), explicit: true)
         }
-        Button("Change my choices") { store.step = store.draft.category == .go ? .destination : .categories }
+        Button("Change my choices") { store.step = store.draft.category == .go ? .destination : .interests }
             .font(.headline).padding(18)
-        Button("Choose another wish") { store.step = .categories }.font(.headline).padding(18)
+        Button("Choose another wish") { store.step = .interests }.font(.headline).padding(18)
     }
 }

@@ -10,6 +10,8 @@ enum WishTheme {
     static let yellow = Color(red: 1, green: 0.80, blue: 0.25)
     static let background = Color(red: 0.97, green: 0.98, blue: 1)
     static let secondary = Color(red: 0.30, green: 0.37, blue: 0.47)
+    static let picturePeach = Color(red: 1, green: 0.85, blue: 0.77)
+    static let boardBackground = Color(red: 1, green: 0.96, blue: 0.92)
 
     static func color(for choice: CoasterColor) -> Color {
         switch choice {
@@ -20,16 +22,6 @@ enum WishTheme {
         }
     }
 
-    static func categoryColor(_ category: WishCategory) -> Color {
-        switch category {
-        case .go: sky
-        case .be: lavender
-        case .meet: peach
-        case .have: mint
-        case .give: Color(red: 1, green: 0.91, blue: 0.94)
-        case .helpChoose: Color(red: 1, green: 0.97, blue: 0.85)
-        }
-    }
 }
 
 struct PrimaryWishButton: View {

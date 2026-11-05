@@ -7,16 +7,16 @@ Give a child who does not rely on speech a calm, visual way to explore a wish wi
 ## Initial journey
 
 1. A welcoming star introduces the experience.
-2. “Create your wish” offers six large entry choices: go, have, meet, be, give, and help me choose. The sixth is a navigation aid, not an official wish category.
+2. “Create your wish” shows the 20 childlike illustrated topic tiles from the user's reference, in its original row order. Labels sit above the pictures on peach tiles with dark dividers. The earlier six-verb concept is retained only as documented design history in `backend/docs/`.
 3. The first detailed path explores an amusement park. Example destinations are Six Flags Great America, Walt Disney World, and Universal Orlando. These are example interests, not current travel or availability recommendations.
 4. The child can choose a rollercoaster color and optional animals, change their mind, skip optional personalization, or pause.
 5. A wish postcard illustrates the choices and gives a caregiver a starting point for a conversation. It does not submit a wish application.
 
 ## Communication board
 
-Preserve all 54 labels from the supplied board. Keep a stable order and pair words with simple symbols, without reproducing licensed source artwork. Offer tap-to-speak and a phrase area, with clear and speak actions. Preserve vocabulary such as “no/don’t,” “finished,” “I need time to think,” and “I need a break.”
+Preserve all 54 labels across two surfaces: 20 topic tiles in the main screen and 34 core communication choices in the drawer. Reuse the supplied pictograms as requested, with a reusable picture component. The drawer contains pronouns, actions, feelings, questions, and agency phrases; it does not duplicate the sports, school, or other topic tiles. Offer tap-to-speak and a phrase area, with clear and speak actions.
 
-The expandable tray is reachable through the journey. Do not require speech, timed completion, dragging, color recognition alone, or a long sentence before allowing progress. Provide a visible way to pause and resume. A child's “no” or request to stop should not silently become a wish selection.
+The communication drawer is collapsed by default, with only a small centered grab tab visible at the bottom. Tapping the tab or dragging it up/down opens or closes the drawer; dragging is optional. Remove the previous “My voice” section and the permanent quick-action row. No, stop, think, break, and finished remain inside the core drawer as pictured choices. Do not require speech, timed completion, color recognition alone, or a long sentence before allowing progress. A child's “no” or request to stop should not silently become a wish selection.
 
 ## Caregiver experience
 

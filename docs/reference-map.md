@@ -4,7 +4,7 @@ The six supplied files contain four unique documents. The duplicate guide and bo
 
 | Source | Evidence used | Product decision |
 | --- | --- | --- |
-| `WishImages.pdf`, pp. 1-2 | Same 9-column, 6-row board on both pages, with a different surround | Preserve the 54 labels in stable order; the child can open the board independently of the wish route |
+| `WishImages.pdf`, pp. 1-2 | Same 9-column, 6-row board on both pages, with a different surround | Preserve 54 concepts across 20 illustrated topic tiles and 34 core drawer choices |
 | `Super Star-Wish Guide (1).pdf`, pp. 2-3 | Relaxed exploration, family/team participation, multiple ideas, four broad interest groups | No time pressure or forced single “correct” wish; caregiver-supported exploration |
 | `Super Star-Wish Guide (1).pdf`, pp. 4-8 | Sensory, movement, communication, and learning examples | Reference for future paths rather than forcing a diagnostic quiz |
 | `WishIntakeform(1).pdf`, pp. 1-2 | Preferences mixed with identity and contact fields | Prototype uses fixed, non-identifying preference choices; no child identity form |
@@ -14,9 +14,9 @@ The six supplied files contain four unique documents. The duplicate guide and bo
 
 The dated operational guide is evidence of the supplied 2023 workflow, not a statement of current policy. Example parks and imagined animals do not imply approval, current attractions, accessibility, or travel availability.
 
-## Six entry choices
+## Archived six-panel concept
 
-The user's request asks for six panels. The supplied board has six rows, not six prescribed top-level wish categories. The app uses the five broad wish verbs (go, have, meet, be, give) and a sixth “Help me choose” navigation tile. This is an app design decision.
+The first prototype used the five broad wish verbs (go, have, meet, be, give) and a sixth “Help me choose” navigation tile. The user replaced that screen with illustrated topic components matching their screenshot. Preserve the previous six-panel idea and screenshot under `backend/docs/`; it is not the active child-facing screen. The backend's older wish taxonomy remains an API detail rather than the current home-screen layout.
 
 Public context checked November 5, 2026:
 
@@ -28,4 +28,4 @@ Public context checked November 5, 2026:
 
 The canonical source order is stored in `communication-board.json`. Source wording is retained, including short fragments and phrases. App controls may use sentence capitalization, while remaining consistent in meaning and order. Stable source order supports follow-up AAC review; it is not a claim that replacing a child's established AAC system is appropriate.
 
-The starter uses original shapes and system symbols. It does not embed the source PDFs, the source pictogram artwork, or an official organization logo. The working brand and symbol set should be reviewed before distribution.
+The revised prototype reuses the supplied pictograms at the user's request. Original image objects are extracted unchanged and displayed through reusable picture components; source PDFs are not embedded. The working app mark remains original. Asset provenance and display rectangles are recorded in `assets/`.

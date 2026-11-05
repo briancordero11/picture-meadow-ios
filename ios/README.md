@@ -1,8 +1,10 @@
 # Wish Explorer for iPad
 
-Native SwiftUI prototype, iPadOS 17 and later. The complete demo is: welcome → five wish verbs and a sixth **Help me choose** navigation card → amusement park → optional park, coaster color, and animal preferences → an original illustrated wish postcard. Other wish verbs start a supported conversation with the talking board.
+Native SwiftUI prototype, iPadOS 17 and later. The main screen presents **20 picture interests** in the supplied source order, with peach tiles, dark outlines, black labels above the unchanged colorful pictograms. It uses four columns on a full iPad layout and two columns in a compact layout. The complete demo is: welcome → amusement park picture → optional park, coaster color, and animal preferences → an original illustrated wish postcard. The other 19 interest pictures open a supported exploration conversation; they do not imply a completed destination-specific journey.
 
-The 54 communication concepts from the supplied board are organized into People, Actions, Wish ideas, Feelings & needs, and Questions. **No, Stop, Think, Break, and Finished** remain outside the expandable board. Speech uses the system speech synthesizer. No microphone permission, account, child name, photograph, health information, advertising, or analytics is requested.
+The source's other **34 core communication pictures** live entirely inside the pull-up drawer. The collapsed drawer leaves only a small centered rounded tab with a grabber and chevron. Tap the tab, drag it up/down, or use its accessible button action to open and close it. There is no My Voice section or quick-response toolbar. Interest nouns are not duplicated in the drawer. Stop, break, finished, and time-to-think remain available inside it. Speech uses the system speech synthesizer. No microphone permission, account, child name, photograph, health information, advertising, or analytics is requested.
+
+`PictureTile` and `PictureSymbol` are reused on the main board and inside the drawer. `Resources/Pictures` bundles the supplied source PNG objects unchanged and the shared `picture-catalog.json`; native runtime viewports select each pictogram from its atlas. Labels are rendered outside the image. No recolored, generated, or authored cropped replacement of those supplied pictograms is included.
 
 ## Open and run on a Mac
 
@@ -26,7 +28,7 @@ The script checks macOS and Xcode 26+, generates the project, validates property
 WISH_TEST_DESTINATION='platform=iOS Simulator,name=iPad Pro 13-inch (M4)' bash scripts/verify.sh
 ```
 
-**Native compilation, simulator tests, speech, VoiceOver, Switch Control, portrait/landscape layouts, and on-device behavior have not been verified in the Windows workspace.** The repository includes unit tests for skipped choices, preserving a wish when asking for help, 54 source concepts, persistence opt-in, and resetting unrelated choices. Run them on a Mac before device testing.
+**Native compilation, simulator tests, speech, VoiceOver, Switch Control, portrait/landscape layouts, and on-device behavior have not been verified in the Windows workspace.** The repository includes unit tests for skipped choices, the 20-interest/34-core split, bundled source imagery, interest routing, persistence opt-in, and resetting unrelated choices. Run them on a Mac before device testing. `python3 scripts/check_resources.py` performs portable property-list, image, catalog-boundary, and unchanged-source-byte checks; it does not compile Swift.
 
 ## Backend connection
 
@@ -47,13 +49,13 @@ The optional request is sent only when the caregiver taps that action and a park
 
 ## Retention and accessibility
 
-- Preferences are kept in memory unless a grown-up enables **Remember choices on this iPad**. Only non-identifying category, park, color, and animal selections are stored in UserDefaults; the talking-board sentence is not saved.
+- Preferences are kept in memory unless a grown-up enables **Remember choices on this iPad**. Only non-identifying interest, park, color, and animal selections (plus the internal wish verb used by the park API) are stored in UserDefaults; the talking-board sentence is not saved.
 - Turn the switch off to erase the stored preference copy, or use **Start a fresh wish** to clear the current choices and saved draft. Finishing a session returns home and keeps the in-memory wish so the child can continue later.
 - Large labeled controls, selected-state semantics, system Dynamic Type, VoiceOver labels, spoken AAC responses, static imagery, and Reduce Motion-aware drawer animation are included. These are implementation features, not a completed accessibility audit. Work with AAC users and professionals to evaluate vocabulary grouping and symbol comprehension.
 - Stop/Break present a quiet pause screen; Think speaks a request for time without moving the child. No timer, forced completion, eligibility judgment, or destination booking is built into the journey.
 
 ## Before TestFlight
 
-The project is a starting point, not a submitted or approved build. Root release documentation tracks the remaining product review, real-device accessibility checks, privacy disclosures, brand/asset permission, deployment, signing, App Store Connect record, and TestFlight review steps. This independent prototype uses its own star mark and illustrations. It does not use the Make-A-Wish logo or copy PDF artwork.
+The project is a starting point, not a submitted or approved build. Root release documentation tracks the remaining product review, real-device accessibility checks, privacy disclosures, brand/asset permission, deployment, signing, App Store Connect record, and TestFlight review steps. This independent prototype uses its own star mark and park illustrations, and reuses the supplied pictograms unchanged at the user's request. It does not use the Make-A-Wish logo. Confirm rights to distribute the supplied pictograms before a public release.
 
 Verified Apple references, 2026-11-05: [upload requirements](https://developer.apple.com/help/app-store-connect/manage-builds/upload-builds/), [TestFlight setup](https://developer.apple.com/testflight/), and [Reduce Motion](https://developer.apple.com/documentation/swiftui/environmentvalues/accessibilityreducemotion).

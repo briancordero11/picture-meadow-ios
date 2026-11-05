@@ -16,8 +16,18 @@ const {pathToFileURL}=require('node:url');
   const normalized=s=>s.toLowerCase().replace(/[^a-z0-9]/g,'');
   const sourceWords=JSON.parse(fs.readFileSync(path.join(project,'docs/communication-board.json'),'utf8').replace(/^\uFEFF/,''));
   const nativeWords=[...swift.matchAll(/\.init\(label: "([^"]+)"/g)].map(m=>m[1]);
-  assert.equal(nativeWords.length,54);
-  assert.deepEqual(sorted(nativeWords.map(normalized)),sorted(sourceWords.flat().map(normalized)));
+  const pictureCatalog=JSON.parse(fs.readFileSync(path.join(project,'assets/picture-catalog.json'),'utf8'));
+  const topicPictures=pictureCatalog.items.filter(item=>item.kind==='interest');
+  const corePictures=pictureCatalog.items.filter(item=>item.kind==='core');
+  assert.equal(nativeWords.length,34);
+  assert.equal(topicPictures.length,20);
+  assert.equal(corePictures.length,34);
+  assert.deepEqual(sorted(nativeWords.map(normalized)),sorted(corePictures.map(item=>normalized(item.label))));
+  assert.deepEqual(sorted(pictureCatalog.items.map(item=>normalized(item.label))),sorted(sourceWords.flat().map(normalized)));
+  const interestEnum=swift.match(/enum InterestChoice[^\{]*\{([\s\S]*?)var id/)[1];
+  const interestIDs=[...interestEnum.matchAll(/^\s*case ([^\r\n]+)/gm)].flatMap(match=>match[1].split(',').map(value=>value.match(/=\s*"([^"]+)"/)?.[1]??value.trim()));
+  assert.deepEqual(interestIDs,topicPictures.map(item=>item.id));
+  assert.deepEqual(JSON.parse(fs.readFileSync(path.join(project,'ios/WishExplorer/Resources/Pictures/picture-catalog.json'),'utf8')),pictureCatalog);
   const idsSeen=new Set();
   for(const d of catalog.destinations)for(const color of catalog.coasterColors)for(let mask=0;mask<8;mask++){
     const animalIds=catalog.animals.filter((_,i)=>mask&(1<<i)).map(a=>a.id);
@@ -30,5 +40,5 @@ const {pathToFileURL}=require('node:url');
     idsSeen.add(result.id);
   }
   assert.equal(idsSeen.size,96);
-  console.log('Integration verified: native/server destination/color/animal IDs match; all54 AAC concepts match supplied board; 96 selection combinations produce unique illustrated postcards.');
+  console.log('Integration verified: native/server choice IDs match; 20 topic + 34 core pictures cover all 54 source concepts with matching native assets; 96 selection combinations produce unique illustrated postcards.');
 })().catch(error=>{console.error(error);process.exitCode=1;});

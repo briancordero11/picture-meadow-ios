@@ -1,30 +1,10 @@
 import Foundation
 
-enum WishCategory: String, CaseIterable, Codable, Identifiable {
+/// Internal park API verb and compatibility values for previously saved drafts.
+/// Child-facing navigation uses the 20 InterestChoice pictures instead.
+enum WishCategory: String, Codable {
     case go, be, meet, have, give
     case helpChoose = "explore"
-    var id: String { rawValue }
-    var title: String { self == .helpChoose ? "Help me choose" : "I wish to \(rawValue)" }
-    var symbol: String {
-        switch self {
-        case .go: "airplane"
-        case .be: "theatermasks.fill"
-        case .meet: "person.2.fill"
-        case .have: "gift.fill"
-        case .give: "heart.fill"
-        case .helpChoose: "questionmark.bubble.fill"
-        }
-    }
-    var subtitle: String {
-        switch self {
-        case .go: "An amazing adventure"
-        case .be: "Try something wonderful"
-        case .meet: "Someone special"
-        case .have: "Something just for me"
-        case .give: "Make someone smile"
-        case .helpChoose: "Let's explore together"
-        }
-    }
 }
 
 enum CoasterColor: String, CaseIterable, Codable, Identifiable {
@@ -60,6 +40,7 @@ struct WishDestination: Identifiable, Equatable {
 /// Preference exploration only. No identity, contact details, eligibility, or clinical fields.
 struct WishDraft: Codable, Equatable {
     var category: WishCategory? = nil
+    var interestID: String? = nil
     var destinationID: String? = nil
     var coasterColor: CoasterColor? = nil
     var animals: [WishAnimal] = []
@@ -83,6 +64,14 @@ struct WishDraft: Codable, Equatable {
         if self.category != category { self = WishDraft(category: category) }
     }
 
+    mutating func selectInterest(_ interest: InterestChoice) {
+        if interestID != interest.id {
+            self = WishDraft(category: interest == .amusementPark ? .go : nil, interestID: interest.id)
+        }
+    }
+
+    var interest: InterestChoice? { interestID.flatMap(InterestChoice.init(rawValue:)) }
+
     mutating func toggleAnimal(_ animal: WishAnimal) {
         if animals.contains(animal) { animals.removeAll { $0 == animal } }
         else { animals.append(animal) }
@@ -90,10 +79,10 @@ struct WishDraft: Codable, Equatable {
 }
 
 enum WishStep: Int, CaseIterable {
-    case welcome, categories, destination, color, animals, postcard, otherWish
+    case welcome, interests, destination, color, animals, postcard, otherWish
     var progress: Double {
         switch self {
-        case .welcome, .categories, .otherWish: 0
+        case .welcome, .interests, .otherWish: 0
         case .destination: 0.25
         case .color: 0.5
         case .animals: 0.75
@@ -102,11 +91,28 @@ enum WishStep: Int, CaseIterable {
     }
     var previous: Self {
         switch self {
-        case .welcome, .categories: .welcome
-        case .destination, .otherWish: .categories
+        case .welcome, .interests: .welcome
+        case .destination, .otherWish: .interests
         case .color: .destination
         case .animals: .color
         case .postcard: .animals
+        }
+    }
+}
+
+enum InterestChoice: String, CaseIterable, Codable, Identifiable {
+    case sportingEvent = "sporting-event", camp, athlete
+    case vrEquipment = "vr-equipment", amusementPark = "amusement-park"
+    case school, celebrity, art, home, waterpark, animals, bike, hospital, party, gift, train, playground, music
+    case sensoryRoom = "sensory-room", fishing
+    var id: String { rawValue }
+    var label: String {
+        switch self {
+        case .sportingEvent: "sporting event"
+        case .vrEquipment: "VR equipment"
+        case .amusementPark: "amusement park"
+        case .sensoryRoom: "sensory room"
+        default: rawValue
         }
     }
 }
@@ -118,10 +124,10 @@ struct CommunicationWord: Identifiable {
     let group: Group
     var id: String { label }
     enum Group: String, CaseIterable, Identifiable {
-        case people = "People", actions = "Actions", wishes = "Wish ideas", feelings = "Feelings & needs", questions = "Questions"
+        case people = "People", actions = "Actions", feelings = "Feelings & needs", questions = "Questions"
         var id: String { rawValue }
     }
-    static let all: [Self] = [
+    private static let vocabulary: [Self] = [
         .init(label: "I", speech: "I", symbol: "person.fill", group: .people),
         .init(label: "You", speech: "You", symbol: "person.crop.circle", group: .people),
         .init(label: "We", speech: "We", symbol: "person.2.fill", group: .people),
@@ -137,26 +143,6 @@ struct CommunicationWord: Identifiable {
         .init(label: "Watch", speech: "watch", symbol: "play.rectangle.fill", group: .actions),
         .init(label: "Wish", speech: "wish", symbol: "sparkles", group: .actions),
         .init(label: "More", speech: "more", symbol: "plus.circle.fill", group: .actions),
-        .init(label: "Amusement park", speech: "an amusement park", symbol: "sparkles", group: .wishes),
-        .init(label: "Animals", speech: "animals", symbol: "pawprint.fill", group: .wishes),
-        .init(label: "Music", speech: "music", symbol: "music.note", group: .wishes),
-        .init(label: "Art", speech: "art", symbol: "paintpalette.fill", group: .wishes),
-        .init(label: "Waterpark", speech: "a waterpark", symbol: "water.waves", group: .wishes),
-        .init(label: "Sensory room", speech: "a sensory room", symbol: "lightbulb.fill", group: .wishes),
-        .init(label: "Sporting event", speech: "a sporting event", symbol: "sportscourt.fill", group: .wishes),
-        .init(label: "Camp", speech: "camp", symbol: "tent.fill", group: .wishes),
-        .init(label: "Athlete", speech: "an athlete", symbol: "figure.run", group: .wishes),
-        .init(label: "VR equipment", speech: "VR equipment", symbol: "visionpro.fill", group: .wishes),
-        .init(label: "School", speech: "school", symbol: "building.2.fill", group: .wishes),
-        .init(label: "Celebrity", speech: "a celebrity", symbol: "star.circle.fill", group: .wishes),
-        .init(label: "Home", speech: "home", symbol: "house.fill", group: .wishes),
-        .init(label: "Bike", speech: "a bike", symbol: "bicycle", group: .wishes),
-        .init(label: "Hospital", speech: "hospital", symbol: "cross.case.fill", group: .wishes),
-        .init(label: "Party", speech: "a party", symbol: "party.popper.fill", group: .wishes),
-        .init(label: "Gift", speech: "a gift", symbol: "gift.fill", group: .wishes),
-        .init(label: "Train", speech: "a train", symbol: "tram.fill", group: .wishes),
-        .init(label: "Playground", speech: "a playground", symbol: "figure.play", group: .wishes),
-        .init(label: "Fishing", speech: "fishing", symbol: "fish.fill", group: .wishes),
         .init(label: "Yes", speech: "Yes", symbol: "checkmark.circle.fill", group: .feelings),
         .init(label: "No / don't", speech: "No", symbol: "xmark.circle.fill", group: .feelings),
         .init(label: "Happy", speech: "I feel happy", symbol: "face.smiling.fill", group: .feelings),
@@ -177,4 +163,13 @@ struct CommunicationWord: Identifiable {
         .init(label: "When", speech: "When?", symbol: "calendar", group: .questions),
         .init(label: "Why", speech: "Why?", symbol: "questionmark.bubble.fill", group: .questions)
     ]
+    static let all: [Self] = {
+        let sourceOrder = [
+            "I", "Want", "See", "Wet", "More", "You", "Go", "Help", "Dry", "Where",
+            "We", "Stop", "Act", "Hot", "What", "Watch", "Like", "Give", "Cold", "When",
+            "Wish", "Eat", "Meet", "Tired", "Who", "Yes", "No / don't", "Finished",
+            "This is fun!", "Thank you!", "I need time to think", "I need a break", "Happy", "Why"
+        ]
+        return sourceOrder.compactMap { label in vocabulary.first { $0.label == label } }
+    }()
 }

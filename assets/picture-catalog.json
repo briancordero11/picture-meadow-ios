@@ -1,0 +1,1361 @@
+{
+  "version": 1,
+  "description": "Unchanged embedded source image objects extracted from the user-supplied WishImages.pdf. Frames are pictogram-only runtime viewports; render labels outside the image viewport.",
+  "coordinates": "Top-left origin in source image pixels; frame values are integers. normalizedFrame is frame / atlas dimensions.",
+  "atlases": {
+    "wish-symbols": {
+      "file": "pictures/wish-symbols.png",
+      "width": 1076,
+      "height": 713,
+      "source": "WishImages.pdf, page 1, image object /Im41",
+      "sha256": "e43c6cdcfb3feae59039a5105edcdfa0b8278b9f109f0ae927a9faad0a77d112",
+      "bytes": 1094438
+    },
+    "think-and-thank-you": {
+      "file": "pictures/think-and-thank-you.png",
+      "width": 412,
+      "height": 206,
+      "source": "WishImages.pdf, page 1, image object /Im24",
+      "sha256": "4a3de2fa2c7f6608f46cd242c2df53f7cb39fb1a45ef6546521a01e7ba4cf330",
+      "bytes": 89930
+    },
+    "i": {
+      "file": "pictures/i.png",
+      "width": 169,
+      "height": 152,
+      "source": "WishImages.pdf, page 1, image object /Im31",
+      "sha256": "dc30fd1edd79427b5046e70e5161f0905f43299205e7d6cf926b415e1a7e6836",
+      "bytes": 24189
+    },
+    "want": {
+      "file": "pictures/want.png",
+      "width": 235,
+      "height": 174,
+      "source": "WishImages.pdf, page 1, image object /Im29",
+      "sha256": "2f16ca2ec6f41bfdce997affa80355b49f1bc263e5272bec2f775113b845b436",
+      "bytes": 25369
+    },
+    "see": {
+      "file": "pictures/see.png",
+      "width": 174,
+      "height": 152,
+      "source": "WishImages.pdf, page 1, image object /Im30",
+      "sha256": "22323cd95f5ffb88b0824d0b88e8a50ff92302f687078b4a7aef267c7a5b18a5",
+      "bytes": 16350
+    },
+    "wet": {
+      "file": "pictures/wet.png",
+      "width": 169,
+      "height": 155,
+      "source": "WishImages.pdf, page 1, image object /Im5",
+      "sha256": "0a0e9da3219bdc199b4e711f6fbbbf14af747a2e98d0813dafc393ba9cbd1f93",
+      "bytes": 27096
+    },
+    "more": {
+      "file": "pictures/more.png",
+      "width": 198,
+      "height": 152,
+      "source": "WishImages.pdf, page 1, image object /Im6",
+      "sha256": "76597175bd2bcc159932608672f127d5b11d985b27337373b917ea3d963f06e7",
+      "bytes": 23501
+    },
+    "you": {
+      "file": "pictures/you.png",
+      "width": 169,
+      "height": 152,
+      "source": "WishImages.pdf, page 1, image object /Im7",
+      "sha256": "5bba3cee08b2697911b28d8d5f82d4b90ba4f28856ec6923585beccce187f5bd",
+      "bytes": 21451
+    },
+    "go": {
+      "file": "pictures/go.png",
+      "width": 205,
+      "height": 152,
+      "source": "WishImages.pdf, page 1, image object /Im8",
+      "sha256": "d40ea82ff5e722d9eccb14ca384ff4a322ae90dbfdcd9b2396a2615a5aec7b8c",
+      "bytes": 10188
+    },
+    "help": {
+      "file": "pictures/help.png",
+      "width": 172,
+      "height": 152,
+      "source": "WishImages.pdf, page 1, image object /Im9",
+      "sha256": "630f19df87e1b39c47ec02455bbf65a0e2f87165947bd895811b68a24a399921",
+      "bytes": 27157
+    },
+    "dry": {
+      "file": "pictures/dry.png",
+      "width": 153,
+      "height": 152,
+      "source": "WishImages.pdf, page 1, image object /Im32",
+      "sha256": "f7dc1aa67cb019dcf4bfffa5c3921e0f8281027f3a12ab9f0f60ac58abfa7919",
+      "bytes": 23395
+    },
+    "where": {
+      "file": "pictures/where.png",
+      "width": 164,
+      "height": 152,
+      "source": "WishImages.pdf, page 1, image object /Im10",
+      "sha256": "26f2ecb027a29ce0b103919ed52b198c083c56787f83881e179bcb823b5f5b42",
+      "bytes": 26791
+    },
+    "we": {
+      "file": "pictures/we.png",
+      "width": 163,
+      "height": 152,
+      "source": "WishImages.pdf, page 1, image object /Im34",
+      "sha256": "bb1bd51eb00b658b921ff9a3e04c3ba7649fea19ae4d279d048a6f1bb6bf35e1",
+      "bytes": 32680
+    },
+    "stop": {
+      "file": "pictures/stop.png",
+      "width": 168,
+      "height": 152,
+      "source": "WishImages.pdf, page 1, image object /Im33",
+      "sha256": "c092c7f3ffc934cadbf404536bb0d217dcbc455d3f23ff60e5e1306d40b89253",
+      "bytes": 24595
+    },
+    "hot": {
+      "file": "pictures/hot.png",
+      "width": 184,
+      "height": 152,
+      "source": "WishImages.pdf, page 1, image object /Im12",
+      "sha256": "03ec1e661deba8e07024716525f11100f3b75dd537ea67d5b18a41dd7a52637b",
+      "bytes": 29097
+    },
+    "what": {
+      "file": "pictures/what.png",
+      "width": 183,
+      "height": 152,
+      "source": "WishImages.pdf, page 1, image object /Im13",
+      "sha256": "574429f4697d40a0267b352fc1b821ea313093790e1caf5f5b11ea1a9300040f",
+      "bytes": 26776
+    },
+    "like": {
+      "file": "pictures/like.png",
+      "width": 171,
+      "height": 152,
+      "source": "WishImages.pdf, page 1, image object /Im15",
+      "sha256": "acfefa8d60803d6a205019378cd42777ecb43e05bd06f7ca0c2fb427aed8c87c",
+      "bytes": 30888
+    },
+    "cold": {
+      "file": "pictures/cold.png",
+      "width": 171,
+      "height": 152,
+      "source": "WishImages.pdf, page 1, image object /Im16",
+      "sha256": "428d520db93dfba38a9c801443b554ee58e8895f1b01e45a13e3fe9edf578439",
+      "bytes": 28426
+    },
+    "when": {
+      "file": "pictures/when.png",
+      "width": 191,
+      "height": 152,
+      "source": "WishImages.pdf, page 1, image object /Im17",
+      "sha256": "48fd6884ed958e27b3c92d6454a411f647d4ddfaf4d643c8195c0a3596ffc6a6",
+      "bytes": 33420
+    },
+    "eat": {
+      "file": "pictures/eat.png",
+      "width": 175,
+      "height": 175,
+      "source": "WishImages.pdf, page 1, image object /Im35",
+      "sha256": "b329b0fa6c9fd07d16d6d77035f56f9790893cc1060e4fdec4bd771202f245cf",
+      "bytes": 13483
+    },
+    "tired": {
+      "file": "pictures/tired.png",
+      "width": 168,
+      "height": 152,
+      "source": "WishImages.pdf, page 1, image object /Im19",
+      "sha256": "68d87edeff751e0af99f47a02e7e626e0b36b21db621a449b79bcc23232eddcc",
+      "bytes": 25916
+    },
+    "who": {
+      "file": "pictures/who.png",
+      "width": 162,
+      "height": 152,
+      "source": "WishImages.pdf, page 1, image object /Im20",
+      "sha256": "aa9fe20a5832e118bf464f12b93add813be09793297c4bc8c3de77d756cb3762",
+      "bytes": 25971
+    },
+    "yes": {
+      "file": "pictures/yes.png",
+      "width": 192,
+      "height": 152,
+      "source": "WishImages.pdf, page 1, image object /Im21",
+      "sha256": "24ad1d5251ab191b00592bf8f43497755dda493cfe8496e56214963cadac1714",
+      "bytes": 11995
+    },
+    "no-dont": {
+      "file": "pictures/no-dont.png",
+      "width": 189,
+      "height": 152,
+      "source": "WishImages.pdf, page 1, image object /Im22",
+      "sha256": "6baff890cdd8aa01c4d81401d1975d689e37c026c9f7cfb76ac41c91aeabf589",
+      "bytes": 17496
+    },
+    "finished": {
+      "file": "pictures/finished.png",
+      "width": 197,
+      "height": 152,
+      "source": "WishImages.pdf, page 1, image object /Im23",
+      "sha256": "95180361fb62b47b2dcef4f8501e0d7dd336e922eb53122a68c0f051b8dc35f6",
+      "bytes": 17023
+    },
+    "this-is-fun": {
+      "file": "pictures/this-is-fun.png",
+      "width": 172,
+      "height": 152,
+      "source": "WishImages.pdf, page 1, image object /Im40",
+      "sha256": "cc761ec9a265f60ea86910534435251edd65d55c56ab880bcb15c1c13d3d727d",
+      "bytes": 31256
+    },
+    "break": {
+      "file": "pictures/break.png",
+      "width": 181,
+      "height": 152,
+      "source": "WishImages.pdf, page 1, image object /Im26",
+      "sha256": "efbf298a7e481031dac2feb6b8f895fb55c3beec3c59d3cdef82adb12349ccc2",
+      "bytes": 25611
+    },
+    "happy": {
+      "file": "pictures/happy.png",
+      "width": 180,
+      "height": 152,
+      "source": "WishImages.pdf, page 1, image object /Im27",
+      "sha256": "a4e65d10eea2146bbd2f99184553e2b12118383502b7a5271d5458533c5d3747",
+      "bytes": 24099
+    },
+    "why": {
+      "file": "pictures/why.png",
+      "width": 183,
+      "height": 152,
+      "source": "WishImages.pdf, page 1, image object /Im28",
+      "sha256": "f7179c952aad1ca5106e3818ca32e86bbd1fb754fa957de9a7d818f0430cbd33",
+      "bytes": 29711
+    }
+  },
+  "items": [
+    {
+      "id": "sporting-event",
+      "label": "Sporting event",
+      "kind": "interest",
+      "atlas": "wish-symbols",
+      "frame": {
+        "x": 206,
+        "y": 175,
+        "width": 212,
+        "height": 141
+      },
+      "normalizedFrame": {
+        "x": 0.19144981412639406,
+        "y": 0.24544179523141654,
+        "width": 0.1970260223048327,
+        "height": 0.19775596072931276
+      },
+      "speech": "Sporting event",
+      "sourceOrder": 0
+    },
+    {
+      "id": "camp",
+      "label": "Camp",
+      "kind": "interest",
+      "atlas": "wish-symbols",
+      "frame": {
+        "x": 520,
+        "y": 462,
+        "width": 199,
+        "height": 136
+      },
+      "normalizedFrame": {
+        "x": 0.483271375464684,
+        "y": 0.6479663394109397,
+        "width": 0.18494423791821563,
+        "height": 0.19074333800841514
+      },
+      "speech": "Camp",
+      "sourceOrder": 1
+    },
+    {
+      "id": "athlete",
+      "label": "Athlete",
+      "kind": "interest",
+      "atlas": "wish-symbols",
+      "frame": {
+        "x": 653,
+        "y": 330,
+        "width": 197,
+        "height": 135
+      },
+      "normalizedFrame": {
+        "x": 0.6068773234200744,
+        "y": 0.4628330995792426,
+        "width": 0.18308550185873607,
+        "height": 0.18934081346423562
+      },
+      "speech": "Athlete",
+      "sourceOrder": 2
+    },
+    {
+      "id": "vr-equipment",
+      "label": "VR equipment",
+      "kind": "interest",
+      "atlas": "wish-symbols",
+      "frame": {
+        "x": 895,
+        "y": 466,
+        "width": 178,
+        "height": 132
+      },
+      "normalizedFrame": {
+        "x": 0.8317843866171004,
+        "y": 0.6535764375876578,
+        "width": 0.1654275092936803,
+        "height": 0.18513323983169705
+      },
+      "speech": "VR equipment",
+      "sourceOrder": 3
+    },
+    {
+      "id": "amusement-park",
+      "label": "Amusement park",
+      "kind": "interest",
+      "atlas": "wish-symbols",
+      "frame": {
+        "x": 420,
+        "y": 174,
+        "width": 225,
+        "height": 145
+      },
+      "normalizedFrame": {
+        "x": 0.3903345724907063,
+        "y": 0.24403927068723702,
+        "width": 0.20910780669144982,
+        "height": 0.20336605890603085
+      },
+      "speech": "Amusement park",
+      "sourceOrder": 4
+    },
+    {
+      "id": "school",
+      "label": "School",
+      "kind": "interest",
+      "atlas": "wish-symbols",
+      "frame": {
+        "x": 851,
+        "y": 316,
+        "width": 221,
+        "height": 146
+      },
+      "normalizedFrame": {
+        "x": 0.7908921933085502,
+        "y": 0.4431977559607293,
+        "width": 0.2053903345724907,
+        "height": 0.20476858345021037
+      },
+      "speech": "School",
+      "sourceOrder": 5
+    },
+    {
+      "id": "celebrity",
+      "label": "Celebrity",
+      "kind": "interest",
+      "atlas": "wish-symbols",
+      "frame": {
+        "x": 10,
+        "y": 171,
+        "width": 198,
+        "height": 151
+      },
+      "normalizedFrame": {
+        "x": 0.00929368029739777,
+        "y": 0.23983169705469845,
+        "width": 0.18401486988847585,
+        "height": 0.211781206171108
+      },
+      "speech": "Celebrity",
+      "sourceOrder": 6
+    },
+    {
+      "id": "art",
+      "label": "Art",
+      "kind": "interest",
+      "atlas": "wish-symbols",
+      "frame": {
+        "x": 539,
+        "y": 603,
+        "width": 259,
+        "height": 110
+      },
+      "normalizedFrame": {
+        "x": 0.5009293680297398,
+        "y": 0.8457223001402524,
+        "width": 0.24070631970260223,
+        "height": 0.15427769985974754
+      },
+      "speech": "Art",
+      "sourceOrder": 7
+    },
+    {
+      "id": "home",
+      "label": "Home",
+      "kind": "interest",
+      "atlas": "wish-symbols",
+      "frame": {
+        "x": 437,
+        "y": 326,
+        "width": 215,
+        "height": 136
+      },
+      "normalizedFrame": {
+        "x": 0.40613382899628253,
+        "y": 0.45722300140252453,
+        "width": 0.19981412639405205,
+        "height": 0.19074333800841514
+      },
+      "speech": "Home",
+      "sourceOrder": 8
+    },
+    {
+      "id": "waterpark",
+      "label": "Waterpark",
+      "kind": "interest",
+      "atlas": "wish-symbols",
+      "frame": {
+        "x": 646,
+        "y": 175,
+        "width": 224,
+        "height": 149
+      },
+      "normalizedFrame": {
+        "x": 0.6003717472118959,
+        "y": 0.24544179523141654,
+        "width": 0.20817843866171004,
+        "height": 0.20897615708274894
+      },
+      "speech": "Waterpark",
+      "sourceOrder": 9
+    },
+    {
+      "id": "animals",
+      "label": "Animals",
+      "kind": "interest",
+      "atlas": "wish-symbols",
+      "frame": {
+        "x": 5,
+        "y": 317,
+        "width": 225,
+        "height": 148
+      },
+      "normalizedFrame": {
+        "x": 0.004646840148698885,
+        "y": 0.44460028050490885,
+        "width": 0.20910780669144982,
+        "height": 0.20757363253856942
+      },
+      "speech": "Animals",
+      "sourceOrder": 10
+    },
+    {
+      "id": "bike",
+      "label": "Bike",
+      "kind": "interest",
+      "atlas": "wish-symbols",
+      "frame": {
+        "x": 17,
+        "y": 597,
+        "width": 221,
+        "height": 116
+      },
+      "normalizedFrame": {
+        "x": 0.015799256505576207,
+        "y": 0.8373071528751753,
+        "width": 0.2053903345724907,
+        "height": 0.16269284712482468
+      },
+      "speech": "Bike",
+      "sourceOrder": 11
+    },
+    {
+      "id": "hospital",
+      "label": "Hospital",
+      "kind": "interest",
+      "atlas": "wish-symbols",
+      "frame": {
+        "x": 2,
+        "y": 466,
+        "width": 188,
+        "height": 124
+      },
+      "normalizedFrame": {
+        "x": 0.0018587360594795538,
+        "y": 0.6535764375876578,
+        "width": 0.17472118959107807,
+        "height": 0.17391304347826086
+      },
+      "speech": "Hospital",
+      "sourceOrder": 12
+    },
+    {
+      "id": "party",
+      "label": "Party",
+      "kind": "interest",
+      "atlas": "wish-symbols",
+      "frame": {
+        "x": 230,
+        "y": 320,
+        "width": 209,
+        "height": 144
+      },
+      "normalizedFrame": {
+        "x": 0.2137546468401487,
+        "y": 0.4488078541374474,
+        "width": 0.19423791821561337,
+        "height": 0.20196353436185133
+      },
+      "speech": "Party",
+      "sourceOrder": 13
+    },
+    {
+      "id": "gift",
+      "label": "Gift",
+      "kind": "interest",
+      "atlas": "wish-symbols",
+      "frame": {
+        "x": 190,
+        "y": 471,
+        "width": 139,
+        "height": 125
+      },
+      "normalizedFrame": {
+        "x": 0.17657992565055763,
+        "y": 0.6605890603085554,
+        "width": 0.129182156133829,
+        "height": 0.1753155680224404
+      },
+      "speech": "Gift",
+      "sourceOrder": 14
+    },
+    {
+      "id": "train",
+      "label": "Train",
+      "kind": "interest",
+      "atlas": "wish-symbols",
+      "frame": {
+        "x": 253,
+        "y": 600,
+        "width": 280,
+        "height": 113
+      },
+      "normalizedFrame": {
+        "x": 0.23513011152416358,
+        "y": 0.8415147265077139,
+        "width": 0.26022304832713755,
+        "height": 0.1584852734922861
+      },
+      "speech": "Train",
+      "sourceOrder": 15
+    },
+    {
+      "id": "playground",
+      "label": "Playground",
+      "kind": "interest",
+      "atlas": "wish-symbols",
+      "frame": {
+        "x": 329,
+        "y": 464,
+        "width": 193,
+        "height": 135
+      },
+      "normalizedFrame": {
+        "x": 0.30576208178438663,
+        "y": 0.6507713884992987,
+        "width": 0.17936802973977695,
+        "height": 0.18934081346423562
+      },
+      "speech": "Playground",
+      "sourceOrder": 16
+    },
+    {
+      "id": "music",
+      "label": "Music",
+      "kind": "interest",
+      "atlas": "wish-symbols",
+      "frame": {
+        "x": 718,
+        "y": 461,
+        "width": 174,
+        "height": 141
+      },
+      "normalizedFrame": {
+        "x": 0.6672862453531598,
+        "y": 0.6465638148667602,
+        "width": 0.16171003717472118,
+        "height": 0.19775596072931276
+      },
+      "speech": "Music",
+      "sourceOrder": 17
+    },
+    {
+      "id": "sensory-room",
+      "label": "Sensory room",
+      "kind": "interest",
+      "atlas": "wish-symbols",
+      "frame": {
+        "x": 867,
+        "y": 174,
+        "width": 202,
+        "height": 146
+      },
+      "normalizedFrame": {
+        "x": 0.8057620817843866,
+        "y": 0.24403927068723702,
+        "width": 0.18773234200743494,
+        "height": 0.20476858345021037
+      },
+      "speech": "Sensory room",
+      "sourceOrder": 18
+    },
+    {
+      "id": "fishing",
+      "label": "Fishing",
+      "kind": "interest",
+      "atlas": "wish-symbols",
+      "frame": {
+        "x": 797,
+        "y": 598,
+        "width": 279,
+        "height": 115
+      },
+      "normalizedFrame": {
+        "x": 0.7407063197026023,
+        "y": 0.8387096774193549,
+        "width": 0.25929368029739774,
+        "height": 0.16129032258064516
+      },
+      "speech": "Fishing",
+      "sourceOrder": 19
+    },
+    {
+      "id": "i",
+      "label": "I",
+      "kind": "core",
+      "atlas": "i",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 169,
+        "height": 152
+      },
+      "normalizedFrame": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0
+      },
+      "speech": "I",
+      "sourceOrder": 0,
+      "group": "People"
+    },
+    {
+      "id": "want",
+      "label": "Want",
+      "kind": "core",
+      "atlas": "want",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 235,
+        "height": 174
+      },
+      "normalizedFrame": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0
+      },
+      "speech": "Want",
+      "sourceOrder": 1,
+      "group": "Actions"
+    },
+    {
+      "id": "see",
+      "label": "See",
+      "kind": "core",
+      "atlas": "see",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 174,
+        "height": 152
+      },
+      "normalizedFrame": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0
+      },
+      "speech": "See",
+      "sourceOrder": 2,
+      "group": "Actions"
+    },
+    {
+      "id": "wet",
+      "label": "Wet",
+      "kind": "core",
+      "atlas": "wet",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 169,
+        "height": 155
+      },
+      "normalizedFrame": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0
+      },
+      "speech": "Wet",
+      "sourceOrder": 3,
+      "group": "Feelings & needs"
+    },
+    {
+      "id": "more",
+      "label": "More",
+      "kind": "core",
+      "atlas": "more",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 198,
+        "height": 152
+      },
+      "normalizedFrame": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0
+      },
+      "speech": "More",
+      "sourceOrder": 4,
+      "group": "Actions"
+    },
+    {
+      "id": "you",
+      "label": "You",
+      "kind": "core",
+      "atlas": "you",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 169,
+        "height": 152
+      },
+      "normalizedFrame": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0
+      },
+      "speech": "You",
+      "sourceOrder": 5,
+      "group": "People"
+    },
+    {
+      "id": "go",
+      "label": "Go",
+      "kind": "core",
+      "atlas": "go",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 205,
+        "height": 152
+      },
+      "normalizedFrame": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0
+      },
+      "speech": "Go",
+      "sourceOrder": 6,
+      "group": "Actions"
+    },
+    {
+      "id": "help",
+      "label": "Help",
+      "kind": "core",
+      "atlas": "help",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 172,
+        "height": 152
+      },
+      "normalizedFrame": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0
+      },
+      "speech": "Help",
+      "sourceOrder": 7,
+      "group": "Actions"
+    },
+    {
+      "id": "dry",
+      "label": "Dry",
+      "kind": "core",
+      "atlas": "dry",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 153,
+        "height": 152
+      },
+      "normalizedFrame": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0
+      },
+      "speech": "Dry",
+      "sourceOrder": 8,
+      "group": "Feelings & needs"
+    },
+    {
+      "id": "where",
+      "label": "Where",
+      "kind": "core",
+      "atlas": "where",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 164,
+        "height": 152
+      },
+      "normalizedFrame": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0
+      },
+      "speech": "Where",
+      "sourceOrder": 9,
+      "group": "Questions"
+    },
+    {
+      "id": "we",
+      "label": "We",
+      "kind": "core",
+      "atlas": "we",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 163,
+        "height": 152
+      },
+      "normalizedFrame": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0
+      },
+      "speech": "We",
+      "sourceOrder": 10,
+      "group": "People"
+    },
+    {
+      "id": "stop",
+      "label": "Stop",
+      "kind": "core",
+      "atlas": "stop",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 168,
+        "height": 152
+      },
+      "normalizedFrame": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0
+      },
+      "speech": "Stop",
+      "sourceOrder": 11,
+      "group": "Actions"
+    },
+    {
+      "id": "act",
+      "label": "Act",
+      "kind": "core",
+      "atlas": "wish-symbols",
+      "frame": {
+        "x": 204,
+        "y": 4,
+        "width": 195,
+        "height": 165
+      },
+      "normalizedFrame": {
+        "x": 0.1895910780669145,
+        "y": 0.005610098176718092,
+        "width": 0.1812267657992565,
+        "height": 0.2314165497896213
+      },
+      "speech": "Act",
+      "sourceOrder": 12,
+      "group": "Actions"
+    },
+    {
+      "id": "hot",
+      "label": "Hot",
+      "kind": "core",
+      "atlas": "hot",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 184,
+        "height": 152
+      },
+      "normalizedFrame": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0
+      },
+      "speech": "Hot",
+      "sourceOrder": 13,
+      "group": "Feelings & needs"
+    },
+    {
+      "id": "what",
+      "label": "What",
+      "kind": "core",
+      "atlas": "what",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 183,
+        "height": 152
+      },
+      "normalizedFrame": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0
+      },
+      "speech": "What",
+      "sourceOrder": 14,
+      "group": "Questions"
+    },
+    {
+      "id": "watch",
+      "label": "Watch",
+      "kind": "core",
+      "atlas": "wish-symbols",
+      "frame": {
+        "x": 868,
+        "y": 10,
+        "width": 201,
+        "height": 159
+      },
+      "normalizedFrame": {
+        "x": 0.8066914498141264,
+        "y": 0.014025245441795231,
+        "width": 0.18680297397769516,
+        "height": 0.22300140252454417
+      },
+      "speech": "Watch",
+      "sourceOrder": 15,
+      "group": "Actions"
+    },
+    {
+      "id": "like",
+      "label": "Like",
+      "kind": "core",
+      "atlas": "like",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 171,
+        "height": 152
+      },
+      "normalizedFrame": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0
+      },
+      "speech": "Like",
+      "sourceOrder": 16,
+      "group": "Actions"
+    },
+    {
+      "id": "give",
+      "label": "Give",
+      "kind": "core",
+      "atlas": "wish-symbols",
+      "frame": {
+        "x": 406,
+        "y": 22,
+        "width": 245,
+        "height": 147
+      },
+      "normalizedFrame": {
+        "x": 0.37732342007434944,
+        "y": 0.030855539971949508,
+        "width": 0.22769516728624536,
+        "height": 0.2061711079943899
+      },
+      "speech": "Give",
+      "sourceOrder": 17,
+      "group": "Actions"
+    },
+    {
+      "id": "cold",
+      "label": "Cold",
+      "kind": "core",
+      "atlas": "cold",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 171,
+        "height": 152
+      },
+      "normalizedFrame": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0
+      },
+      "speech": "Cold",
+      "sourceOrder": 18,
+      "group": "Feelings & needs"
+    },
+    {
+      "id": "when",
+      "label": "When",
+      "kind": "core",
+      "atlas": "when",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 191,
+        "height": 152
+      },
+      "normalizedFrame": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0
+      },
+      "speech": "When",
+      "sourceOrder": 19,
+      "group": "Questions"
+    },
+    {
+      "id": "wish",
+      "label": "Wish",
+      "kind": "core",
+      "atlas": "wish-symbols",
+      "frame": {
+        "x": 10,
+        "y": 5,
+        "width": 192,
+        "height": 166
+      },
+      "normalizedFrame": {
+        "x": 0.00929368029739777,
+        "y": 0.0070126227208976155,
+        "width": 0.17843866171003717,
+        "height": 0.23281907433380084
+      },
+      "speech": "Wish",
+      "sourceOrder": 20,
+      "group": "Actions"
+    },
+    {
+      "id": "eat",
+      "label": "Eat",
+      "kind": "core",
+      "atlas": "eat",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 175,
+        "height": 175
+      },
+      "normalizedFrame": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0
+      },
+      "speech": "Eat",
+      "sourceOrder": 21,
+      "group": "Actions"
+    },
+    {
+      "id": "meet",
+      "label": "Meet",
+      "kind": "core",
+      "atlas": "wish-symbols",
+      "frame": {
+        "x": 659,
+        "y": 18,
+        "width": 209,
+        "height": 151
+      },
+      "normalizedFrame": {
+        "x": 0.612453531598513,
+        "y": 0.025245441795231416,
+        "width": 0.19423791821561337,
+        "height": 0.211781206171108
+      },
+      "speech": "Meet",
+      "sourceOrder": 22,
+      "group": "Actions"
+    },
+    {
+      "id": "tired",
+      "label": "Tired",
+      "kind": "core",
+      "atlas": "tired",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 168,
+        "height": 152
+      },
+      "normalizedFrame": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0
+      },
+      "speech": "Tired",
+      "sourceOrder": 23,
+      "group": "Feelings & needs"
+    },
+    {
+      "id": "who",
+      "label": "Who",
+      "kind": "core",
+      "atlas": "who",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 162,
+        "height": 152
+      },
+      "normalizedFrame": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0
+      },
+      "speech": "Who",
+      "sourceOrder": 24,
+      "group": "Questions"
+    },
+    {
+      "id": "yes",
+      "label": "Yes",
+      "kind": "core",
+      "atlas": "yes",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 192,
+        "height": 152
+      },
+      "normalizedFrame": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0
+      },
+      "speech": "Yes",
+      "sourceOrder": 25,
+      "group": "Feelings & needs"
+    },
+    {
+      "id": "no-dont",
+      "label": "No / don't",
+      "kind": "core",
+      "atlas": "no-dont",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 189,
+        "height": 152
+      },
+      "normalizedFrame": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0
+      },
+      "speech": "No / don't",
+      "sourceOrder": 26,
+      "group": "Feelings & needs"
+    },
+    {
+      "id": "finished",
+      "label": "Finished",
+      "kind": "core",
+      "atlas": "finished",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 197,
+        "height": 152
+      },
+      "normalizedFrame": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0
+      },
+      "speech": "Finished",
+      "sourceOrder": 27,
+      "group": "Feelings & needs"
+    },
+    {
+      "id": "this-is-fun",
+      "label": "This is fun!",
+      "kind": "core",
+      "atlas": "this-is-fun",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 172,
+        "height": 152
+      },
+      "normalizedFrame": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0
+      },
+      "speech": "This is fun!",
+      "sourceOrder": 28,
+      "group": "Feelings & needs"
+    },
+    {
+      "id": "thank-you",
+      "label": "Thank you!",
+      "kind": "core",
+      "atlas": "think-and-thank-you",
+      "frame": {
+        "x": 216,
+        "y": 18,
+        "width": 196,
+        "height": 188
+      },
+      "normalizedFrame": {
+        "x": 0.5242718446601942,
+        "y": 0.08737864077669903,
+        "width": 0.47572815533980584,
+        "height": 0.912621359223301
+      },
+      "speech": "Thank you!",
+      "sourceOrder": 29,
+      "group": "Feelings & needs"
+    },
+    {
+      "id": "time-to-think",
+      "label": "I need time to think.",
+      "kind": "core",
+      "atlas": "think-and-thank-you",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 211,
+        "height": 206
+      },
+      "normalizedFrame": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 0.5121359223300971,
+        "height": 1.0
+      },
+      "speech": "I need time to think.",
+      "sourceOrder": 30,
+      "group": "Feelings & needs"
+    },
+    {
+      "id": "break",
+      "label": "I need a break.",
+      "kind": "core",
+      "atlas": "break",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 181,
+        "height": 152
+      },
+      "normalizedFrame": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0
+      },
+      "speech": "I need a break.",
+      "sourceOrder": 31,
+      "group": "Feelings & needs"
+    },
+    {
+      "id": "happy",
+      "label": "Happy",
+      "kind": "core",
+      "atlas": "happy",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 180,
+        "height": 152
+      },
+      "normalizedFrame": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0
+      },
+      "speech": "Happy",
+      "sourceOrder": 32,
+      "group": "Feelings & needs"
+    },
+    {
+      "id": "why",
+      "label": "Why",
+      "kind": "core",
+      "atlas": "why",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 183,
+        "height": 152
+      },
+      "normalizedFrame": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0
+      },
+      "speech": "Why",
+      "sourceOrder": 33,
+      "group": "Questions"
+    }
+  ],
+  "sourceCounts": {
+    "interest": 20,
+    "core": 34,
+    "total": 54
+  },
+  "reuseScope": "User requested exact supplied pictograms for this project prototype; no representation of brand or symbol licensing for distribution is made."
+}
