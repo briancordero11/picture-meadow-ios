@@ -1,0 +1,38 @@
+[
+  {
+    "file": "Super Star-Wish Guide (1).pdf",
+    "sha256": "d3cd3f2f2d85147b076e04798e969edfa7a24bf37d4695036a11021eeef25c7a",
+    "page_count": 8,
+    "duplicate_of": null
+  },
+  {
+    "file": "Super Star-Wish Guide (1) - Copy.pdf",
+    "sha256": "d3cd3f2f2d85147b076e04798e969edfa7a24bf37d4695036a11021eeef25c7a",
+    "page_count": null,
+    "duplicate_of": "Super Star-Wish Guide (1).pdf"
+  },
+  {
+    "file": "WishImages - Copy.pdf",
+    "sha256": "dbb740863220b12129322ba17c2e139e260eb17feb670a65e90438c86dc7babb",
+    "page_count": 2,
+    "duplicate_of": null
+  },
+  {
+    "file": "WishImages.pdf",
+    "sha256": "dbb740863220b12129322ba17c2e139e260eb17feb670a65e90438c86dc7babb",
+    "page_count": null,
+    "duplicate_of": "WishImages - Copy.pdf"
+  },
+  {
+    "file": "WishIntakeform(1).pdf",
+    "sha256": "0ec61150537e082a57dcaba5d7b2d3011dbae88bcd62d902a598b5548fe91f8b",
+    "page_count": 6,
+    "duplicate_of": null
+  },
+  {
+    "file": "WVC Guidance_Wish Types and Subtypes_Last Updated 2.22.2023.pdf",
+    "sha256": "0a6529498193fca33c65a677012941a35a13658f59eb00a0f9d4d860c44b8310",
+    "page_count": 4,
+    "duplicate_of": null
+  }
+]

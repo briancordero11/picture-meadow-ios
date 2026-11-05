@@ -1,0 +1,7 @@
+test
+node_modules
+.env
+.env.*
+README.md
+package-lock.json
+*.log

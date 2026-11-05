@@ -1,0 +1,13 @@
+{
+  "name": "wish-explorer-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Stateless illustrated wish preview API for the Wish Explorer prototype",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "start": "node src/main.js",
+    "test": "node --test test/*.test.js",
+    "check": "node --check src/main.js && node --check src/server.js && node --check src/preview.js && node --check src/catalog.js"
+  }
+}

@@ -1,0 +1,33 @@
+name: Verify starter
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - run: npm test
+        working-directory: backend
+      - name: Check native and server choice consistency
+        run: node scripts/check-contracts.cjs
+
+  native-ipad:
+    runs-on: macos-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install project generator
+        run: brew install xcodegen
+      - name: Build and test iPad app
+        run: bash ios/scripts/verify.sh
