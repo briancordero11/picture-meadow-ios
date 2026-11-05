@@ -1,6 +1,8 @@
-* text=auto
+* text=auto eol=lf
 *.sh text eol=lf
 *.swift text eol=lf
 *.yml text eol=lf
 *.json text eol=lf
 *.png binary
+# Preserve recovered source wording and spacing verbatim.
+docs/original-brief.txt -whitespace
