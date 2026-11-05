@@ -14,19 +14,46 @@ struct CommunicationBoardView: View {
                 VStack(spacing: 14) {
                     phraseBar
                     ScrollView {
-                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 125), spacing: 12)], spacing: 12) {
-                            ForEach(CommunicationWord.all) { word in
-                                PictureTile(label: word.label, selected: false, compact: true) {
-                                    store.addWord(word)
+                        VStack(spacing: 0) {
+                            LazyVGrid(columns: Array(repeating: GridItem(.flexible(minimum: 44), spacing: 0), count: 5), spacing: 0) {
+                                ForEach(CommunicationWord.mainRows.flatMap { $0 }) { word in
+                                    wordTile(word)
                                 }
-                                .accessibilityHint("Say \(word.speech) and add it to the sentence")
                             }
-                        }.padding(.bottom, 14)
+                            LazyVGrid(columns: Array(repeating: GridItem(.flexible(minimum: 44), spacing: 0), count: 4), spacing: 0) {
+                                ForEach(CommunicationWord.phraseWords) { word in
+                                    wordTile(word)
+                                }
+                            }
+                        }.padding(.bottom, 10)
                     }
                 }
                 .padding(.horizontal, 22).padding(.top, 14).padding(.bottom, 10)
                 .background(WishTheme.boardBackground)
             }
+        }
+    }
+
+    private func wordTile(_ word: CommunicationWord) -> some View {
+        PictureTile(label: word.label, selected: false, compact: true, backgroundColor: tileColor(word)) {
+            store.addWord(word)
+        }
+        .accessibilityHint("Say \(word.speech) and add it to the sentence")
+    }
+
+    private func tileColor(_ word: CommunicationWord) -> Color {
+        if word.label == "No / don't" { return Color(red: 0.98, green: 0.79, blue: 0.79) }
+        if CommunicationWord.phraseWords.contains(where: { $0.id == word.id }) {
+            return Color(red: 0.96, green: 0.82, blue: 0.89)
+        }
+        if ["Yes", "Finished"].contains(word.label) { return Color(red: 0.80, green: 0.93, blue: 0.81) }
+        switch word.group {
+        case .people: return Color(red: 1, green: 0.94, blue: 0.68)
+        case .actions: return Color(red: 0.80, green: 0.93, blue: 0.81)
+        case .questions: return Color(red: 0.89, green: 0.83, blue: 0.95)
+        case .feelings:
+            if word.label == "Help" { return Color(red: 0.80, green: 0.93, blue: 0.81) }
+            return Color(red: 0.83, green: 0.92, blue: 0.98)
         }
     }
 

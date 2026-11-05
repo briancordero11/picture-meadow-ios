@@ -18,6 +18,8 @@ Preserve all 54 labels across two surfaces: 20 topic tiles in the main screen an
 
 The communication drawer is collapsed by default, with only a small centered grab tab visible at the bottom. Tapping the tab or dragging it up/down opens or closes the drawer; dragging is optional. Remove the previous “My voice” section and the permanent quick-action row. No, stop, think, break, and finished remain inside the core drawer as pictured choices. Do not require speech, timed completion, color recognition alone, or a long sentence before allowing progress. A child's “no” or request to stop should not silently become a wish selection.
 
+Use stable, tightly packed columns: I/You/We vertically aligned, actions next to them, and descriptions/questions on the right. The 30 short core words form a five-column grid; the four longer social/agency phrases sit in one row below. Do not reflow pronouns to different columns as the screen width changes. The top “Create your wish” heading uses blue serif lettering with a decorative arch and star inspired by the supplied wordmark.
+
 ## Caregiver experience
 
 Keep configuration and reset controls away from the main child choices. Explain that this is a local exploration, and that actual wish discovery, application, approvals, and travel planning take place with the responsible organization. The prototype does not collect the medical, contact, identity, or family information found in the intake document.

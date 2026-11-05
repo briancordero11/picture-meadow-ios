@@ -33,7 +33,7 @@ struct WishRootView: View {
             .background(WishTheme.background)
             .safeAreaInset(edge: .bottom, spacing: 0) {
                 CommunicationBoardView()
-                    .frame(maxHeight: store.boardExpanded ? max(280, geometry.size.height * 0.52) : nil)
+                    .frame(maxHeight: store.boardExpanded ? max(280, geometry.size.height * 0.82) : nil)
             }
             .disabled(store.isPaused)
             .accessibilityHidden(store.isPaused)
@@ -79,9 +79,7 @@ struct WelcomeView: View {
                 WishStar().fill(WishTheme.yellow).frame(width: 110, height: 110).rotationEffect(.degrees(-12))
                 Image(systemName: "sparkle").font(.system(size: 32)).foregroundStyle(WishTheme.blue).offset(x: 90, y: -65)
             }.padding(.top, 16).accessibilityHidden(true)
-            Text("Big dreams.\nYour way.")
-                .font(.system(.largeTitle, design: .rounded, weight: .bold))
-                .multilineTextAlignment(.center).foregroundStyle(WishTheme.ink)
+            WishWordmark()
             Text("Tap a picture. Explore an idea.\nTake all the time you need.")
                 .font(.title2).multilineTextAlignment(.center).foregroundStyle(WishTheme.secondary)
             PrimaryWishButton(title: "Create your wish", symbol: "sparkles") {
@@ -105,7 +103,7 @@ struct InterestView: View {
     var body: some View {
         VStack(spacing: 22) {
             VStack(spacing: 9) {
-                Text("Create your wish").font(.system(.largeTitle, design: .rounded, weight: .bold)).foregroundStyle(.black).accessibilityAddTraits(.isHeader)
+                WishWordmark()
                 Text("What would you like? Choose a picture.").font(.title3).foregroundStyle(WishTheme.secondary)
             }.frame(maxWidth: .infinity)
             LazyVGrid(columns: columns, spacing: 8) {

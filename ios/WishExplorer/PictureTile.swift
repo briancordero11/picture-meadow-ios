@@ -5,24 +5,25 @@ struct PictureTile: View {
     let label: String
     var selected = false
     var compact = false
+    var backgroundColor: Color? = nil
     var action: () -> Void
 
     var body: some View {
         Button(action: action) {
-            VStack(spacing: compact ? 8 : 12) {
+            VStack(spacing: compact ? 5 : 12) {
                 Text(PictureCatalog.shared.item(label: label)?.label ?? label)
-                    .font(compact ? .system(.body, design: .rounded, weight: .bold) : .system(.title3, design: .rounded, weight: .bold))
+                    .font(compact ? .system(.callout, design: .rounded, weight: .bold) : .system(.title3, design: .rounded, weight: .bold))
                     .multilineTextAlignment(.center)
                     .foregroundStyle(.black)
                     .fixedSize(horizontal: false, vertical: true)
                 PictureSymbol(label: label)
-                    .frame(height: compact ? 72 : 105)
+                    .frame(height: compact ? 50 : 105)
                     .accessibilityHidden(true)
             }
-            .padding(compact ? 12 : 16)
-            .frame(maxWidth: .infinity, minHeight: compact ? 126 : 174)
-            .background(WishTheme.picturePeach, in: RoundedRectangle(cornerRadius: 4))
-            .overlay(RoundedRectangle(cornerRadius: 4).stroke(.black, lineWidth: selected ? 3 : 1.5))
+            .padding(compact ? 5 : 16)
+            .frame(maxWidth: .infinity, minHeight: compact ? 96 : 174)
+            .background(backgroundColor ?? WishTheme.picturePeach, in: RoundedRectangle(cornerRadius: compact ? 0 : 4))
+            .overlay(RoundedRectangle(cornerRadius: compact ? 0 : 4).stroke(.black, lineWidth: selected ? 3 : compact ? 1 : 1.5))
             .overlay(alignment: .topTrailing) {
                 if selected {
                     Image(systemName: "checkmark.circle.fill").foregroundStyle(.black, .white).padding(7).accessibilityHidden(true)

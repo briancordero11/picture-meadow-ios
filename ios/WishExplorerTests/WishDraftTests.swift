@@ -60,6 +60,28 @@ final class WishDraftTests: XCTestCase {
         }
     }
 
+    func testCoreRowsKeepPronounsActionsAndQuestionsInFamiliarColumns() {
+        let expected = [
+            ["I", "Want", "See", "Wet", "More"],
+            ["You", "Go", "Help", "Dry", "Where"],
+            ["We", "Stop", "Act", "Hot", "What"],
+            ["Watch", "Like", "Give", "Cold", "When"],
+            ["Wish", "Eat", "Meet", "Tired", "Who"],
+            ["Yes", "No / don't", "Finished", "Happy", "Why"]
+        ]
+        XCTAssertEqual(CommunicationWord.mainRows.map { $0.map(\.label) }, expected)
+        XCTAssertEqual(CommunicationWord.mainRows.prefix(3).map { $0.first?.label }, ["I", "You", "We"])
+        XCTAssertTrue(CommunicationWord.mainRows.allSatisfy { $0.count == 5 })
+    }
+
+    func testAgencyPhraseFooterHasFourAdjacentDistinctChoices() {
+        XCTAssertEqual(CommunicationWord.phraseWords.map(\.label), ["This is fun!", "Thank you!", "I need time to think", "I need a break"])
+        XCTAssertEqual(CommunicationWord.all.count, 34)
+        XCTAssertEqual(Set(CommunicationWord.all.map(\.id)).count, 34)
+        XCTAssertTrue(Set(CommunicationWord.mainRows.flatMap { $0 }.map(\.id))
+            .isDisjoint(with: Set(CommunicationWord.phraseWords.map(\.id))))
+    }
+
     @MainActor
     func testPreferencesAreNotRetainedUnlessCaregiverOptsIn() throws {
         let suite = "WishExplorerTests.\(UUID().uuidString)"

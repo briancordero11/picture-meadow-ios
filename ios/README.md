@@ -4,6 +4,10 @@ Native SwiftUI prototype, iPadOS 17 and later. The main screen presents **20 pic
 
 The source's other **34 core communication pictures** live entirely inside the pull-up drawer. The collapsed drawer leaves only a small centered rounded tab with a grabber and chevron. Tap the tab, drag it up/down, or use its accessible button action to open and close it. There is no My Voice section or quick-response toolbar. Interest nouns are not duplicated in the drawer. Stop, break, finished, and time-to-think remain available inside it. Speech uses the system speech synthesizer. No microphone permission, account, child name, photograph, health information, advertising, or analytics is requested.
 
+The compact drawer uses five stable columns and six rows, followed by four adjacent phrase tiles. I/You/We stay vertically aligned in the first column, and the original action, descriptor, and question columns remain alongside each other after removing the interest topics. Tiles have no gutters, thin dividers, 5-point internal padding, and a 96-point minimum height; text wraps with Dynamic Type and the drawer scrolls when necessary. The drawer can occupy up to 82% of the available app height. `CommunicationWord.mainRows` and `phraseWords` define the spatial arrangement and have ordering tests.
+
+`WishWordmark` supplies the blue Georgia regular **Create your wish** heading with an original drawn arch and star over “wish.” It scales with Dynamic Type, wraps to a stacked heading on narrow layouts, and has one accessible heading label. It is typeset native text and shape code, not a bitmap or the official logo. Main picture-tile type remains unchanged.
+
 `PictureTile` and `PictureSymbol` are reused on the main board and inside the drawer. `Resources/Pictures` bundles the supplied source PNG objects unchanged and the shared `picture-catalog.json`; native runtime viewports select each pictogram from its atlas. Labels are rendered outside the image. No recolored, generated, or authored cropped replacement of those supplied pictograms is included.
 
 ## Open and run on a Mac

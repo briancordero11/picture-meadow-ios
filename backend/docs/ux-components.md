@@ -46,7 +46,11 @@ The parent tile supplies the spoken/accessible name. A decorative image inside a
 
 One centered handle at the bottom of the screen opens and closes the drawer. Support both a tap and an up/down drag on that handle. Dragging is an optional convenience: opening or closing the board must never require a gesture that a child cannot perform. Provide an accessible button label and expanded/collapsed state. Keep the drawer available through the existing park journey and postcard screens.
 
-The drawer contains exactly the source board's 54 concepts **minus the 20 noun-interest pictures on the home screen**. Preserve the remaining order. This produces 34 concepts:
+The drawer contains exactly the source board's 54 concepts **minus the 20 noun-interest pictures on the home screen**. Keep familiar spatial relationships rather than flowing all words into an adaptive grid. This produces 34 concepts.
+
+The main grid has five fixed columns and six rows, with one-pixel dividers and no card gutters. `I`, `You`, and `We` share the first column; actions occupy the next two columns; descriptions and questions stay at the right. The sixth row is **Yes · No/don't · Finished · Happy · Why**. A separate touching row below holds **This is fun! · Thank you! · I need time to think · I need a break**. This arrangement removes the topic columns while preserving the remaining column relationships. The five-column arrangement remains stable on compact views; vertical scrolling and text wrapping handle limited height and larger type.
+
+For provenance, the original source rows are:
 
 | Source row | Core concepts retained in reading order |
 | --- | --- |
@@ -57,7 +61,11 @@ The drawer contains exactly the source board's 54 concepts **minus the 20 noun-i
 | 5 | wish; eat; meet; tired; who |
 | 6 | Yes; no/don’t; finished; This is fun!; Thank you!; I need time to think.; I need a break.; happy; why |
 
-These are source-row groupings for checking coverage, not new tabs or redundant categories to add to the child interface. Reuse the communication selection, phrase, speech, clear, pause, and resume behaviors already present in the app. Keep “no/don’t,” “stop,” “finished,” time to think, and a break reachable. Do not convert a refusal or request to pause into a wish choice.
+These source rows check vocabulary coverage; the compact five-column layout above defines the current display. Reuse the communication selection, phrase, speech, clear, pause, and resume behaviors already present in the app. Keep “no/don’t,” “stop,” “finished,” time to think, and a break reachable. Do not convert a refusal or request to pause into a wish choice.
+
+## `WishWordmark`
+
+“Create your wish” uses a reusable blue serif heading, with a small original arch and star above “wish” to echo the supplied Make-A-Wish lettering style. Georgia regular is used as a close visual approximation, not an assertion that it is the organization's exact typeface. Keep it one accessible heading; decorative shapes do not create extra speech stops. Picture-tile labels retain their existing childlike font.
 
 ## API boundary and verification status
 

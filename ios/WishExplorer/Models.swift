@@ -163,13 +163,18 @@ struct CommunicationWord: Identifiable {
         .init(label: "When", speech: "When?", symbol: "calendar", group: .questions),
         .init(label: "Why", speech: "Why?", symbol: "questionmark.bubble.fill", group: .questions)
     ]
-    static let all: [Self] = {
-        let sourceOrder = [
-            "I", "Want", "See", "Wet", "More", "You", "Go", "Help", "Dry", "Where",
-            "We", "Stop", "Act", "Hot", "What", "Watch", "Like", "Give", "Cold", "When",
-            "Wish", "Eat", "Meet", "Tired", "Who", "Yes", "No / don't", "Finished",
-            "This is fun!", "Thank you!", "I need time to think", "I need a break", "Happy", "Why"
+    static let mainRows: [[Self]] = {
+        let labels = [
+            ["I", "Want", "See", "Wet", "More"],
+            ["You", "Go", "Help", "Dry", "Where"],
+            ["We", "Stop", "Act", "Hot", "What"],
+            ["Watch", "Like", "Give", "Cold", "When"],
+            ["Wish", "Eat", "Meet", "Tired", "Who"],
+            ["Yes", "No / don't", "Finished", "Happy", "Why"]
         ]
-        return sourceOrder.compactMap { label in vocabulary.first { $0.label == label } }
+        return labels.map { row in row.compactMap { label in vocabulary.first { $0.label == label } } }
     }()
+    static let phraseWords: [Self] = ["This is fun!", "Thank you!", "I need time to think", "I need a break"]
+        .compactMap { label in vocabulary.first { $0.label == label } }
+    static let all: [Self] = mainRows.flatMap { $0 } + phraseWords
 }

@@ -23,6 +23,18 @@ assert raw[25] == 2, "App icon must be opaque RGB"
 models = (root / "WishExplorer/Models.swift").read_text(encoding="utf-8")
 labels = re.findall(r'\.init\(label: "([^"]+)"', models)
 assert len(labels) == len(set(labels)) == 34, "Core communication concepts must be complete and unique"
+rows_match = re.search(r"let labels = (\[.*?\n        \])", models, re.S)
+assert rows_match, "Core row declaration missing"
+core_rows = json.loads(rows_match.group(1))
+assert len(core_rows) == 6 and all(len(row) == 5 for row in core_rows)
+assert [row[0] for row in core_rows[:3]] == ["I", "You", "We"]
+phrase_match = re.search(r"static let phraseWords: \[Self\] = (\[[^\n]+\])", models)
+assert phrase_match, "Core phrase footer missing"
+core_phrases = json.loads(phrase_match.group(1))
+assert core_phrases == ["This is fun!", "Thank you!", "I need time to think", "I need a break"]
+packed_labels = [label for row in core_rows for label in row] + core_phrases
+assert len(packed_labels) == len(set(packed_labels)) == 34
+assert set(packed_labels) == set(labels)
 pictures = root / "WishExplorer/Resources/Pictures"
 manifest_path = pictures / "picture-catalog.json"
 manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
@@ -46,5 +58,6 @@ for item in manifest["items"]:
 test_count = len(re.findall(r"func test", (root / "WishExplorerTests/WishDraftTests.swift").read_text()))
 print(json.dumps({"valid_plists": len(plists), "valid_asset_catalog_files": len(assets),
                   "opaque_icon": "1024x1024", "interest_pictures": 20, "core_pictures": len(labels),
+                  "core_grid": "5 columns x 6 rows + 4 phrase tiles",
                   "unchanged_source_picture_files": len(manifest["atlases"]),
                   "native_tests_written_not_run": test_count, "swift_compiled": False}))
