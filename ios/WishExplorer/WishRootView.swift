@@ -3,6 +3,8 @@ import SwiftUI
 struct WishRootView: View {
     @EnvironmentObject private var store: WishStore
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.horizontalSizeClass) private var sizeClass
 
     var body: some View {
         GeometryReader { geometry in
@@ -41,32 +43,48 @@ struct WishRootView: View {
                 if store.isPaused { PauseView() }
             }
             .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: store.boardExpanded)
-            .sheet(isPresented: $store.caregiverPresented) { CaregiverView() }
+            .sheet(isPresented: $store.caregiverPresented, onDismiss: { store.endAdultSession() }) { AdultSettingsPortal() }
+            .sheet(isPresented: $store.privacyPresented) { PrivacyNoticeView() }
+            .onChange(of: scenePhase) { _, phase in store.handleSceneActivity(phase == .active) }
         }
     }
 
     private var header: some View {
-        HStack(spacing: 16) {
+        HStack(spacing: sizeClass == .compact ? 6 : 16) {
             if store.step != .welcome {
                 Button {
                     store.stopSpeaking()
                     store.step = store.step.previous
                 } label: {
-                    Label("Back", systemImage: "arrow.left").font(.headline).padding(14)
-                        .background(.white, in: RoundedRectangle(cornerRadius: 16))
-                        .foregroundStyle(WishTheme.blue)
+                    if sizeClass == .compact {
+                        Image(systemName: "arrow.left").font(.headline).frame(width: 44, height: 44)
+                    } else {
+                        Label("Back", systemImage: "arrow.left").font(.headline).padding(14)
+                            .background(.white, in: RoundedRectangle(cornerRadius: 16))
+                    }
                 }.buttonStyle(.plain)
+                    .foregroundStyle(WishTheme.blue).accessibilityLabel("Back")
             }
             HStack(spacing: 9) {
-                WishStar().fill(WishTheme.yellow).frame(width: 30, height: 30).accessibilityHidden(true)
-                Text("wish explorer").font(.title2.weight(.heavy)).foregroundStyle(WishTheme.ink)
+                WishStar().fill(WishTheme.yellow).frame(width: sizeClass == .compact ? 20 : 30, height: sizeClass == .compact ? 20 : 30).accessibilityHidden(true)
+                Text("wish explorer").font(sizeClass == .compact ? .headline : .title2.weight(.heavy)).foregroundStyle(WishTheme.ink)
             }.accessibilityElement(children: .combine)
             Spacer(minLength: 4)
+            Button { store.privacyPresented = true } label: {
+                if sizeClass == .compact {
+                    Image(systemName: "hand.raised").font(.headline).frame(width: 44, height: 44)
+                } else {
+                    Label("Privacy", systemImage: "hand.raised").font(.subheadline.weight(.semibold)).padding(14)
+                }
+            }.buttonStyle(.plain).foregroundStyle(WishTheme.secondary).accessibilityLabel("Privacy")
             Button { store.caregiverPresented = true } label: {
-                Label("Grown-ups", systemImage: "person.crop.circle")
-                    .font(.subheadline.weight(.semibold)).padding(14)
-            }.buttonStyle(.plain).foregroundStyle(WishTheme.secondary)
-        }.padding(.horizontal, 24).padding(.vertical, 16)
+                if sizeClass == .compact {
+                    Image(systemName: "person.crop.circle").font(.headline).frame(width: 44, height: 44)
+                } else {
+                    Label("Grown-ups", systemImage: "person.crop.circle").font(.subheadline.weight(.semibold)).padding(14)
+                }
+            }.buttonStyle(.plain).foregroundStyle(WishTheme.secondary).accessibilityLabel("Grown-ups")
+        }.padding(.horizontal, sizeClass == .compact ? 12 : 24).padding(.vertical, 16)
     }
 }
 
@@ -239,6 +257,7 @@ struct PauseView: View {
                     .font(.title2).multilineTextAlignment(.center).foregroundStyle(WishTheme.secondary)
                 PrimaryWishButton(title: "I'm ready", symbol: "play.fill") { store.isPaused = false }
                 Button("Finished for now") { store.finishSession() }.font(.headline).padding(20)
+                Button("Privacy") { store.privacyPresented = true }.font(.headline).padding(12)
             }.padding(40)
         }.accessibilityAddTraits(.isModal)
     }

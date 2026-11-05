@@ -43,7 +43,11 @@ Follow [ios/README.md](ios/README.md). Generate the project using XcodeGen, sele
 | `scripts/check-contracts.cjs` | Check native/server choice IDs and source-board vocabulary together |
 | `assets/` | Original source picture assets and the reusable picture catalog |
 | `backend/docs/ux-components.md` | Current components and the archived six-panel concept with screenshot |
+| `docs/apple-requirements-review.md` | Current Apple privacy/submission review and remaining release decisions |
+| `config/release-metadata.example.json` | Required publisher, privacy, audience, and launch-region decisions, intentionally unset |
 
 Run `node scripts/check-contracts.cjs` from the project folder to check that the native app and backend use matching selections and that the source board's 54 concepts are retained across the 20 topic tiles and 34 core communication choices. This does not compile or test SwiftUI.
 
 Source PDFs remain in the user's Downloads folder. They are not copied into the Git repository.
+
+The default app build is offline, with no child identity fields, accounts, advertising, or analytics. Privacy improvements include a native notice, adult gates, local forget controls, and per-request confirmation before optional online descriptions. Public privacy/support details, release audience/regions, distribution rights, and Mac/device verification remain open; this project is not submission-ready yet. See the release checklist before enabling a service or preparing an upload.

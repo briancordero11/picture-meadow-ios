@@ -15,7 +15,7 @@ struct WishWordmark: View {
                 wish
             }.multilineTextAlignment(.center)
         }
-        .font(.custom("Georgia", size: 40, relativeTo: .largeTitle))
+        .font(.custom("Georgia-Bold", size: 40, relativeTo: .largeTitle))
         .foregroundStyle(WishTheme.blue)
         .padding(.top, ornamentScale * 0.35)
         .accessibilityElement(children: .ignore)
@@ -28,7 +28,7 @@ struct WishWordmark: View {
             .overlay(alignment: .topLeading) {
                 GeometryReader { geometry in
                     WishWordmarkArch()
-                        .stroke(WishTheme.blue, style: StrokeStyle(lineWidth: max(1.2, ornamentScale * 0.035), lineCap: .round))
+                        .stroke(WishTheme.blue, style: StrokeStyle(lineWidth: max(1.8, ornamentScale * 0.05), lineCap: .round))
                         .frame(width: geometry.size.width * 1.12, height: ornamentScale * 0.45)
                         .offset(x: -geometry.size.width * 0.06, y: -ornamentScale * 0.26)
                     WishStar().fill(WishTheme.blue)

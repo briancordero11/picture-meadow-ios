@@ -21,6 +21,8 @@ jobs:
         working-directory: backend
       - name: Check native and server choice consistency
         run: node scripts/check-contracts.cjs
+      - name: Verify release metadata gate
+        run: python3 -m unittest discover -s scripts -p test_release_metadata.py
 
   native-ipad:
     runs-on: macos-latest

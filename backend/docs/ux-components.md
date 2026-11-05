@@ -65,7 +65,7 @@ These source rows check vocabulary coverage; the compact five-column layout abov
 
 ## `WishWordmark`
 
-“Create your wish” uses a reusable blue serif heading, with a small original arch and star above “wish” to echo the supplied Make-A-Wish lettering style. Georgia regular is used as a close visual approximation, not an assertion that it is the organization's exact typeface. Keep it one accessible heading; decorative shapes do not create extra speech stops. Picture-tile labels retain their existing childlike font.
+“Create your wish” uses a reusable bold blue serif heading, with a small original arch and star above “wish” to echo the supplied Make-A-Wish lettering style. Georgia Bold is a visual approximation, not an assertion that it is the organization's exact typeface. Keep it one accessible heading; decorative shapes do not create extra speech stops. Picture-tile labels retain their existing childlike font.
 
 ## API boundary and verification status
 

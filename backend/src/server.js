@@ -19,31 +19,55 @@ export function parseAllowedOrigins(value = '') {
   });
 }
 
-function createRateLimiter({ windowMs = 60_000, maxRequests = 60, maxClients = 10_000 } = {}, now = Date.now) {
+// Exported for aggregate retention/lifecycle verification, not exposed by an HTTP endpoint.
+export function createRateLimiter({ windowMs = 60_000, maxRequests = 60, maxClients = 10_000 } = {}, now = Date.now) {
   for (const value of [windowMs, maxRequests, maxClients]) {
     if (!Number.isSafeInteger(value) || value < 1) throw new Error('Rate limit options must be positive integers.');
   }
   const clients = new Map();
-  let nextSweepAt = 0;
-  return key => {
-    const time = now();
-    if (time >= nextSweepAt || clients.size >= maxClients) {
-      for (const [client, entry] of clients) if (entry.resetAt <= time) clients.delete(client);
-      nextSweepAt = time + Math.min(windowMs, 60_000);
-    }
-    let entry = clients.get(key);
-    if (!entry) {
-      if (clients.size >= maxClients) throw new HTTPError(503, 'temporarily_unavailable', 'Please try again shortly.');
-      entry = { count: 0, resetAt: time + windowMs };
-      clients.set(key, entry);
-    }
-    entry.count += 1;
-    return {
-      allowed: entry.count <= maxRequests,
-      limit: maxRequests,
-      remaining: Math.max(0, maxRequests - entry.count),
-      retryAfter: Math.max(1, Math.ceil((entry.resetAt - time) / 1000)),
-    };
+  const cleanupIntervalMs = Math.min(windowMs, 1_000);
+  let timer;
+  let disposed = false;
+  const sweep = (time = now()) => {
+    for (const [client, entry] of clients) if (entry.resetAt <= time) clients.delete(client);
+  };
+  return {
+    start() {
+      if (timer || disposed) return;
+      // Expired addresses must be deleted even when no more API calls arrive.
+      timer = setInterval(sweep, cleanupIntervalMs);
+      timer.unref();
+    },
+    dispose() {
+      disposed = true;
+      clearInterval(timer);
+      timer = undefined;
+      clients.clear();
+    },
+    get retainedClientCount() { return clients.size; },
+    check(key) {
+      if (disposed) throw new HTTPError(503, 'temporarily_unavailable', 'Please try again shortly.');
+      const time = now();
+      let entry = clients.get(key);
+      if (entry && entry.resetAt <= time) {
+        clients.delete(key);
+        entry = undefined;
+      }
+      if (!entry) {
+        // Reclaim expired entries before enforcing the bounded address capacity.
+        if (clients.size >= maxClients) sweep(time);
+        if (clients.size >= maxClients) throw new HTTPError(503, 'temporarily_unavailable', 'Please try again shortly.');
+        entry = { count: 0, resetAt: time + windowMs };
+        clients.set(key, entry);
+      }
+      entry.count += 1;
+      return {
+        allowed: entry.count <= maxRequests,
+        limit: maxRequests,
+        remaining: Math.max(0, maxRequests - entry.count),
+        retryAfter: Math.max(1, Math.ceil((entry.resetAt - time) / 1000)),
+      };
+    },
   };
 }
 
@@ -116,7 +140,7 @@ export function createWishServer({ allowedOrigins = [], bodyLimitBytes = 2_048, 
     throw new Error('bodyLimitBytes must be an integer between 128 and 65536.');
   }
   const origins = new Set(parseAllowedOrigins(allowedOrigins.join(',')));
-  const checkRate = createRateLimiter(rateLimit, now);
+  const limiter = createRateLimiter(rateLimit, now);
   const server = createServer(async (request, response) => {
     response.setHeader('Content-Type', 'application/json; charset=utf-8');
     response.setHeader('Cache-Control', 'no-store');
@@ -161,7 +185,7 @@ export function createWishServer({ allowedOrigins = [], bodyLimitBytes = 2_048, 
         return;
       }
       // Do not trust client-controlled X-Forwarded-For. See deployment notes for proxies.
-      const rate = checkRate(request.socket.remoteAddress ?? 'unknown');
+      const rate = limiter.check(request.socket.remoteAddress ?? 'unknown');
       response.setHeader('X-RateLimit-Limit', String(rate.limit));
       response.setHeader('X-RateLimit-Remaining', String(rate.remaining));
       if (!rate.allowed) {
@@ -183,6 +207,8 @@ export function createWishServer({ allowedOrigins = [], bodyLimitBytes = 2_048, 
       } else send(500, { error: { code: 'internal_error', message: 'The preview could not be created. Please try again.' } });
     }
   });
+  server.once('listening', () => limiter.start());
+  server.once('close', () => limiter.dispose());
   server.requestTimeout = 10_000;
   server.headersTimeout = 5_000;
   server.keepAliveTimeout = 5_000;

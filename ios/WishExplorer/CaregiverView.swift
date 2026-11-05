@@ -4,6 +4,8 @@ struct CaregiverView: View {
     @EnvironmentObject private var store: WishStore
     @Environment(\.dismiss) private var dismiss
     @State private var confirmingReset = false
+    @State private var onlineDisclosure: OnlinePreviewDisclosure?
+    @State private var privacyPresented = false
 
     var body: some View {
         NavigationStack {
@@ -21,9 +23,9 @@ struct CaregiverView: View {
                 }
                 Section("Optional online description") {
                     Text("Your wish picture already works offline. Refreshing the description sends only park, color, and animal ideas to the configured service. It does not send the talking-board sentence or a child's identity. The picture continues to be drawn on this iPad.")
-                    if WishAPIClient.isConfigured {
+                    if store.onlinePreviewAvailable {
                         Button {
-                            Task { await store.requestRemotePreview() }
+                            onlineDisclosure = store.prepareOnlinePreview()
                         } label: {
                             HStack {
                                 Text(store.isLoadingPreview ? "Refreshing description…" : "Refresh this wish's description")
@@ -35,9 +37,14 @@ struct CaregiverView: View {
                                 .font(.footnote).foregroundStyle(.secondary)
                         }
                     } else {
-                        Text("This prototype is in offline mode.").foregroundStyle(.secondary)
+                        Text("Online descriptions are disabled or unconfigured in this build. The wish picture works offline.").foregroundStyle(.secondary)
                     }
                     if let status = store.remoteStatus { Text(status) }
+                }
+                Section("Privacy") {
+                    Button("Read privacy notice") { privacyPresented = true }
+                    Text("Grown-up access lasts only while these settings are open and the app stays active. Each online request needs its own confirmation.")
+                        .font(.footnote).foregroundStyle(.secondary)
                 }
                 Section("About this prototype") {
                     Text("Wish Explorer is an independent exploration prototype inspired by the reference wish materials. It is not an official Make-A-Wish app and does not submit a wish, determine eligibility, promise a trip, or arrange care.")
@@ -46,6 +53,8 @@ struct CaregiverView: View {
             }
             .navigationTitle("For grown-ups")
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
+            .sheet(item: $onlineDisclosure) { disclosure in OnlinePreviewConsentView(disclosure: disclosure) }
+            .sheet(isPresented: $privacyPresented) { PrivacyNoticeView() }
             .confirmationDialog("Start a fresh wish?", isPresented: $confirmingReset, titleVisibility: .visible) {
                 Button("Clear choices and start again", role: .destructive) { store.reset(); dismiss() }
                 Button("Keep my choices", role: .cancel) { }

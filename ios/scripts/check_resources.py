@@ -55,9 +55,23 @@ for item in manifest["items"]:
     atlas, frame = manifest["atlases"][item["atlas"]], item["frame"]
     assert min(frame.values()) >= 0 and frame["width"] > 0 and frame["height"] > 0
     assert frame["x"] + frame["width"] <= atlas["width"] and frame["y"] + frame["height"] <= atlas["height"]
-test_count = len(re.findall(r"func test", (root / "WishExplorerTests/WishDraftTests.swift").read_text()))
+test_files = list((root / "WishExplorerTests").glob("*Tests.swift"))
+test_count = sum(len(re.findall(r"func test", file.read_text(encoding="utf-8"))) for file in test_files)
+info = plistlib.loads(plists[0].read_bytes())
+for info_key, build_key in {
+    "WishAPIBaseURL": "WISH_API_BASE_URL", "WishOnlinePreviewEnabled": "WISH_ONLINE_PREVIEW_ENABLED",
+    "WishPublisherName": "WISH_PUBLISHER_NAME", "WishSupportEmail": "WISH_SUPPORT_EMAIL",
+    "WishPrivacyPolicyURL": "WISH_PRIVACY_POLICY_URL", "WishSupportURL": "WISH_SUPPORT_URL"
+}.items():
+    assert info[info_key] == "$(" + build_key + ")"
+    assert re.search(r"^    " + build_key + r":", (root / "project.yml").read_text(), re.M)
+privacy = plistlib.loads(plists[1].read_bytes())
+assert privacy["NSPrivacyTracking"] is False
+assert privacy["NSPrivacyCollectedDataTypes"] == []
+assert privacy["NSPrivacyAccessedAPITypes"] == [{"NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryUserDefaults", "NSPrivacyAccessedAPITypeReasons": ["CA92.1"]}]
 print(json.dumps({"valid_plists": len(plists), "valid_asset_catalog_files": len(assets),
                   "opaque_icon": "1024x1024", "interest_pictures": 20, "core_pictures": len(labels),
                   "core_grid": "5 columns x 6 rows + 4 phrase tiles",
                   "unchanged_source_picture_files": len(manifest["atlases"]),
+                  "native_test_files": len(test_files), "build_metadata_bindings": 6,
                   "native_tests_written_not_run": test_count, "swift_compiled": False}))

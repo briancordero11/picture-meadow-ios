@@ -9,6 +9,8 @@ final class WishStore: ObservableObject {
     @Published var phrase: [String] = []
     @Published var isPaused = false
     @Published var caregiverPresented = false
+    @Published var privacyPresented = false
+    @Published private(set) var adultSessionActive = false
     @Published var readChoicesAloud: Bool {
         didSet { defaults.set(readChoicesAloud, forKey: Self.speechKey) }
     }
@@ -22,14 +24,26 @@ final class WishStore: ObservableObject {
     @Published var remoteStatus: String?
     @Published var isLoadingPreview = false
 
+    let configuration: WishBuildConfiguration
+    private let previewService: any WishPreviewServicing
+    private var pendingOnlineDisclosure: OnlinePreviewDisclosure?
+    private var onlineTask: Task<Void, Never>?
+    private var activeOnlineRequestID: UUID?
+    private var authorizationEpoch = UUID()
+    private var sceneIsActive = true
+
     private let defaults: UserDefaults
     private let synthesizer = AVSpeechSynthesizer()
     private static let draftKey = "wish-explorer.preferences.v1"
     private static let speechKey = "wish-explorer.speech.v1"
     private static let rememberKey = "wish-explorer.remember.v1"
 
-    init(defaults: UserDefaults = .standard) {
+    init(defaults: UserDefaults = .standard,
+         configuration: WishBuildConfiguration = .current,
+         previewService: (any WishPreviewServicing)? = nil) {
         self.defaults = defaults
+        self.configuration = configuration
+        self.previewService = previewService ?? WishAPIClient(configuration: configuration)
         readChoicesAloud = defaults.object(forKey: Self.speechKey) as? Bool ?? true
         let shouldRemember = defaults.bool(forKey: Self.rememberKey)
         rememberChoices = shouldRemember
@@ -98,6 +112,7 @@ final class WishStore: ObservableObject {
         boardExpanded = false
         isPaused = false
         step = .welcome
+        phrase = []
     }
 
     func skipDestination() {
@@ -120,6 +135,7 @@ final class WishStore: ObservableObject {
     }
 
     func reset() {
+        cancelNetworkWork()
         stopSpeaking()
         draft = WishDraft()
         defaults.removeObject(forKey: Self.draftKey)
@@ -131,24 +147,106 @@ final class WishStore: ObservableObject {
     }
 
     func invalidatePreview() {
+        cancelNetworkWork()
         remoteDescription = nil
         remoteStatus = nil
     }
 
-    func requestRemotePreview() async {
-        guard draft.canRequestRemotePreview, !isLoadingPreview else { return }
-        let snapshot = draft
+    func beginAdultSession() {
+        guard caregiverPresented, sceneIsActive else { return }
+        endAdultSession()
+        adultSessionActive = true
+    }
+
+    func endAdultSession() {
+        adultSessionActive = false
+        authorizationEpoch = UUID()
+        cancelNetworkWork()
+    }
+
+    func handleSceneActivity(_ isActive: Bool) {
+        sceneIsActive = isActive
+        if !isActive {
+            endAdultSession()
+            caregiverPresented = false
+            phrase = []
+            stopSpeaking()
+        }
+    }
+
+    func forgetAllChoices() {
+        rememberChoices = false
+        readChoicesAloud = true
+        defaults.removeObject(forKey: Self.rememberKey)
+        defaults.removeObject(forKey: Self.speechKey)
+        reset()
+        endAdultSession()
+        caregiverPresented = false
+    }
+
+    var onlinePreviewAvailable: Bool { configuration.onlinePreviewAvailable }
+
+    func prepareOnlinePreview() -> OnlinePreviewDisclosure? {
+        guard adultSessionActive, sceneIsActive, configuration.onlinePreviewAvailable,
+              draft.canRequestRemotePreview, !isLoadingPreview,
+              let host = configuration.apiBaseURL?.host else { return nil }
+        let disclosure = OnlinePreviewDisclosure(id: UUID(), draft: draft, serviceHost: host)
+        pendingOnlineDisclosure = disclosure
+        return disclosure
+    }
+
+    func cancelOnlineConfirmation(_ id: UUID) {
+        if pendingOnlineDisclosure?.id == id { pendingOnlineDisclosure = nil }
+    }
+
+    @discardableResult
+    func confirmOnlinePreview(_ id: UUID) -> Bool {
+        guard adultSessionActive, sceneIsActive, configuration.onlinePreviewAvailable,
+              !isLoadingPreview, let disclosure = pendingOnlineDisclosure,
+              disclosure.id == id, disclosure.draft == draft else { return false }
+        pendingOnlineDisclosure = nil
+        activeOnlineRequestID = id
         isLoadingPreview = true
-        defer { isLoadingPreview = false }
+        let epoch = authorizationEpoch
+        onlineTask = Task { [weak self] in
+            guard let self else { return }
+            await self.performOnlinePreview(disclosure, epoch: epoch)
+        }
+        return true
+    }
+
+    private func performOnlinePreview(_ disclosure: OnlinePreviewDisclosure, epoch: UUID) async {
+        defer {
+            if activeOnlineRequestID == disclosure.id {
+                activeOnlineRequestID = nil
+                isLoadingPreview = false
+                onlineTask = nil
+            }
+        }
+        guard !Task.isCancelled, adultSessionActive, sceneIsActive,
+              authorizationEpoch == epoch, activeOnlineRequestID == disclosure.id,
+              draft == disclosure.draft else { return }
         do {
-            let preview = try await WishAPIClient().createPreview(for: snapshot)
-            guard draft == snapshot else { return }
+            let preview = try await previewService.createPreview(for: disclosure.draft)
+            guard !Task.isCancelled, adultSessionActive, sceneIsActive,
+                  authorizationEpoch == epoch, activeOnlineRequestID == disclosure.id,
+                  draft == disclosure.draft else { return }
             remoteDescription = preview.description
             remoteStatus = "Wish description refreshed. Your picture stays on this iPad."
         } catch {
-            guard draft == snapshot else { return }
+            guard !Task.isCancelled, adultSessionActive, sceneIsActive,
+                  authorizationEpoch == epoch, activeOnlineRequestID == disclosure.id,
+                  draft == disclosure.draft else { return }
             remoteStatus = "Your wish is still here. The online description is unavailable; your picture works offline."
         }
+    }
+
+    private func cancelNetworkWork() {
+        pendingOnlineDisclosure = nil
+        onlineTask?.cancel()
+        onlineTask = nil
+        activeOnlineRequestID = nil
+        isLoadingPreview = false
     }
 
     private func saveDraft() {

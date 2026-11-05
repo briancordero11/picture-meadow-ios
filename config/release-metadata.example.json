@@ -1,0 +1,25 @@
+{
+  "publisherName": "",
+  "supportEmail": "",
+  "privacyPolicyURL": "",
+  "supportURL": "",
+  "onlinePreviewEnabled": false,
+  "apiBaseURL": "",
+  "audience": {
+    "kidsCategory": null,
+    "kidsAgeBand": "",
+    "minimumAge": null,
+    "maximumAge": null,
+    "launchCountries": []
+  },
+  "reviewed": {
+    "privacyPolicy": false,
+    "appPrivacyAnswers": false,
+    "ageAssuranceForLaunchRegions": false,
+    "parentalGateWithTargetAudience": false,
+    "brandAndArtworkRights": false,
+    "nativeDeviceTesting": false,
+    "archivePrivacyManifest": false,
+    "backendAndHostingRetention": false
+  }
+}

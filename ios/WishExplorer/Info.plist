@@ -19,4 +19,9 @@
     <string>UIInterfaceOrientationLandscapeLeft</string><string>UIInterfaceOrientationLandscapeRight</string>
   </array>
   <key>WishAPIBaseURL</key><string>$(WISH_API_BASE_URL)</string>
+  <key>WishOnlinePreviewEnabled</key><string>$(WISH_ONLINE_PREVIEW_ENABLED)</string>
+  <key>WishPublisherName</key><string>$(WISH_PUBLISHER_NAME)</string>
+  <key>WishSupportEmail</key><string>$(WISH_SUPPORT_EMAIL)</string>
+  <key>WishPrivacyPolicyURL</key><string>$(WISH_PRIVACY_POLICY_URL)</string>
+  <key>WishSupportURL</key><string>$(WISH_SUPPORT_URL)</string>
 </dict></plist>

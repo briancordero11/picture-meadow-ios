@@ -16,6 +16,11 @@ settings:
     CURRENT_PROJECT_VERSION: 1
     GENERATE_INFOPLIST_FILE: NO
     WISH_API_BASE_URL: ""
+    WISH_ONLINE_PREVIEW_ENABLED: "NO"
+    WISH_PUBLISHER_NAME: ""
+    WISH_SUPPORT_EMAIL: ""
+    WISH_PRIVACY_POLICY_URL: ""
+    WISH_SUPPORT_URL: ""
 targets:
   WishExplorer:
     type: application
