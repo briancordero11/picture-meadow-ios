@@ -47,10 +47,13 @@ def validate(metadata):
     if audience.get("kidsCategory") is True and audience.get("kidsAgeBand") not in {"5-and-under", "6-8", "9-11"}:
         problems.append("Choose the Kids Category age band: 5-and-under, 6-8, or 9-11.")
     low, high = audience.get("minimumAge"), audience.get("maximumAge")
-    if any(isinstance(age, bool) or not isinstance(age, (int, float)) for age in (low, high)) or not 0 <= low <= high <= 120:
+    valid_low = not isinstance(low, bool) and isinstance(low, (int, float)) and 0 <= low <= 120
+    # Once a minimum is specified, null maximum means an open-ended age range.
+    valid_high = "maximumAge" in audience and (high is None or (not isinstance(high, bool) and isinstance(high, (int, float)) and valid_low and low <= high <= 120))
+    if not valid_low or not valid_high:
         problems.append("Specify the intended audience age range.")
-    elif audience.get("kidsCategory") is True and high > 11:
-        problems.append("Review the Kids Category choice against an audience range extending above age 11.")
+    elif audience.get("kidsCategory") is True and (high is None or high > 11):
+        problems.append("Review the Kids Category choice against an audience range extending above age 11 or having no upper age limit.")
     countries = audience.get("launchCountries")
     if not isinstance(countries, list) or not countries or any(not isinstance(code, str) or not re.fullmatch(r"[A-Z]{2}", code) or code in {"XX", "ZZ"} for code in countries):
         problems.append("Choose actual launch countries using two-letter country codes; verify availability in App Store Connect.")

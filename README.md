@@ -45,10 +45,10 @@ Follow [ios/README.md](ios/README.md). Generate the project using XcodeGen, sele
 | `backend/docs/ux-components.md` | Current components and the archived six-panel concept with screenshot |
 | `docs/apple-requirements-review.md` | Current Apple privacy/submission review and remaining release decisions |
 | `docs/white-label-distribution.md` | Business-published first release and options for later client distribution |
-| `config/release-metadata.example.json` | U.S. launch recorded; publisher, privacy, and age decisions remain unset |
+| `config/release-metadata.example.json` | U.S. launch and stated ages 2–17+ recorded; publisher, privacy, and Kids Category decisions remain unset |
 
 Run `node scripts/check-contracts.cjs` from the project folder to check that the native app and backend use matching selections and that the source board's 54 concepts are retained across the 20 topic tiles and 34 core communication choices. This does not compile or test SwiftUI.
 
 Source PDFs remain in the user's Downloads folder. They are not copied into the Git repository.
 
-The default app build is offline, with no child identity fields, accounts, advertising, or analytics. Privacy improvements include a native notice, adult gates, local forget controls, and per-request confirmation before optional online descriptions. The owner confirmed a U.S. launch and business publishing account; the exact legal publisher, public privacy/support details, target ages, distribution rights, and Mac/device verification remain open. This project is not submission-ready yet. See the release checklist before enabling a service or preparing an upload.
+The default app build is offline, with no child identity fields, accounts, advertising, or analytics. Privacy improvements include a native notice, adult gates, local forget controls, and per-request confirmation before optional online descriptions. The owner confirmed a U.S. launch under a separate LLC and stated ages **2–17+**. The release record uses minimum age 2 and an open-ended maximum (`null`); this is an audience plan, not Apple's content age rating. Exact legal publisher name, public email/policy/support pages, Kids Category approach, distribution rights, and Mac/device verification remain open. This project is not submission-ready yet. See the release checklist before enabling a service or preparing an upload.

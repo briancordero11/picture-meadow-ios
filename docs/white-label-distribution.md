@@ -1,10 +1,10 @@
 # White-label distribution plan
 
-Reviewed November 5, 2026 using primary Apple sources. The user confirmed a US, business-published product. Exact legal publisher name, support email, final brand, intended ages/Kids Category choice, and published privacy URL remain pending. This plan is an engineering recommendation, not Apple approval or a legal determination. No additional app records, Bundle IDs, or publications have been created.
+Reviewed November 5, 2026 using primary Apple sources. The user confirmed a **US product published by a separate, independent LLC, not CanaClaw**. The LLC's exact legal name is unspecified; there is no public business email or published privacy-policy URL yet. The intended audience is exactly **"2 - 17+"**, with no inferred upper age cap. That span crosses Kids Category bands and extends to older users; category/content-rating decisions require deliberate review. Final brand also remains pending. This plan is an engineering recommendation, not Apple approval or a legal determination. No additional app records, Bundle IDs, or publications have been created.
 
 ## Initial recommendation
 
-Build **one app published by the user's business**, with configuration for organization name, approved artwork, colors, support details, and permitted wish content. Keep one product identity and one maintained codebase. If multiple organizations are later represented, use clearly identified organization profiles within that product rather than automatically producing a public app clone for each customer. This recommendation is an inference from the constraints below.
+Build **one app published by the user's independent LLC**, with configuration for organization name, approved artwork, colors, support details, and permitted wish content. Keep one product identity and one maintained codebase. If multiple organizations are later represented, use clearly identified organization profiles within that product rather than automatically producing a public app clone for each customer. This recommendation is an inference from the constraints below.
 
 | Route | Practical constraint | Decision for this project |
 | --- | --- | --- |
@@ -24,6 +24,8 @@ Public distribution reaches consumers in selected storefronts; private distribut
 ## Configuration and release boundaries
 
 The current native app supports per-build publisher name, support email, policy/support URLs, and optional API settings. Its display name, blue wordmark, icon, and prototype Bundle ID are still fixed. Customer-specific branding, organization profiles, and separate client products are future work; this plan does not claim that a complete white-label system already exists.
+
+The release record preserves the audience as `statedAgeRange: "2–17+"`, `minimumAge: 2`, `maximumAge: null`. The null upper bound is an explicit open-ended range; it does not select a Kids Category band or imply an age cap.
 
 - Keep publisher identity separate from a customer's displayed brand. Do not silently replace the accountable operator with an organization profile.
 - Keep the child's communication experience independent of branding. Customer configuration must not remove privacy controls, the adult gate, offline access, or essential communication words.

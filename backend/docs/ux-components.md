@@ -67,6 +67,10 @@ These source rows check vocabulary coverage; the compact five-column layout abov
 
 “Create your wish” uses a reusable bold blue serif heading, with a small original arch and star above “wish” to echo the supplied Make-A-Wish lettering style. Georgia Bold is a visual approximation, not an assertion that it is the organization's exact typeface. Keep it one accessible heading; decorative shapes do not create extra speech stops. Picture-tile labels retain their existing childlike font.
 
+## Star settings button
+
+A yellow star in the top-right corner opens the existing grown-up settings through the adult reading check. The native `SettingsStarButton` provides a 48-point tap target, the accessible name **Settings**, and a hint explaining that it opens grown-up settings. Keep this action distinct from the decorative star in the heading. The native Privacy action remains available separately. The browser concept also shows the star, a reading check, choice narration, and a confirmed fresh-wish action; it does not reproduce every native settings option.
+
 ## API boundary and verification status
 
 This is a client UI/component revision. The backend endpoints and tests are unchanged. In particular, `/v1/catalog` still exposes the earlier verb taxonomy for compatibility; it does not supply the revised home board or the drawer's 34-word composition. The app owns that screen definition. `amusement-park` maps to `categoryId: "go"` only when entering the existing park flow; it is not itself a valid backend `categoryId`.

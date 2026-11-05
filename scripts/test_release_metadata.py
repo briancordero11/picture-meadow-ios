@@ -27,6 +27,8 @@ class ReleaseMetadataTests(unittest.TestCase):
         self.assertTrue(any("publisher" in problem for problem in problems))
         self.assertEqual(example["audience"]["launchCountries"], ["US"])
         self.assertFalse(any("launch countries" in problem for problem in problems))
+        self.assertEqual(example["audience"]["minimumAge"], 2)
+        self.assertIsNone(example["audience"]["maximumAge"])
 
     def test_offline_record_still_requires_completed_reviews(self):
         record = self.valid_record()
@@ -58,6 +60,16 @@ class ReleaseMetadataTests(unittest.TestCase):
         record = self.valid_record()
         record["onlinePreviewEnabled"] = "NO"
         self.assertTrue(any("Explicitly choose" in problem for problem in module.validate(record)))
+
+    def test_open_ended_audience_still_needs_category_review(self):
+        record = self.valid_record()
+        record["audience"].update(kidsCategory=False, kidsAgeBand="", minimumAge=2, maximumAge=None)
+        self.assertEqual(module.validate(record), [])
+        record["audience"]["kidsCategory"] = True
+        record["audience"]["kidsAgeBand"] = "5-and-under"
+        self.assertTrue(any("no upper age limit" in problem for problem in module.validate(record)))
+        del record["audience"]["maximumAge"]
+        self.assertIn("Specify the intended audience age range.", module.validate(record))
 
 
 if __name__ == "__main__":

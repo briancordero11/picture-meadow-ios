@@ -2,7 +2,7 @@
 
 Status: development starter, not uploaded, signed, or device-validated.
 
-Confirmed release direction: United States, published under the owner's business, with future white-label versions planned. The legal business name, public email, published policy/support pages, and target child ages are still unconfirmed. See [white-label distribution](white-label-distribution.md) before choosing public client apps or private Custom Apps; no Apple account enrollment or App Store Connect availability has been verified.
+Confirmed release direction: United States, published by a **separate, independent LLC, not CanaClaw**, with future white-label versions planned. The LLC's exact legal name is unspecified, and there is no public business email or published privacy-policy URL yet. The intended audience is exactly **"2 - 17+"**; no upper age cap is inferred. This broad span crosses Kids Category bands and extends to older users, so Kids Category must be reviewed deliberately rather than selected automatically. See [white-label distribution](white-label-distribution.md) before choosing public client apps or private Custom Apps; no Apple account enrollment or App Store Connect availability has been verified.
 
 Privacy review: [Apple requirements](apple-requirements-review.md), [service data-flow audit](backend-privacy-review.md), and [unfinished policy draft](privacy-policy-draft.html). Native source now includes a readable privacy notice, adult gates, per-request online confirmation, opt-in local retention/forget controls, and temporary HTTPS-only networking. The backend's IP limiter now expires idle entries. Native runtime verification is still pending.
 
@@ -17,7 +17,7 @@ Privacy review: [Apple requirements](apple-requirements-review.md), [service dat
 
 ## Signing and TestFlight
 
-- [ ] Choose the final app name, bundle ID, and Apple development team.
+- [ ] Choose the final app name, bundle ID, and verified Apple development team for the independent LLC; obtain its exact legal name.
 - [ ] Create the corresponding App Store Connect app and signing configuration.
 - [ ] Archive, validate, and upload from Xcode; complete export-compliance questions based on the final build.
 - [ ] Supply beta description, review notes, feedback contact, and tester groups. Do not add external testers until the build is ready for their use and Apple's required review is complete.
@@ -27,8 +27,8 @@ Privacy review: [Apple requirements](apple-requirements-review.md), [service dat
 
 - [ ] Finalize approved visual branding and a release icon; do not imply organizational endorsement without agreement.
 - [ ] Publish the actual privacy policy and support contact, complete App Privacy answers against the final binary and hosting behavior, and verify the included privacy manifest.
-- [ ] Decide the appropriate age rating and whether the app will be placed in the Kids Category; implement and validate any requirements that follow from that choice.
-- [ ] Confirm audience ages and resolve current U.S. state age-assurance, parental-consent, and significant-update obligations for the U.S. launch. Do not substitute the reading gate for legal parental consent or assume a low content rating resolves this. Reassess before expanding to another country.
+- [ ] Decide the content age rating and Kids Category treatment for the declared **"2 - 17+"** audience. The span includes multiple Kids bands and older users; do not assign a single Kids band automatically or invent an upper age cap. Implement and validate the resulting requirements.
+- [ ] Review the declared audience and resolve current U.S. state age-assurance, parental-consent, and significant-update obligations for the U.S. launch. Do not substitute the reading gate for legal parental consent or assume a low content rating resolves this. Reassess before expanding to another country.
 - [ ] Confirm offline-only versus online release. The current native build has online descriptions explicitly disabled. Enabling a server requires reviewing IP retention, hosting logs, operator/vendor disclosures, and the final App Privacy answers.
 - [ ] Complete the remaining wish routes and evaluate retaining multiple ideas, including a local idea.
 - [ ] If using a hosted backend, deploy behind HTTPS with appropriate edge rate limits, restricted operational access, retention controls, and incident procedures. Confirm no wish payloads enter infrastructure logs.
@@ -47,7 +47,7 @@ Recheck these requirements before a real upload; they change independently of th
 
 ## Check the release record
 
-Copy `config/release-metadata.example.json` to ignored `config/release-metadata.local.json`, enter the real decisions, and record the reviews that have actually been completed. The example records the confirmed `US` storefront; this file does not change App Store Connect availability. Then run:
+Copy `config/release-metadata.example.json` to ignored `config/release-metadata.local.json`, enter the real decisions, and record the reviews that have actually been completed. The example records the confirmed `US` storefront and the audience as `statedAgeRange: "2–17+"`, `minimumAge: 2`, `maximumAge: null`. Null means the upper age is explicitly open-ended, not missing or capped at 17. The Kids Category decision still needs deliberate review for this span. This file does not change App Store Connect availability. Then run:
 
 ```powershell
 python scripts/check-release-metadata.py config/release-metadata.local.json --check-public-links

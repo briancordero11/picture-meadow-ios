@@ -77,14 +77,28 @@ struct WishRootView: View {
                     Label("Privacy", systemImage: "hand.raised").font(.subheadline.weight(.semibold)).padding(14)
                 }
             }.buttonStyle(.plain).foregroundStyle(WishTheme.secondary).accessibilityLabel("Privacy")
-            Button { store.caregiverPresented = true } label: {
-                if sizeClass == .compact {
-                    Image(systemName: "person.crop.circle").font(.headline).frame(width: 44, height: 44)
-                } else {
-                    Label("Grown-ups", systemImage: "person.crop.circle").font(.subheadline.weight(.semibold)).padding(14)
-                }
-            }.buttonStyle(.plain).foregroundStyle(WishTheme.secondary).accessibilityLabel("Grown-ups")
+            SettingsStarButton { store.caregiverPresented = true }
         }.padding(.horizontal, sizeClass == .compact ? 12 : 24).padding(.vertical, 16)
+    }
+}
+
+private struct SettingsStarButton: View {
+    var action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            WishStar().fill(WishTheme.yellow)
+                .overlay(WishStar().stroke(WishTheme.ink, lineWidth: 1.5))
+                .frame(width: 32, height: 32)
+                .rotationEffect(.degrees(-8))
+                .frame(width: 48, height: 48)
+                .background(.white, in: Circle())
+                .contentShape(Rectangle())
+                .accessibilityHidden(true)
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("Settings")
+        .accessibilityHint("Open grown-up settings")
     }
 }
 
