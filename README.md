@@ -40,6 +40,7 @@ Follow [ios/README.md](ios/README.md). Generate the project using XcodeGen, sele
 | `docs/reference-map.md` | Source mapping and design decisions |
 | `docs/architecture.md` | Data flow and boundaries |
 | `docs/release-checklist.md` | Work required for TestFlight and public release |
+| `docs/ios-readiness-benchmark.md` | Evidence from the November 8 audit and pass/fail gates for native and release readiness |
 | `scripts/check-contracts.cjs` | Check native/server choice IDs and source-board vocabulary together |
 | `assets/` | Original source picture assets and the reusable picture catalog |
 | `backend/docs/ux-components.md` | Current components and the archived six-panel concept with screenshot |
