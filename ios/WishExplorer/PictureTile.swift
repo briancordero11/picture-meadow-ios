@@ -22,8 +22,8 @@ struct PictureTile: View {
             }
             .padding(compact ? 5 : 16)
             .frame(maxWidth: .infinity, minHeight: compact ? 96 : 174)
-            .background(backgroundColor ?? WishTheme.picturePeach, in: RoundedRectangle(cornerRadius: compact ? 0 : 4))
-            .overlay(RoundedRectangle(cornerRadius: compact ? 0 : 4).stroke(.black, lineWidth: selected ? 3 : compact ? 1 : 1.5))
+            .background(backgroundColor ?? WishTheme.picturePeach, in: RoundedRectangle(cornerRadius: compact ? 12 : 4))
+            .overlay(RoundedRectangle(cornerRadius: compact ? 12 : 4).stroke(.black, lineWidth: selected ? 3 : compact ? 1 : 1.5))
             .overlay(alignment: .topTrailing) {
                 if selected {
                     Image(systemName: "checkmark.circle.fill").foregroundStyle(.black, .white).padding(7).accessibilityHidden(true)

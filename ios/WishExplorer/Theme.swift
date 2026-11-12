@@ -1,6 +1,7 @@
 import SwiftUI
 
 enum WishTheme {
+    static let launchBlue = Color("LaunchBackground")
     static let ink = Color(red: 0.09, green: 0.18, blue: 0.31)
     static let blue = Color(red: 0.03, green: 0.34, blue: 0.75)
     static let sky = Color(red: 0.91, green: 0.96, blue: 1)

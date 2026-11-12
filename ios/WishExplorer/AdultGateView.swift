@@ -27,12 +27,21 @@ struct AdultGateChallenge: Equatable {
 
 struct AdultGateView: View {
     let purpose: String
+    let showsPrivacyNotice: Bool
     var onSuccess: () -> Void
     @Environment(\.dismiss) private var dismiss
     @Environment(\.scenePhase) private var scenePhase
     @State private var challenge = AdultGateChallenge()
     @State private var answer = ""
     @State private var incorrect = false
+    @State private var privacyPresented = false
+    @FocusState private var answerIsFocused: Bool
+
+    init(purpose: String, showsPrivacyNotice: Bool = false, onSuccess: @escaping () -> Void) {
+        self.purpose = purpose
+        self.showsPrivacyNotice = showsPrivacyNotice
+        self.onSuccess = onSuccess
+    }
 
     var body: some View {
         NavigationStack {
@@ -44,6 +53,7 @@ struct AdultGateView: View {
                     Text(challenge.prompt).font(.title2.weight(.semibold))
                         .accessibilityLabel("Code in words: \(challenge.prompt)")
                     TextField("Four-digit code", text: $answer)
+                        .focused($answerIsFocused)
                         .keyboardType(.numberPad)
                         .textInputAutocapitalization(.never).autocorrectionDisabled()
                         .textFieldStyle(.roundedBorder).font(.title2)
@@ -51,30 +61,47 @@ struct AdultGateView: View {
                         .privacySensitive()
                         .onChange(of: answer) { _, value in
                             answer = String(value.filter { $0 >= "0" && $0 <= "9" }.prefix(4))
+                            if answer.count == 4 { answerIsFocused = false }
                         }
                     if incorrect {
                         Text("Let's try the new code shown above.")
                             .foregroundStyle(.red).accessibilityAddTraits(.updatesFrequently)
                     }
-                    PrimaryWishButton(title: "Continue", symbol: "arrow.right") {
-                        let passed = challenge.submit(answer)
-                        answer = ""
-                        if passed { incorrect = false; onSuccess() }
-                        else { incorrect = true }
-                    }.disabled(answer.count != 4)
+                    PrimaryWishButton(title: "Continue", symbol: "arrow.right", action: submitCode)
+                        .disabled(answer.count != 4)
                     Text("This reading check keeps grown-up tasks separate. It does not verify identity or provide permission to share information.")
                         .font(.footnote).foregroundStyle(.secondary)
+                    if showsPrivacyNotice {
+                        Button("Read privacy notice") { privacyPresented = true }
+                            .font(.headline).frame(minHeight: 44)
+                    }
                 }.padding(28)
             }
-            .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cancel") { clear(); dismiss() } } }
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) { Button("Cancel") { clear(); dismiss() } }
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button("Done entering code") { answerIsFocused = false }
+                }
+            }
             .onDisappear { clear() }
+            .sheet(isPresented: $privacyPresented) { PrivacyNoticeView() }
             .onChange(of: scenePhase) { _, phase in
                 if phase != .active { clear(); dismiss() }
             }
         }
     }
 
-    private func clear() { answer = ""; challenge.renew(); incorrect = false }
+    private func submitCode() {
+        guard answer.count == 4 else { return }
+        answerIsFocused = false
+        let passed = challenge.submit(answer)
+        answer = ""
+        if passed { incorrect = false; onSuccess() }
+        else { incorrect = true }
+    }
+
+    private func clear() { answerIsFocused = false; answer = ""; challenge.renew(); incorrect = false }
 }
 
 struct AdultSettingsPortal: View {
@@ -83,7 +110,7 @@ struct AdultSettingsPortal: View {
         ZStack {
             if store.adultSessionActive { CaregiverView() }
             else {
-                AdultGateView(purpose: "Open the grown-up settings.") { store.beginAdultSession() }
+                AdultGateView(purpose: "Open the grown-up settings.", showsPrivacyNotice: true) { store.beginAdultSession() }
             }
         }
         .onDisappear { store.endAdultSession() }

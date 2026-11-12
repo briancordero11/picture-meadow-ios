@@ -11,7 +11,10 @@ struct CaregiverView: View {
     var body: some View {
         NavigationStack(path: $settingsPath) {
             Form {
-                Section("Privacy and app information") {
+                Section("Picture tools and settings") {
+                    NavigationLink(value: GrownUpPage.image) {
+                        Label("AI picture generation", systemImage: "sparkles")
+                    }.accessibilityIdentifier("grownup-ai-generation")
                     NavigationLink(value: GrownUpPage.privacy) {
                         Label("Privacy & Data", systemImage: "hand.raised.fill")
                     }.accessibilityIdentifier("grownup-privacy-data")
@@ -30,9 +33,8 @@ struct CaregiverView: View {
                 }
                 Section("Current wish") {
                     Text("Saving, AI permissions, and forgetting choices are in Privacy & Data. Start a fresh wish clears the current and saved wish while keeping the remembering preference and service access code.")
-                    Button("Start a fresh wish", role: .destructive) { confirmingReset = true }
+                    Button("Start a new wish", role: .destructive) { confirmingReset = true }
                 }
-                SceneGenerationSettingsView()
                 if store.onlinePreviewAvailable { Section("Optional online description") {
                     Text("Your wish picture already works offline. Refreshing the description sends only park, color, and animal ideas to the configured service. It does not send the talking-board sentence or a child's identity. The picture continues to be drawn on this iPad.")
                     if store.onlinePreviewAvailable {
@@ -67,6 +69,7 @@ struct CaregiverView: View {
             .navigationTitle("For grown-ups")
             .navigationDestination(for: GrownUpPage.self) { page in
                 switch page {
+                case .image: Form { SceneGenerationSettingsView() }.navigationTitle("AI picture generation")
                 case .privacy: PrivacySettingsView()
                 case .information: AppInformationView()
                 case .report: ReportAIConcernView()
@@ -75,22 +78,28 @@ struct CaregiverView: View {
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
             .sheet(item: $onlineDisclosure) { disclosure in OnlinePreviewConsentView(disclosure: disclosure) }
             .sheet(isPresented: $privacyPresented) { PrivacyNoticeView() }
-            .confirmationDialog("Start a fresh wish?", isPresented: $confirmingReset, titleVisibility: .visible) {
+            .confirmationDialog("Start a new wish?", isPresented: $confirmingReset, titleVisibility: .visible) {
                 Button("Clear choices and start again", role: .destructive) { store.reset(); dismiss() }
                 Button("Keep my choices", role: .cancel) { }
             } message: {
                 Text("This clears the choices saved on this iPad and the current talking-board sentence.")
             }
-            .onAppear { openRequestedReport() }
-            .onChange(of: store.aiReportRequested) { _, _ in openRequestedReport() }
+            .onAppear { openRequestedPage() }
+            .onChange(of: store.aiReportRequested) { _, _ in openRequestedPage() }
+            .onChange(of: store.aiGenerationRequested) { _, _ in openRequestedPage() }
         }
     }
 
-    private func openRequestedReport() {
-        guard store.adultSessionActive, store.aiReportRequested else { return }
-        store.aiReportRequested = false
-        settingsPath.append(.report)
+    private func openRequestedPage() {
+        guard store.adultSessionActive else { return }
+        if store.aiReportRequested {
+            store.clearSettingsRequests()
+            settingsPath.append(.report)
+        } else if store.aiGenerationRequested {
+            store.clearSettingsRequests()
+            settingsPath.append(.image)
+        }
     }
 }
 
-private enum GrownUpPage: Hashable { case privacy, information, report }
+private enum GrownUpPage: Hashable { case privacy, information, report, image }

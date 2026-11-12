@@ -44,7 +44,7 @@ struct WishRootView: View {
             }
             .sheet(isPresented: $store.caregiverPresented, onDismiss: {
                 store.endAdultSession()
-                store.aiReportRequested = false
+                store.clearSettingsRequests()
             }) { AdultSettingsPortal() }
             .sheet(isPresented: $store.privacyPresented) { PrivacyNoticeView() }
             .onChange(of: scenePhase) { _, phase in store.handleSceneActivity(phase == .active) }
@@ -72,13 +72,6 @@ struct WishRootView: View {
                 Text("wish explorer").font(sizeClass == .compact ? .headline : .title2.weight(.heavy)).foregroundStyle(WishTheme.ink)
             }.accessibilityElement(children: .combine)
             Spacer(minLength: 4)
-            Button { store.privacyPresented = true } label: {
-                if sizeClass == .compact {
-                    Image(systemName: "hand.raised").font(.headline).frame(width: 44, height: 44)
-                } else {
-                    Label("Privacy", systemImage: "hand.raised").font(.subheadline.weight(.semibold)).padding(14)
-                }
-            }.buttonStyle(.plain).foregroundStyle(WishTheme.secondary).accessibilityLabel("Privacy")
             SettingsStarButton { store.caregiverPresented = true }
         }.padding(.horizontal, sizeClass == .compact ? 12 : 24).padding(.vertical, 16)
     }

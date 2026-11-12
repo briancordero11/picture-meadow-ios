@@ -22,13 +22,14 @@ struct SceneGenerationSettingsView: View {
                 if let message = accessMessage { Text(message).font(.footnote) }
                 Button { disclosure = store.prepareSceneGeneration() } label: {
                     HStack {
-                        Text(store.isGeneratingScene ? "Making your picture…" : "Review choices and make a picture")
+                        Text(store.isGeneratingScene ? "Generating your picture…" : "Review choices and generate an AI picture")
                         if store.isGeneratingScene { ProgressView() }
                     }
                 }.disabled(!store.sceneGenerationAvailable || !store.draft.canRequestScene || store.isGeneratingScene || store.isLoadingPreview)
                 if !store.draft.canRequestScene { Text("Choose an action, a setting, or a favorite first.").font(.footnote) }
                 if store.isGeneratingScene { Button("Cancel picture making", role: .cancel) { store.cancelSceneGeneration() } }
             } else {
+                Button("Generate AI picture") { }.disabled(true)
                 Text("AI picture making is not connected in this build. All 20 journeys and the picture board work offline.").foregroundStyle(.secondary)
             }
             if let status = store.sceneStatus { Text(status).accessibilityAddTraits(.updatesFrequently) }

@@ -5,7 +5,6 @@ struct PrivacyNoticeView: View {
     @EnvironmentObject private var store: WishStore
     @Environment(\.dismiss) private var dismiss
     @State private var externalDestination: ExternalDestination?
-    @State private var confirmingForget = false
 
     var body: some View {
         NavigationStack {
@@ -17,7 +16,7 @@ struct PrivacyNoticeView: View {
                     Text("The topic, actions, setting, favorites, and most-important choice stay in memory while the app runs. Older park, color, and animal choices may also be present. Remember choices is off by default. A grown-up can opt in to save those choices in the app's local device settings. Device backups may include app settings under the device owner's backup settings.")
                     Text("The read-choice-labels setting can also be saved locally. The talking-board sentence is never written to storage or sent online. It clears when you finish, reset, or the app becomes inactive.")
                     Text("Start a fresh wish clears the current and saved wish. Turn Remember choices off to remove the saved copy while keeping the current picture on screen. Forget choices below turns retention off and clears the wish, talking-board sentence, read-aloud setting, AI pictures, and service access code. It works without an internet connection.")
-                    Button("Forget choices on this iPad", role: .destructive) { confirmingForget = true }
+                    Text("A grown-up can find Forget choices in Settings → Privacy & Data. The privacy notice itself can be read without completing the grown-up check.")
                 }
                 Section("Optional AI pictures") {
                     Text("AI picture making is disabled in the default build. When configured, a grown-up must pass the reading check, have service access, and confirm each request. Only the selected catalog topic, actions, setting, favorites, and most-important choice shown in the confirmation are sent to the service. The service composes an image prompt for the disclosed AI provider and calls it directly. No picture files, intake documents, identity, medical information, or talking-board sentence are sent.")
@@ -64,10 +63,6 @@ struct PrivacyNoticeView: View {
             .navigationTitle("Privacy")
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
             .sheet(item: $externalDestination) { destination in ExternalLinkGate(destination: destination) }
-            .confirmationDialog("Forget choices on this iPad?", isPresented: $confirmingForget, titleVisibility: .visible) {
-                Button("Forget and start again", role: .destructive) { store.forgetAllChoices() }
-                Button("Keep my choices", role: .cancel) { }
-            } message: { Text("This clears local choices and settings and turns Remember choices off. It does not contact a server.") }
         }
     }
 }

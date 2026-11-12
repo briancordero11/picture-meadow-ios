@@ -12,6 +12,7 @@ final class WishStore: ObservableObject {
     @Published var caregiverPresented = false
     @Published var privacyPresented = false
     @Published var aiReportRequested = false
+    @Published var aiGenerationRequested = false
     @Published private(set) var adultSessionActive = false
     @Published var readChoicesAloud: Bool {
         didSet { defaults.set(readChoicesAloud, forKey: Self.speechKey) }
@@ -206,7 +207,7 @@ final class WishStore: ObservableObject {
     func reset() {
         cancelNetworkWork()
         stopSpeaking()
-        aiReportRequested = false
+        clearSettingsRequests()
         journeyStage = 0
         draft = WishDraft()
         defaults.removeObject(forKey: Self.draftKey)
@@ -243,7 +244,7 @@ final class WishStore: ObservableObject {
     func handleSceneActivity(_ isActive: Bool) {
         sceneIsActive = isActive
         if !isActive {
-            aiReportRequested = false
+            clearSettingsRequests()
             endAdultSession()
             caregiverPresented = false
             phrase = []
@@ -397,8 +398,21 @@ final class WishStore: ObservableObject {
 
     func requestAIReport() {
         stopSpeaking()
+        aiGenerationRequested = false
         aiReportRequested = true
         caregiverPresented = true
+    }
+
+    func requestAIPicture() {
+        stopSpeaking()
+        aiReportRequested = false
+        aiGenerationRequested = true
+        caregiverPresented = true
+    }
+
+    func clearSettingsRequests() {
+        aiReportRequested = false
+        aiGenerationRequested = false
     }
 
     private func saveDraft() {

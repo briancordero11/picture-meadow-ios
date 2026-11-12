@@ -32,7 +32,11 @@ struct PostcardView: View {
                 HStack(spacing: 16) { actions }
                 VStack(spacing: 16) { actions }
             }
-            Text("A grown-up can open Settings to make an optional AI picture from these ideas.")
+            Button { store.requestAIPicture() } label: {
+                Label(store.generatedScene == nil ? "Make an AI picture" : "Make another AI picture", systemImage: "sparkles")
+                    .font(.headline).padding(18).frame(minHeight: 44)
+            }.accessibilityHint("A grown-up reviews the chosen concepts and gives permission")
+            Text("Your picture board works offline. An optional AI picture needs a connected service and a grown-up's permission.")
                 .font(.body).foregroundStyle(WishTheme.secondary).multilineTextAlignment(.center)
             Text("An idea to explore together. Availability and approval are decided separately.")
                 .font(.body).foregroundStyle(WishTheme.secondary).multilineTextAlignment(.center)
