@@ -26,6 +26,7 @@ struct WishRootView: View {
                         case .postcard: PostcardView()
                         case .otherWish: OtherWishView()
                         case .journey: JourneyView()
+                        case .favoritesIntake: FavoritesIntakeView()
                         }
                     }
                     .padding(30)
@@ -113,8 +114,10 @@ struct WelcomeView: View {
                 store.step = .interests
                 store.say("What would you like to wish for?")
             }.padding(.top, 8)
-            if store.draft.interest != nil || store.draft.category != nil {
-                Button("See my choices so far") { store.step = store.draft.interest != nil || store.draft.category == .go ? .postcard : .otherWish }
+            if store.draft.interest != nil || store.draft.category != nil || !store.draft.favoriteIDs.isEmpty {
+                Button("See my choices so far") {
+                    store.step = store.draft.interest != nil || store.draft.category == .go ? .postcard : (store.draft.category != nil ? .otherWish : .interests)
+                }
                     .font(.headline).padding(16)
             }
             Label("Open the little tab to tell us something.", systemImage: "chevron.up")
@@ -133,6 +136,7 @@ struct InterestView: View {
                 WishWordmark()
                 Text("What would you like? Choose a picture.").font(.title3).foregroundStyle(WishTheme.secondary)
             }.frame(maxWidth: .infinity)
+            FavoritesIntakeCard()
             LazyVGrid(columns: columns, spacing: 8) {
                 ForEach(InterestChoice.allCases) { interest in
                     PictureTile(label: interest.label, selected: store.draft.interest == interest) {

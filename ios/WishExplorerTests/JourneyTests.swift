@@ -125,7 +125,7 @@ final class JourneyTests: XCTestCase {
     }
 
     @MainActor
-    func testSkippingEachStageClearsItsPriorAnswerAndDependentEssential() throws {
+    func testSkippingWishQuestionsKeepsSharedIntakeFavorites() throws {
         let storage = try JourneyTestStorage()
         let store = makeStore(storage)
         let topic = try XCTUnwrap(JourneyCatalog.shared.interest(id: InterestChoice.art.id))
@@ -141,8 +141,8 @@ final class JourneyTests: XCTestCase {
             store.skipJourneyStage()
             XCTAssertEqual(store.draft.selectedActionIDs, stage == 0 ? [] : [action])
             XCTAssertEqual(store.draft.selectedSettingID, stage == 1 ? nil : setting)
-            XCTAssertEqual(store.draft.favoriteIDs, stage == 2 ? [] : [favorite])
-            XCTAssertNil(store.draft.essentialChoiceID)
+            XCTAssertEqual(store.draft.favoriteIDs, [favorite])
+            XCTAssertEqual(store.draft.essentialChoiceID, stage == 2 ? favorite : nil)
             XCTAssertEqual(store.step, stage == 3 ? .postcard : .journey)
             XCTAssertEqual(store.journeyStage, min(stage + 1, 3))
         }
@@ -173,7 +173,7 @@ final class JourneyTests: XCTestCase {
     }
 
     @MainActor
-    func testChangingInterestClearsJourneyAnswersWhileRechoosingKeepsThem() throws {
+    func testChangingInterestClearsWishSpecificAnswersAndKeepsIntakeFavorites() throws {
         let storage = try JourneyTestStorage()
         let store = makeStore(storage)
         let topic = try XCTUnwrap(JourneyCatalog.shared.interest(id: InterestChoice.art.id))
@@ -185,7 +185,7 @@ final class JourneyTests: XCTestCase {
         XCTAssertEqual(store.draft, original)
         store.journeyStage = 3
         store.chooseInterest(.camp)
-        XCTAssertEqual(store.draft, WishDraft(interestID: InterestChoice.camp.id))
+        XCTAssertEqual(store.draft, WishDraft(interestID: InterestChoice.camp.id, favoriteIDs: [favorite]))
         XCTAssertEqual(store.journeyStage, 0)
         XCTAssertEqual(store.step, .journey)
     }
@@ -206,6 +206,43 @@ final class JourneyTests: XCTestCase {
         XCTAssertEqual(restored.draft, store.draft)
         XCTAssertEqual(restored.draft.essentialChoiceID, favorite)
         XCTAssertTrue(restored.draft.canRequestScene)
+    }
+
+    @MainActor
+    func testFavoritesIntakeWorksBeforeChoosingATopicAndCarriesIntoDifferentIdeas() throws {
+        let storage = try JourneyTestStorage()
+        let store = makeStore(storage)
+        let favorite = try XCTUnwrap(JourneyCatalog.shared.favoriteOptions.first).id
+        store.boardExpanded = true
+        store.openFavoritesIntake()
+        XCTAssertEqual(store.step, .favoritesIntake)
+        XCTAssertFalse(store.boardExpanded)
+        store.toggleFavorite(favorite)
+        XCTAssertNil(store.draft.interest)
+        XCTAssertFalse(store.draft.canRequestScene)
+        store.finishFavoritesIntake()
+        XCTAssertEqual(store.step, .interests)
+        store.chooseInterest(.camp)
+        XCTAssertEqual(store.draft.favoriteIDs, [favorite])
+        store.chooseInterest(.gift)
+        XCTAssertEqual(store.draft.favoriteIDs, [favorite])
+        XCTAssertTrue(store.draft.canRequestScene)
+        store.reset()
+        XCTAssertTrue(store.draft.favoriteIDs.isEmpty)
+    }
+
+    @MainActor
+    func testAnOptedInIntakeDraftRestoresWithoutInventingAWishTopic() throws {
+        let storage = try JourneyTestStorage()
+        let store = makeStore(storage)
+        let favorite = try XCTUnwrap(JourneyCatalog.shared.favoriteOptions.first).id
+        store.rememberChoices = true
+        store.openFavoritesIntake()
+        store.toggleFavorite(favorite)
+        let restored = makeStore(storage)
+        XCTAssertNil(restored.draft.interest)
+        XCTAssertEqual(restored.draft.favoriteIDs, [favorite])
+        XCTAssertFalse(restored.draft.canRequestScene)
     }
 
     @MainActor

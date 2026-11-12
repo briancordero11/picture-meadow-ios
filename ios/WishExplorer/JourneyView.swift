@@ -22,7 +22,7 @@ struct JourneyView: View {
         switch stage {
         case 0: "Choose up to three pictures."
         case 1: "Choose a place or thing for your wish."
-        case 2: "Pick any pictures you like. You can skip a group."
+        case 2: "These favorites stay with your ideas. Change any picture you like."
         default: "Pick the picture that is most important to you."
         }
     }
@@ -57,13 +57,7 @@ struct JourneyView: View {
                 store.selectJourneySetting($0)
             }
         case 2:
-            ForEach(catalog.favorites) { group in
-                VStack(alignment: .leading, spacing: 14) {
-                    Text(group.label).font(.title2.weight(.bold)).foregroundStyle(WishTheme.ink)
-                        .accessibilityAddTraits(.isHeader)
-                    choiceGrid(group.options, selected: store.draft.favoriteIDs) { store.toggleFavorite($0) }
-                }
-            }
+            FavoriteChoicesView()
         default:
             let selectedChoices = catalog.choices(for: store.draft)
             if selectedChoices.isEmpty {
@@ -95,7 +89,7 @@ struct JourneyView: View {
     }
 
     private var skipButton: some View {
-        Button("Skip this part", action: store.skipJourneyStage)
+        Button(stage == 2 && !store.draft.favoriteIDs.isEmpty ? "Keep my favorites" : "Skip this part", action: store.skipJourneyStage)
             .font(.headline).foregroundStyle(WishTheme.blue)
             .padding(16).frame(minHeight: 54)
     }

@@ -8,6 +8,12 @@ struct SceneGenerationSettingsView: View {
     var body: some View {
         Section("Make one picture from these ideas") {
             Text("The picture board already works offline. AI can combine the selected picture concepts into one imagined scene. It does not receive picture files or the talking-board sentence.")
+            if store.draft.interest != nil {
+                Text(store.draft.sceneDescription).font(.body)
+                if !store.draft.sceneChoices.isEmpty { SceneChoiceCollage(draft: store.draft) }
+            } else {
+                Text("Choose a wish picture after exploring your favorites to build an AI scene.").font(.footnote).foregroundStyle(.secondary)
+            }
             if store.configuration.sceneGenerationAvailable {
                 if !store.sceneAccessConfigured {
                     SecureField("Service access code from your operator", text: $accessCode)

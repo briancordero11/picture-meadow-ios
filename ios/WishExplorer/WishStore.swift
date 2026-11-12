@@ -98,6 +98,17 @@ final class WishStore: ObservableObject {
         else { step = step.previous }
     }
 
+    func openFavoritesIntake() {
+        stopSpeaking()
+        boardExpanded = false
+        step = .favoritesIntake
+    }
+
+    func finishFavoritesIntake() {
+        stopSpeaking()
+        step = .interests
+    }
+
     func toggleJourneyAction(_ id: String) {
         guard let topic = JourneyCatalog.shared.interest(id: draft.interestID), topic.actions.contains(where: { $0.id == id }) else { return }
         if draft.selectedActionIDs.contains(id) { draft.selectedActionIDs.removeAll { $0 == id } }
@@ -133,7 +144,7 @@ final class WishStore: ObservableObject {
         switch journeyStage {
         case 0: draft.selectedActionIDs = []
         case 1: draft.selectedSettingID = nil
-        case 2: draft.favoriteIDs = []
+        case 2: break // Intake favorites remain available across wish ideas.
         default: draft.essentialChoiceID = nil
         }
         sanitizeEssential(); invalidatePreview(); advanceJourney()

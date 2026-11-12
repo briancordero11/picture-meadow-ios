@@ -112,12 +112,12 @@ struct WishDraft: Codable, Equatable {
     }
 
     mutating func selectCategory(_ category: WishCategory) {
-        if self.category != category { self = WishDraft(category: category) }
+        if self.category != category { self = WishDraft(category: category, favoriteIDs: favoriteIDs) }
     }
 
     mutating func selectInterest(_ interest: InterestChoice) {
         if interestID != interest.id {
-            self = WishDraft(category: interest == .amusementPark ? .go : nil, interestID: interest.id)
+            self = WishDraft(category: interest == .amusementPark ? .go : nil, interestID: interest.id, favoriteIDs: favoriteIDs)
         }
     }
 
@@ -130,10 +130,10 @@ struct WishDraft: Codable, Equatable {
 }
 
 enum WishStep: Int, CaseIterable {
-    case welcome, interests, destination, color, animals, postcard, otherWish, journey
+    case welcome, interests, destination, color, animals, postcard, otherWish, journey, favoritesIntake
     var progress: Double {
         switch self {
-        case .welcome, .interests, .otherWish: 0
+        case .welcome, .interests, .otherWish, .favoritesIntake: 0
         case .journey: 0.25
         case .destination: 0.25
         case .color: 0.5
@@ -144,7 +144,7 @@ enum WishStep: Int, CaseIterable {
     var previous: Self {
         switch self {
         case .welcome, .interests: .welcome
-        case .destination, .otherWish, .journey: .interests
+        case .destination, .otherWish, .journey, .favoritesIntake: .interests
         case .color: .destination
         case .animals: .color
         case .postcard: .animals
