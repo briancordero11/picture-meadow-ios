@@ -1,6 +1,6 @@
 # TestFlight and release checklist
 
-Status: an unsigned native build and 58 unit tests passed for commit `fa3aab0`. The subsequently added tab-tap/drag UI test and direct-provider label await a second CI result. Signing, physical-device validation, and TestFlight upload remain pending. [58-test Mac CI result](https://github.com/briancordero11/picture-meadow-ios/actions/runs/43149946910)
+Status: source commit `11506bd` built unsigned and passed 58 native unit tests, one native tab-tap/drag UI test, and 36 backend tests. The native runner used iPad mini (A17 Pro), iOS 26.5. Signing, physical-device validation, live image-generation verification, and TestFlight upload remain pending. [Successful verification run](https://github.com/briancordero11/picture-meadow-ios/actions/runs/43152713228)
 
 Confirmed release direction: United States, published by a **separate, independent LLC, not CanaClaw**, with future white-label versions planned. The LLC's exact legal name is unspecified, and there is no public business email or published privacy-policy URL yet. The intended audience is exactly **"2 - 17+"**; no upper age cap is inferred. This broad span crosses Kids Category bands and extends to older users, so Kids Category must be reviewed deliberately rather than selected automatically. See [white-label distribution](white-label-distribution.md) before choosing public client apps or private Custom Apps; no Apple account enrollment or App Store Connect availability has been verified.
 
@@ -13,12 +13,12 @@ Privacy references include the [Apple requirements review](apple-requirements-re
 - [x] Implement the optional actual AI scene API using catalog IDs, with grown-up one-request permission, review, removal, and cancellation controls.
 - [x] Preserve the legacy park-description API for compatible saved choices while new home routes use the action-led flow.
 - [x] Implement finger-tracking drawer height, spring snapping, tap/accessibility alternatives, and Reduce Motion behavior.
-- [x] Build and pass 58 native unit tests for the `fa3aab0` baseline.
+- [x] Build and pass 58 native unit tests plus the real tap/drag UI test for source commit `11506bd`.
 
 ## Mac build and device verification
 
 - [ ] Use Xcode 26 or later with the iOS 26 SDK or later. Apple's upload minimum is distinct from this app's iOS 17 deployment target.
-- [ ] Run `bash ios/scripts/verify.sh` with the new gesture UI-test target and provider-label changes, retain the result bundle, and record the source commit, toolchain, simulator, and test totals.
+- [x] Run `bash ios/scripts/verify.sh` with the gesture UI-test target and direct-provider label; record source and simulator evidence in the linked CI run. Re-run for subsequent app changes.
 - [ ] Verify all twenty journeys and skip/back/change paths on a physical iPad in landscape, portrait, split view, and supported text sizes.
 - [ ] Review VoiceOver, Switch Control, Stop speaking, interruption handling, and every No/Stop/Think/Break/Finished control.
 - [ ] Validate drawer finger tracking, interrupted spring snaps, rotation during drag, canceled gestures, tap/accessibility alternatives, and Reduce Motion on device.

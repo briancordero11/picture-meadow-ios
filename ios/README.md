@@ -34,7 +34,7 @@ The script checks macOS and Xcode 26+, generates the project, validates property
 WISH_TEST_DESTINATION='platform=iOS Simulator,name=iPad Pro 13-inch (M4)' bash scripts/verify.sh
 ```
 
-**An unsigned native build and 58 unit tests passed for commit `fa3aab0`.** That baseline covers the action journeys, migration, scene-service boundaries, and drawer geometry. The newly added `WishExplorerUITests` target exercises launch, tab taps, coordinate drags, and word visibility. Its execution and the subsequent provider-label change await a second Mac CI result. [58-test Mac CI result](https://github.com/briancordero11/picture-meadow-ios/actions/runs/43149946910)
+**The unsigned native build, all 58 unit tests, and the tap-and-drag UI test passed for source commit `11506bd`.** The Mac runner used iPad mini (A17 Pro), iOS 26.5. The UI test launched the actual app, tapped the tab open and closed, dragged it in both directions, and checked that word tiles were usable only when open. This verifies those interactions, not frame-rate performance or physical-device feel. [Successful native run](https://github.com/briancordero11/picture-meadow-ios/actions/runs/43152713228/job/130965440026)
 
 The native suite includes catalog/resource, migration, journey selection, persistence, and privacy behavior. Speech, VoiceOver, Switch Control, portrait/landscape, and physical-device behavior need hands-on iPad verification. `python3 scripts/check_resources.py` checks portable resources and unchanged source images. The root contract checker compares the native, authoritative, and backend journey catalogs. Neither portable checker compiles Swift.
 
