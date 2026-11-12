@@ -7,9 +7,12 @@ struct WishBuildConfiguration {
     let supportURL: URL?
     let apiBaseURL: URL?
     let onlinePreviewEnabled: Bool
+    let sceneGenerationEnabled: Bool
+    let aiProviderName: String?
 
     static var current: Self { Self(values: Bundle.main.infoDictionary ?? [:]) }
     var onlinePreviewAvailable: Bool { onlinePreviewEnabled && apiBaseURL != nil }
+    var sceneGenerationAvailable: Bool { sceneGenerationEnabled && apiBaseURL != nil && aiProviderName == "Google Vertex AI via Vercel AI Gateway" }
 
     init(values: [String: Any]) {
         publisherName = Self.publicText(values["WishPublisherName"])
@@ -17,6 +20,9 @@ struct WishBuildConfiguration {
         privacyPolicyURL = Self.httpsURL(values["WishPrivacyPolicyURL"])
         supportURL = Self.httpsURL(values["WishSupportURL"])
         apiBaseURL = Self.apiOriginURL(values["WishAPIBaseURL"])
+        aiProviderName = Self.publicText(values["WishAIProviderName"])
+        sceneGenerationEnabled = (values["WishSceneGenerationEnabled"] as? String)?.uppercased() == "YES"
+            || (values["WishSceneGenerationEnabled"] as? Bool) == true
         if let flag = values["WishOnlinePreviewEnabled"] as? String {
             onlinePreviewEnabled = flag.trimmingCharacters(in: .whitespacesAndNewlines).uppercased() == "YES"
         } else {

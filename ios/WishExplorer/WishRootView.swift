@@ -10,7 +10,7 @@ struct WishRootView: View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
                 header
-                if store.step.progress > 0 {
+                if store.step.progress > 0 && store.step != .journey {
                     ProgressView(value: store.step.progress)
                         .tint(WishTheme.blue).padding(.horizontal, 30)
                         .accessibilityLabel("Wish journey progress")
@@ -25,6 +25,7 @@ struct WishRootView: View {
                         case .animals: AnimalChoiceView()
                         case .postcard: PostcardView()
                         case .otherWish: OtherWishView()
+                        case .journey: JourneyView()
                         }
                     }
                     .padding(30)
@@ -34,15 +35,13 @@ struct WishRootView: View {
             }
             .background(WishTheme.background)
             .safeAreaInset(edge: .bottom, spacing: 0) {
-                CommunicationBoardView()
-                    .frame(maxHeight: store.boardExpanded ? max(280, geometry.size.height * 0.82) : nil)
+                CommunicationBoardView(expandedHeight: min(geometry.size.height, max(280, geometry.size.height * 0.82)))
             }
             .disabled(store.isPaused)
             .accessibilityHidden(store.isPaused)
             .overlay {
                 if store.isPaused { PauseView() }
             }
-            .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: store.boardExpanded)
             .sheet(isPresented: $store.caregiverPresented, onDismiss: { store.endAdultSession() }) { AdultSettingsPortal() }
             .sheet(isPresented: $store.privacyPresented) { PrivacyNoticeView() }
             .onChange(of: scenePhase) { _, phase in store.handleSceneActivity(phase == .active) }
@@ -54,7 +53,7 @@ struct WishRootView: View {
             if store.step != .welcome {
                 Button {
                     store.stopSpeaking()
-                    store.step = store.step.previous
+                    store.goBack()
                 } label: {
                     if sizeClass == .compact {
                         Image(systemName: "arrow.left").font(.headline).frame(width: 44, height: 44)
@@ -119,7 +118,7 @@ struct WelcomeView: View {
                 store.say("What would you like to wish for?")
             }.padding(.top, 8)
             if store.draft.interest != nil || store.draft.category != nil {
-                Button("See my choices so far") { store.step = store.draft.category == .go ? .postcard : .otherWish }
+                Button("See my choices so far") { store.step = store.draft.interest != nil || store.draft.category == .go ? .postcard : .otherWish }
                     .font(.headline).padding(16)
             }
             Label("Open the little tab to tell us something.", systemImage: "chevron.up")
@@ -143,7 +142,7 @@ struct InterestView: View {
                     PictureTile(label: interest.label, selected: store.draft.interest == interest) {
                         store.chooseInterest(interest)
                     }
-                    .accessibilityHint(interest == .amusementPark ? "Explore an amusement park adventure" : "Explore this idea and tell a grown-up more")
+                    .accessibilityHint("Choose actions and favorites for this idea")
                 }
             }
         }

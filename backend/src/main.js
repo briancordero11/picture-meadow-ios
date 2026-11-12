@@ -1,4 +1,5 @@
 import { createWishServer, parseAllowedOrigins } from './server.js';
+import { sceneServiceFromEnvironment } from './scene.js';
 
 function integerSetting(name, fallback, min, max) {
   const raw = process.env[name];
@@ -15,6 +16,7 @@ try {
   const server = createWishServer({
     allowedOrigins: parseAllowedOrigins(process.env.CORS_ALLOWED_ORIGINS),
     bodyLimitBytes: integerSetting('MAX_BODY_BYTES', 2048, 128, 65536),
+    sceneService: sceneServiceFromEnvironment(),
     rateLimit: {
       windowMs: integerSetting('RATE_LIMIT_WINDOW_MS', 60_000, 1000, 3_600_000),
       maxRequests: integerSetting('RATE_LIMIT_MAX', 60, 1, 10_000),

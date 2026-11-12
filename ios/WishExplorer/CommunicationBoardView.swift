@@ -2,6 +2,22 @@ import SwiftUI
 
 struct CommunicationBoardView: View {
     @EnvironmentObject private var store: WishStore
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @GestureState private var isDragging = false
+    @State private var drawerHeight = CommunicationDrawerGeometry.collapsedHeight
+    @State private var presentedHeight = CommunicationDrawerGeometry.collapsedHeight
+    @State private var dragStartHeight: CGFloat?
+    @State private var ignoreCurrentDrag = false
+
+    var expandedHeight: CGFloat = 600
+
+    private var fullHeight: CGFloat {
+        max(CommunicationDrawerGeometry.collapsedHeight, expandedHeight)
+    }
+
+    private var visibleHeight: CGFloat {
+        CommunicationDrawerGeometry.clampedHeight(drawerHeight, expandedHeight: fullHeight)
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -10,27 +26,104 @@ struct CommunicationBoardView: View {
                 drawerTab
                 Spacer(minLength: 0)
             }
-            if store.boardExpanded {
-                VStack(spacing: 14) {
-                    phraseBar
-                    ScrollView {
-                        VStack(spacing: 0) {
-                            LazyVGrid(columns: Array(repeating: GridItem(.flexible(minimum: 44), spacing: 0), count: 5), spacing: 0) {
-                                ForEach(CommunicationWord.mainRows.flatMap { $0 }) { word in
-                                    wordTile(word)
-                                }
+            .frame(height: CommunicationDrawerGeometry.collapsedHeight)
+            VStack(spacing: 14) {
+                phraseBar
+                ScrollView {
+                    VStack(spacing: 0) {
+                        LazyVGrid(columns: Array(repeating: GridItem(.flexible(minimum: 44), spacing: 0), count: 5), spacing: 0) {
+                            ForEach(CommunicationWord.mainRows.flatMap { $0 }) { word in
+                                wordTile(word)
                             }
-                            LazyVGrid(columns: Array(repeating: GridItem(.flexible(minimum: 44), spacing: 0), count: 4), spacing: 0) {
-                                ForEach(CommunicationWord.phraseWords) { word in
-                                    wordTile(word)
-                                }
+                        }
+                        LazyVGrid(columns: Array(repeating: GridItem(.flexible(minimum: 44), spacing: 0), count: 4), spacing: 0) {
+                            ForEach(CommunicationWord.phraseWords) { word in
+                                wordTile(word)
                             }
-                        }.padding(.bottom, 10)
-                    }
+                        }
+                    }.padding(.bottom, 10)
                 }
-                .padding(.horizontal, 22).padding(.top, 14).padding(.bottom, 10)
-                .background(WishTheme.boardBackground)
             }
+            .padding(.horizontal, 22).padding(.top, 14).padding(.bottom, 10)
+            .frame(height: fullHeight - CommunicationDrawerGeometry.collapsedHeight)
+            .background(WishTheme.boardBackground)
+            .allowsHitTesting(store.boardExpanded && !isDragging)
+            .accessibilityHidden(!store.boardExpanded)
+        }
+        .frame(maxWidth: .infinity)
+        .frame(height: visibleHeight, alignment: .top)
+        .clipped()
+        .background {
+            GeometryReader { geometry in
+                Color.clear.preference(key: CommunicationDrawerHeightKey.self, value: geometry.size.height)
+            }
+        }
+        .onPreferenceChange(CommunicationDrawerHeightKey.self) { presentedHeight = $0 }
+        .onAppear { resizeWithoutAnimation() }
+        .onChange(of: fullHeight) { _, _ in
+            ignoreCurrentDrag = isDragging
+            resizeWithoutAnimation()
+        }
+        .onChange(of: store.boardExpanded) { _, expanded in
+            let target = expanded ? fullHeight : CommunicationDrawerGeometry.collapsedHeight
+            if drawerHeight != target { snap(to: expanded) }
+        }
+        .onChange(of: isDragging) { _, dragging in
+            if !dragging {
+                // A canceled gesture returns to the last committed open/closed state.
+                if dragStartHeight != nil { snap(to: store.boardExpanded) }
+                ignoreCurrentDrag = false
+            }
+        }
+    }
+
+    private var drawerDrag: some Gesture {
+        DragGesture(minimumDistance: 8, coordinateSpace: .global)
+            .updating($isDragging) { _, dragging, transaction in
+                dragging = true
+                transaction.disablesAnimations = true
+            }
+            .onChanged { value in
+                guard !ignoreCurrentDrag else { return }
+                if dragStartHeight == nil {
+                    // Read the presented height so a new drag can interrupt a snap.
+                    dragStartHeight = presentedHeight
+                }
+                var transaction = Transaction()
+                transaction.disablesAnimations = true
+                withTransaction(transaction) {
+                    drawerHeight = CommunicationDrawerGeometry.height(
+                        startHeight: dragStartHeight ?? visibleHeight,
+                        translation: value.translation.height,
+                        expandedHeight: fullHeight
+                    )
+                }
+            }
+            .onEnded { value in
+                guard !ignoreCurrentDrag else { return }
+                let expanded = CommunicationDrawerGeometry.shouldExpand(
+                    startHeight: dragStartHeight ?? visibleHeight,
+                    predictedEndTranslation: value.predictedEndTranslation.height,
+                    expandedHeight: fullHeight
+                )
+                snap(to: expanded)
+            }
+    }
+
+    private func snap(to expanded: Bool) {
+        dragStartHeight = nil
+        withAnimation(reduceMotion ? nil : .spring(response: 0.38, dampingFraction: 0.86)) {
+            store.boardExpanded = expanded
+            drawerHeight = expanded ? fullHeight : CommunicationDrawerGeometry.collapsedHeight
+        }
+    }
+
+    private func resizeWithoutAnimation() {
+        dragStartHeight = nil
+        var transaction = Transaction()
+        transaction.disablesAnimations = true
+        withTransaction(transaction) {
+            drawerHeight = store.boardExpanded ? fullHeight : CommunicationDrawerGeometry.collapsedHeight
         }
     }
 
@@ -59,7 +152,7 @@ struct CommunicationBoardView: View {
 
     /// A single visible handle is kept on screen while every word tile is tucked away.
     private var drawerTab: some View {
-        Button { store.boardExpanded.toggle() } label: {
+        Button { snap(to: !store.boardExpanded) } label: {
             VStack(spacing: 7) {
                 Capsule().fill(WishTheme.ink.opacity(0.35)).frame(width: 38, height: 4)
                 Image(systemName: store.boardExpanded ? "chevron.down" : "chevron.up")
@@ -75,12 +168,16 @@ struct CommunicationBoardView: View {
         .accessibilityLabel(store.boardExpanded ? "Close talking board" : "Open talking board")
         .accessibilityHint("Tap to toggle, or drag up to open and down to close")
         .accessibilityValue(store.boardExpanded ? "Open" : "Closed")
-        .simultaneousGesture(DragGesture(minimumDistance: 12).onEnded { value in
-            if value.translation.height < -20 { store.boardExpanded = true }
-            else if value.translation.height > 20 { store.boardExpanded = false }
-        })
+        .highPriorityGesture(drawerDrag)
+        .accessibilityAdjustableAction { direction in
+            switch direction {
+            case .increment: snap(to: true)
+            case .decrement: snap(to: false)
+            @unknown default: break
+            }
+        }
         .accessibilityAction(named: Text(store.boardExpanded ? "Close board" : "Open board")) {
-            store.boardExpanded.toggle()
+            snap(to: !store.boardExpanded)
         }
     }
 
@@ -112,5 +209,13 @@ struct CommunicationBoardView: View {
             Image(systemName: "delete.left").font(.title2).padding(12)
         }.disabled(store.phrase.isEmpty).accessibilityLabel("Remove last word")
         Button("Clear") { store.phrase = [] }.font(.headline).padding(12).disabled(store.phrase.isEmpty)
+    }
+}
+
+private struct CommunicationDrawerHeightKey: PreferenceKey {
+    static let defaultValue: CGFloat = CommunicationDrawerGeometry.collapsedHeight
+
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = nextValue()
     }
 }

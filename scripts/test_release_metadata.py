@@ -71,6 +71,17 @@ class ReleaseMetadataTests(unittest.TestCase):
         del record["audience"]["maximumAge"]
         self.assertIn("Specify the intended audience age range.", module.validate(record))
 
+    def test_ai_release_requires_provider_disclosure_and_specific_reviews(self):
+        record = self.valid_record()
+        record.update(sceneGenerationEnabled=True, apiBaseURL="https://api.apple.com")
+        self.assertEqual(module.validate(record), [])
+        record["reviewed"]["aiConsentAndAdultReview"] = False
+        self.assertIn("Complete and record the aiConsentAndAdultReview review.", module.validate(record))
+        record["aiProviderName"] = "An unspecified AI service"
+        self.assertTrue(any("provider disclosure" in problem for problem in module.validate(record)))
+        record["apiBaseURL"] = ""
+        self.assertTrue(any("API origin" in problem for problem in module.validate(record)))
+
 
 if __name__ == "__main__":
     unittest.main()

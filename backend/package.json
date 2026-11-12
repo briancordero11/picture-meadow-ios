@@ -3,11 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Stateless illustrated wish preview API for the Wish Explorer prototype",
-  "engines": { "node": ">=22" },
+  "description": "Stateless fixed-choice wish preview and optional authenticated AI scene API",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "start": "node src/main.js",
     "test": "node --test test/*.test.js",
-    "check": "node --check src/main.js && node --check src/server.js && node --check src/preview.js && node --check src/catalog.js"
+    "catalog:sync": "node scripts/sync-journey-catalog.mjs",
+    "catalog:check": "node scripts/sync-journey-catalog.mjs --check",
+    "check": "node --check src/main.js && node --check src/server.js && node --check src/preview.js && node --check src/catalog.js && node --check src/scene.js && node --check api/index.js"
+  },
+  "dependencies": {
+    "ai": "^7.0.170"
   }
 }

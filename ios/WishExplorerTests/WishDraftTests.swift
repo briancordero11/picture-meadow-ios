@@ -114,7 +114,7 @@ final class WishDraftTests: XCTestCase {
     }
 
     @MainActor
-    func testChoosingAnotherInterestClearsParkChoicesAndOpensExploration() throws {
+    func testChoosingAnotherInterestClearsParkChoicesAndOpensItsJourney() throws {
         let suite = "WishExplorerTests.\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
         defer { defaults.removePersistentDomain(forName: suite) }
@@ -125,12 +125,12 @@ final class WishDraftTests: XCTestCase {
         XCTAssertNil(store.draft.category)
         XCTAssertNil(store.draft.coasterColor)
         XCTAssertEqual(store.draft.interest, .art)
-        XCTAssertEqual(store.step, .otherWish)
+        XCTAssertEqual(store.step, .journey)
         XCTAssertFalse(store.boardExpanded)
     }
 
     @MainActor
-    func testAmusementParkPictureOpensExistingJourneyAndUsesGoAPIContract() throws {
+    func testAmusementParkPictureOpensActionJourneyAndPreservesGoAPIContract() throws {
         let suite = "WishExplorerTests.\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
         defer { defaults.removePersistentDomain(forName: suite) }
@@ -139,7 +139,7 @@ final class WishDraftTests: XCTestCase {
         store.chooseInterest(.amusementPark)
         XCTAssertEqual(store.draft.category, .go)
         XCTAssertEqual(store.draft.interest, .amusementPark)
-        XCTAssertEqual(store.step, .destination)
+        XCTAssertEqual(store.step, .journey)
     }
 
     func testEveryPictureHasTheOriginalBundledSymbol() {

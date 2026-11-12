@@ -1,0 +1,1479 @@
+{
+  "version": 1,
+  "interests": [
+    {
+      "id": "sporting-event",
+      "actions": [
+        {
+          "id": "sporting-event-watch",
+          "label": "Watch a game",
+          "symbol": "🏟️",
+          "prompt": "watching a sporting game"
+        },
+        {
+          "id": "sporting-event-cheer",
+          "label": "Cheer a team",
+          "symbol": "👏",
+          "prompt": "cheering with colorful team pennants"
+        },
+        {
+          "id": "sporting-event-play",
+          "label": "Play a sport",
+          "symbol": "⚽",
+          "prompt": "playing a friendly ball game"
+        },
+        {
+          "id": "sporting-event-skills",
+          "label": "Try new skills",
+          "symbol": "🎯",
+          "prompt": "trying a simple sporting skill"
+        },
+        {
+          "id": "sporting-event-meet",
+          "label": "Meet players",
+          "symbol": "🤝",
+          "prompt": "meeting friendly sports players"
+        }
+      ],
+      "settings": [
+        {
+          "id": "sporting-event-stadium",
+          "label": "A stadium",
+          "symbol": "🏟️",
+          "prompt": "a lively sports stadium"
+        },
+        {
+          "id": "sporting-event-field",
+          "label": "A local field",
+          "symbol": "🌳",
+          "prompt": "a grassy neighborhood sports field"
+        },
+        {
+          "id": "sporting-event-court",
+          "label": "An indoor court",
+          "symbol": "🏀",
+          "prompt": "a bright indoor sports court"
+        },
+        {
+          "id": "sporting-event-sports-day",
+          "label": "A sports day",
+          "symbol": "🏅",
+          "prompt": "an inclusive outdoor sports day"
+        }
+      ]
+    },
+    {
+      "id": "camp",
+      "actions": [
+        {
+          "id": "camp-explore",
+          "label": "Explore a trail",
+          "symbol": "🥾",
+          "prompt": "exploring a gentle nature trail"
+        },
+        {
+          "id": "camp-wildlife",
+          "label": "Watch wildlife",
+          "symbol": "🦌",
+          "prompt": "watching wildlife from a respectful distance"
+        },
+        {
+          "id": "camp-stars",
+          "label": "Look at stars",
+          "symbol": "🌌",
+          "prompt": "looking at a starry night sky"
+        },
+        {
+          "id": "camp-picnic",
+          "label": "Have a picnic",
+          "symbol": "🧺",
+          "prompt": "enjoying a picnic outdoors"
+        },
+        {
+          "id": "camp-rest",
+          "label": "Rest in a tent",
+          "symbol": "⛺",
+          "prompt": "relaxing beside a cozy camping tent"
+        }
+      ],
+      "settings": [
+        {
+          "id": "camp-yosemite",
+          "label": "Yosemite",
+          "symbol": "🏞️",
+          "prompt": "a Yosemite National Park inspired landscape with granite cliffs and pine trees"
+        },
+        {
+          "id": "camp-forest",
+          "label": "A forest camp",
+          "symbol": "🌲",
+          "prompt": "a peaceful forest campsite"
+        },
+        {
+          "id": "camp-lake",
+          "label": "A lakeside camp",
+          "symbol": "🏕️",
+          "prompt": "a campsite beside a calm lake"
+        },
+        {
+          "id": "camp-backyard",
+          "label": "A backyard camp",
+          "symbol": "⛺",
+          "prompt": "a small backyard camping adventure"
+        }
+      ]
+    },
+    {
+      "id": "athlete",
+      "actions": [
+        {
+          "id": "athlete-meet",
+          "label": "Meet an athlete",
+          "symbol": "🤝",
+          "prompt": "meeting a friendly athlete"
+        },
+        {
+          "id": "athlete-practice",
+          "label": "Practice together",
+          "symbol": "⚽",
+          "prompt": "practicing a favorite sport together"
+        },
+        {
+          "id": "athlete-watch",
+          "label": "Watch a practice",
+          "symbol": "👀",
+          "prompt": "watching athletes practice"
+        },
+        {
+          "id": "athlete-learn",
+          "label": "Learn a skill",
+          "symbol": "🎯",
+          "prompt": "learning a fun sports skill"
+        },
+        {
+          "id": "athlete-celebrate",
+          "label": "Celebrate a team",
+          "symbol": "🏅",
+          "prompt": "celebrating teamwork with sports pennants"
+        }
+      ],
+      "settings": [
+        {
+          "id": "athlete-field",
+          "label": "On a field",
+          "symbol": "🌳",
+          "prompt": "a green sports field"
+        },
+        {
+          "id": "athlete-court",
+          "label": "On a court",
+          "symbol": "🏀",
+          "prompt": "a bright basketball court"
+        },
+        {
+          "id": "athlete-track",
+          "label": "At a track",
+          "symbol": "🏃",
+          "prompt": "a welcoming athletics track"
+        },
+        {
+          "id": "athlete-training-room",
+          "label": "A training room",
+          "symbol": "🏋️",
+          "prompt": "a friendly sports practice room"
+        }
+      ]
+    },
+    {
+      "id": "vr-equipment",
+      "actions": [
+        {
+          "id": "vr-equipment-explore",
+          "label": "Explore a world",
+          "symbol": "🌎",
+          "prompt": "exploring a colorful imaginary virtual world"
+        },
+        {
+          "id": "vr-equipment-create",
+          "label": "Create something",
+          "symbol": "🎨",
+          "prompt": "making colorful digital artwork"
+        },
+        {
+          "id": "vr-equipment-play",
+          "label": "Play a game",
+          "symbol": "🎮",
+          "prompt": "playing an imaginative virtual game"
+        },
+        {
+          "id": "vr-equipment-learn",
+          "label": "Learn something",
+          "symbol": "🔎",
+          "prompt": "discovering a new subject through virtual play"
+        },
+        {
+          "id": "vr-equipment-relax",
+          "label": "Relax with nature",
+          "symbol": "🌿",
+          "prompt": "enjoying a calm virtual nature scene"
+        }
+      ],
+      "settings": [
+        {
+          "id": "vr-equipment-space-world",
+          "label": "A space world",
+          "symbol": "🪐",
+          "prompt": "a playful imaginary space environment"
+        },
+        {
+          "id": "vr-equipment-underwater-world",
+          "label": "An ocean world",
+          "symbol": "🐠",
+          "prompt": "a colorful imaginary underwater environment"
+        },
+        {
+          "id": "vr-equipment-creative-world",
+          "label": "A building world",
+          "symbol": "🧱",
+          "prompt": "a creative virtual building environment"
+        },
+        {
+          "id": "vr-equipment-nature-world",
+          "label": "A nature world",
+          "symbol": "🌳",
+          "prompt": "a peaceful virtual forest environment"
+        }
+      ]
+    },
+    {
+      "id": "amusement-park",
+      "actions": [
+        {
+          "id": "amusement-park-ride",
+          "label": "Ride a coaster",
+          "symbol": "🎢",
+          "prompt": "riding an imaginary colorful roller coaster"
+        },
+        {
+          "id": "amusement-park-explore",
+          "label": "Explore the park",
+          "symbol": "🎡",
+          "prompt": "exploring a whimsical amusement park"
+        },
+        {
+          "id": "amusement-park-watch",
+          "label": "Watch a show",
+          "symbol": "🎭",
+          "prompt": "watching a cheerful park performance"
+        },
+        {
+          "id": "amusement-park-eat",
+          "label": "Have a snack",
+          "symbol": "🍿",
+          "prompt": "enjoying a park snack"
+        },
+        {
+          "id": "amusement-park-relax",
+          "label": "Take a quiet break",
+          "symbol": "🌳",
+          "prompt": "resting in a quiet shaded park corner"
+        }
+      ],
+      "settings": [
+        {
+          "id": "amusement-park-theme-park",
+          "label": "A theme park",
+          "symbol": "🎢",
+          "prompt": "an imaginative amusement park with playful rides"
+        },
+        {
+          "id": "amusement-park-fairground",
+          "label": "A fairground",
+          "symbol": "🎡",
+          "prompt": "a colorful fairground with a Ferris wheel"
+        },
+        {
+          "id": "amusement-park-family-park",
+          "label": "A small park",
+          "symbol": "🎠",
+          "prompt": "a gentle family amusement park"
+        },
+        {
+          "id": "amusement-park-indoor-park",
+          "label": "An indoor park",
+          "symbol": "🏰",
+          "prompt": "a playful indoor amusement park"
+        }
+      ]
+    },
+    {
+      "id": "school",
+      "actions": [
+        {
+          "id": "school-learn",
+          "label": "Learn something",
+          "symbol": "📚",
+          "prompt": "discovering a favorite school subject"
+        },
+        {
+          "id": "school-make",
+          "label": "Make a project",
+          "symbol": "✂️",
+          "prompt": "making a creative classroom project"
+        },
+        {
+          "id": "school-play",
+          "label": "Play together",
+          "symbol": "🧩",
+          "prompt": "playing a friendly learning game"
+        },
+        {
+          "id": "school-read",
+          "label": "Read a story",
+          "symbol": "📖",
+          "prompt": "sharing an illustrated story"
+        },
+        {
+          "id": "school-help",
+          "label": "Help my school",
+          "symbol": "💛",
+          "prompt": "creating something helpful for a school"
+        }
+      ],
+      "settings": [
+        {
+          "id": "school-classroom",
+          "label": "A classroom",
+          "symbol": "🏫",
+          "prompt": "a bright welcoming classroom"
+        },
+        {
+          "id": "school-library",
+          "label": "A library",
+          "symbol": "📚",
+          "prompt": "a cozy library full of books"
+        },
+        {
+          "id": "school-learning-room",
+          "label": "A learning room",
+          "symbol": "🔎",
+          "prompt": "a colorful home learning space"
+        },
+        {
+          "id": "school-school-garden",
+          "label": "A school garden",
+          "symbol": "🌻",
+          "prompt": "a cheerful school garden"
+        }
+      ]
+    },
+    {
+      "id": "celebrity",
+      "actions": [
+        {
+          "id": "celebrity-meet",
+          "label": "Meet someone",
+          "symbol": "🤝",
+          "prompt": "meeting a friendly performer"
+        },
+        {
+          "id": "celebrity-watch",
+          "label": "Watch a show",
+          "symbol": "🎭",
+          "prompt": "watching a cheerful performance"
+        },
+        {
+          "id": "celebrity-create",
+          "label": "Create together",
+          "symbol": "🎨",
+          "prompt": "making something creative with a performer"
+        },
+        {
+          "id": "celebrity-music",
+          "label": "Make music",
+          "symbol": "🎵",
+          "prompt": "making joyful music together"
+        },
+        {
+          "id": "celebrity-play",
+          "label": "Play together",
+          "symbol": "🎮",
+          "prompt": "playing a friendly game together"
+        }
+      ],
+      "settings": [
+        {
+          "id": "celebrity-stage",
+          "label": "A small stage",
+          "symbol": "🎤",
+          "prompt": "a welcoming small performance stage"
+        },
+        {
+          "id": "celebrity-studio",
+          "label": "A creative studio",
+          "symbol": "🎬",
+          "prompt": "a colorful creative studio"
+        },
+        {
+          "id": "celebrity-music-room",
+          "label": "A music room",
+          "symbol": "🎹",
+          "prompt": "a comfortable music room"
+        },
+        {
+          "id": "celebrity-video-visit",
+          "label": "A video visit",
+          "symbol": "💻",
+          "prompt": "a friendly video conversation on a screen"
+        }
+      ]
+    },
+    {
+      "id": "art",
+      "actions": [
+        {
+          "id": "art-paint",
+          "label": "Paint a picture",
+          "symbol": "🎨",
+          "prompt": "painting a colorful picture"
+        },
+        {
+          "id": "art-draw",
+          "label": "Draw something",
+          "symbol": "✏️",
+          "prompt": "drawing an imaginative scene"
+        },
+        {
+          "id": "art-build",
+          "label": "Make a sculpture",
+          "symbol": "🗿",
+          "prompt": "making a playful clay sculpture"
+        },
+        {
+          "id": "art-photo",
+          "label": "Take pictures",
+          "symbol": "📷",
+          "prompt": "taking creative photographs"
+        },
+        {
+          "id": "art-craft",
+          "label": "Make a craft",
+          "symbol": "✂️",
+          "prompt": "making a colorful paper craft"
+        }
+      ],
+      "settings": [
+        {
+          "id": "art-art-studio",
+          "label": "An art studio",
+          "symbol": "🖌️",
+          "prompt": "a bright art studio with supplies"
+        },
+        {
+          "id": "art-home-art-space",
+          "label": "My art corner",
+          "symbol": "🎨",
+          "prompt": "a cozy art corner at home"
+        },
+        {
+          "id": "art-museum",
+          "label": "An art museum",
+          "symbol": "🖼️",
+          "prompt": "a welcoming art museum"
+        },
+        {
+          "id": "art-outdoor-art",
+          "label": "Art outdoors",
+          "symbol": "🌻",
+          "prompt": "an outdoor art space in a garden"
+        }
+      ]
+    },
+    {
+      "id": "home",
+      "actions": [
+        {
+          "id": "home-decorate",
+          "label": "Decorate a room",
+          "symbol": "🖼️",
+          "prompt": "decorating a comfortable room"
+        },
+        {
+          "id": "home-build",
+          "label": "Build something",
+          "symbol": "🧱",
+          "prompt": "building a playful home feature"
+        },
+        {
+          "id": "home-play",
+          "label": "Make room to play",
+          "symbol": "🧸",
+          "prompt": "creating a welcoming play space"
+        },
+        {
+          "id": "home-relax",
+          "label": "Make a calm spot",
+          "symbol": "🛋️",
+          "prompt": "creating a peaceful relaxation corner"
+        },
+        {
+          "id": "home-garden",
+          "label": "Grow a garden",
+          "symbol": "🌱",
+          "prompt": "planting a cheerful home garden"
+        }
+      ],
+      "settings": [
+        {
+          "id": "home-bedroom",
+          "label": "A bedroom",
+          "symbol": "🛏️",
+          "prompt": "a cozy bedroom"
+        },
+        {
+          "id": "home-playroom",
+          "label": "A playroom",
+          "symbol": "🧸",
+          "prompt": "a colorful home playroom"
+        },
+        {
+          "id": "home-backyard",
+          "label": "A backyard",
+          "symbol": "🌳",
+          "prompt": "a welcoming backyard"
+        },
+        {
+          "id": "home-family-room",
+          "label": "A family room",
+          "symbol": "🛋️",
+          "prompt": "a comfortable family room"
+        }
+      ]
+    },
+    {
+      "id": "waterpark",
+      "actions": [
+        {
+          "id": "waterpark-splash",
+          "label": "Splash and play",
+          "symbol": "💦",
+          "prompt": "playing in gentle splashing water"
+        },
+        {
+          "id": "waterpark-slide",
+          "label": "Try a slide",
+          "symbol": "🛝",
+          "prompt": "enjoying an imaginary water slide"
+        },
+        {
+          "id": "waterpark-float",
+          "label": "Float along",
+          "symbol": "🛟",
+          "prompt": "floating peacefully in an imaginary lazy river"
+        },
+        {
+          "id": "waterpark-watch",
+          "label": "Watch the water",
+          "symbol": "🌊",
+          "prompt": "watching playful water fountains"
+        },
+        {
+          "id": "waterpark-relax",
+          "label": "Rest in the shade",
+          "symbol": "🏖️",
+          "prompt": "resting in shade near water"
+        }
+      ],
+      "settings": [
+        {
+          "id": "waterpark-outdoor-waterpark",
+          "label": "An outdoor park",
+          "symbol": "💦",
+          "prompt": "a sunny imaginary waterpark"
+        },
+        {
+          "id": "waterpark-indoor-waterpark",
+          "label": "An indoor park",
+          "symbol": "🏊",
+          "prompt": "a bright indoor imaginary waterpark"
+        },
+        {
+          "id": "waterpark-splash-pad",
+          "label": "A splash pad",
+          "symbol": "🚿",
+          "prompt": "a gentle neighborhood splash pad"
+        },
+        {
+          "id": "waterpark-quiet-pool",
+          "label": "A quiet pool",
+          "symbol": "🛟",
+          "prompt": "a calm swimming pool area"
+        }
+      ]
+    },
+    {
+      "id": "animals",
+      "actions": [
+        {
+          "id": "animals-watch",
+          "label": "Watch animals",
+          "symbol": "👀",
+          "prompt": "observing animals peacefully"
+        },
+        {
+          "id": "animals-learn",
+          "label": "Learn about them",
+          "symbol": "📖",
+          "prompt": "learning about animal habitats"
+        },
+        {
+          "id": "animals-meet",
+          "label": "Meet a pet",
+          "symbol": "🐕",
+          "prompt": "meeting a friendly companion animal"
+        },
+        {
+          "id": "animals-care",
+          "label": "Help care for them",
+          "symbol": "💛",
+          "prompt": "helping with gentle animal care"
+        },
+        {
+          "id": "animals-create",
+          "label": "Make an animal space",
+          "symbol": "🐾",
+          "prompt": "creating a cozy animal themed space"
+        }
+      ],
+      "settings": [
+        {
+          "id": "animals-wildlife-place",
+          "label": "A wildlife place",
+          "symbol": "🦒",
+          "prompt": "a spacious wildlife viewing setting"
+        },
+        {
+          "id": "animals-farm",
+          "label": "A farm",
+          "symbol": "🐄",
+          "prompt": "a welcoming farm landscape"
+        },
+        {
+          "id": "animals-aquarium",
+          "label": "An aquarium",
+          "symbol": "🐠",
+          "prompt": "a colorful aquarium setting"
+        },
+        {
+          "id": "animals-pet-space",
+          "label": "A cozy pet space",
+          "symbol": "🐕",
+          "prompt": "a comfortable home space for a companion animal"
+        }
+      ]
+    },
+    {
+      "id": "bike",
+      "actions": [
+        {
+          "id": "bike-ride",
+          "label": "Go for a ride",
+          "symbol": "🚲",
+          "prompt": "riding a bicycle along a gentle path"
+        },
+        {
+          "id": "bike-explore",
+          "label": "Explore a path",
+          "symbol": "🌳",
+          "prompt": "exploring a green bicycle path"
+        },
+        {
+          "id": "bike-learn",
+          "label": "Learn to ride",
+          "symbol": "🛞",
+          "prompt": "practicing cycling in a friendly open space"
+        },
+        {
+          "id": "bike-decorate",
+          "label": "Choose its look",
+          "symbol": "🎨",
+          "prompt": "personalizing a colorful bicycle"
+        },
+        {
+          "id": "bike-ride-together",
+          "label": "Ride together",
+          "symbol": "🤝",
+          "prompt": "enjoying a shared bicycle ride"
+        }
+      ],
+      "settings": [
+        {
+          "id": "bike-park-path",
+          "label": "A park path",
+          "symbol": "🌳",
+          "prompt": "a gentle paved path in a park"
+        },
+        {
+          "id": "bike-neighborhood",
+          "label": "My neighborhood",
+          "symbol": "🏡",
+          "prompt": "a quiet neighborhood cycling path"
+        },
+        {
+          "id": "bike-adaptive-bike",
+          "label": "An adaptive bike",
+          "symbol": "🚲",
+          "prompt": "a thoughtfully designed adaptive cycle"
+        },
+        {
+          "id": "bike-tandem-bike",
+          "label": "A tandem bike",
+          "symbol": "🚴",
+          "prompt": "a colorful tandem bicycle"
+        }
+      ]
+    },
+    {
+      "id": "hospital",
+      "actions": [
+        {
+          "id": "hospital-give",
+          "label": "Give a gift",
+          "symbol": "🎁",
+          "prompt": "sharing cheerful gifts with a community"
+        },
+        {
+          "id": "hospital-create",
+          "label": "Make artwork",
+          "symbol": "🎨",
+          "prompt": "creating uplifting artwork for a shared space"
+        },
+        {
+          "id": "hospital-play",
+          "label": "Make a play space",
+          "symbol": "🧸",
+          "prompt": "creating a welcoming community play space"
+        },
+        {
+          "id": "hospital-music",
+          "label": "Share music",
+          "symbol": "🎵",
+          "prompt": "sharing joyful music"
+        },
+        {
+          "id": "hospital-help",
+          "label": "Help other people",
+          "symbol": "💛",
+          "prompt": "helping a caring community"
+        }
+      ],
+      "settings": [
+        {
+          "id": "hospital-playroom",
+          "label": "A playroom",
+          "symbol": "🧸",
+          "prompt": "a welcoming hospital playroom"
+        },
+        {
+          "id": "hospital-art-wall",
+          "label": "An art wall",
+          "symbol": "🖼️",
+          "prompt": "a colorful community art wall"
+        },
+        {
+          "id": "hospital-comfort-corner",
+          "label": "A comfort corner",
+          "symbol": "🛋️",
+          "prompt": "a peaceful shared comfort corner"
+        },
+        {
+          "id": "hospital-garden",
+          "label": "A courtyard garden",
+          "symbol": "🌻",
+          "prompt": "a quiet courtyard garden"
+        }
+      ]
+    },
+    {
+      "id": "party",
+      "actions": [
+        {
+          "id": "party-dance",
+          "label": "Dance together",
+          "symbol": "💃",
+          "prompt": "dancing at a cheerful celebration"
+        },
+        {
+          "id": "party-play",
+          "label": "Play party games",
+          "symbol": "🎈",
+          "prompt": "playing friendly party games"
+        },
+        {
+          "id": "party-music",
+          "label": "Listen to music",
+          "symbol": "🎵",
+          "prompt": "enjoying joyful celebration music"
+        },
+        {
+          "id": "party-eat",
+          "label": "Share a treat",
+          "symbol": "🧁",
+          "prompt": "sharing a celebration treat"
+        },
+        {
+          "id": "party-decorate",
+          "label": "Make decorations",
+          "symbol": "🎨",
+          "prompt": "creating colorful party decorations"
+        }
+      ],
+      "settings": [
+        {
+          "id": "party-backyard-party",
+          "label": "A backyard party",
+          "symbol": "🌳",
+          "prompt": "a cheerful backyard celebration"
+        },
+        {
+          "id": "party-indoor-party",
+          "label": "An indoor party",
+          "symbol": "🎈",
+          "prompt": "a cozy indoor celebration"
+        },
+        {
+          "id": "party-picnic-party",
+          "label": "A picnic party",
+          "symbol": "🧺",
+          "prompt": "a festive outdoor picnic"
+        },
+        {
+          "id": "party-creative-party",
+          "label": "An art party",
+          "symbol": "🎨",
+          "prompt": "a colorful craft celebration"
+        }
+      ]
+    },
+    {
+      "id": "gift",
+      "actions": [
+        {
+          "id": "gift-build",
+          "label": "Build something",
+          "symbol": "🧱",
+          "prompt": "building an imaginative creation"
+        },
+        {
+          "id": "gift-create",
+          "label": "Create something",
+          "symbol": "🎨",
+          "prompt": "making a colorful creative project"
+        },
+        {
+          "id": "gift-play",
+          "label": "Play a game",
+          "symbol": "🎮",
+          "prompt": "playing a favorite game"
+        },
+        {
+          "id": "gift-learn",
+          "label": "Learn something",
+          "symbol": "📚",
+          "prompt": "exploring an enjoyable learning activity"
+        },
+        {
+          "id": "gift-share",
+          "label": "Share with others",
+          "symbol": "🎁",
+          "prompt": "sharing an enjoyable gift with others"
+        }
+      ],
+      "settings": [
+        {
+          "id": "gift-custom-brick-build",
+          "label": "A brick creation",
+          "symbol": "🧱",
+          "prompt": "a custom imaginative construction made from colorful interlocking toy bricks"
+        },
+        {
+          "id": "gift-creative-computer",
+          "label": "A creative computer",
+          "symbol": "💻",
+          "prompt": "a computer workspace for artwork and creative projects"
+        },
+        {
+          "id": "gift-gaming-computer",
+          "label": "A gaming computer",
+          "symbol": "🖥️",
+          "prompt": "a colorful computer gaming setup"
+        },
+        {
+          "id": "gift-creative-kit",
+          "label": "A creative kit",
+          "symbol": "🧰",
+          "prompt": "a collection of arts crafts and making supplies"
+        }
+      ]
+    },
+    {
+      "id": "train",
+      "actions": [
+        {
+          "id": "train-ride",
+          "label": "Ride a train",
+          "symbol": "🚂",
+          "prompt": "riding a cheerful passenger train"
+        },
+        {
+          "id": "train-watch",
+          "label": "Watch trains",
+          "symbol": "👀",
+          "prompt": "watching colorful trains"
+        },
+        {
+          "id": "train-learn",
+          "label": "Learn about trains",
+          "symbol": "📖",
+          "prompt": "learning how trains work"
+        },
+        {
+          "id": "train-build",
+          "label": "Build a train world",
+          "symbol": "🧱",
+          "prompt": "building an imaginative model train landscape"
+        },
+        {
+          "id": "train-explore",
+          "label": "Explore a station",
+          "symbol": "🚉",
+          "prompt": "exploring a welcoming train station"
+        }
+      ],
+      "settings": [
+        {
+          "id": "train-scenic-train",
+          "label": "A scenic train",
+          "symbol": "🚞",
+          "prompt": "a scenic passenger train among green hills"
+        },
+        {
+          "id": "train-heritage-train",
+          "label": "A historic train",
+          "symbol": "🚂",
+          "prompt": "a cheerful historic steam train"
+        },
+        {
+          "id": "train-model-train",
+          "label": "A model train",
+          "symbol": "🛤️",
+          "prompt": "a detailed model train landscape"
+        },
+        {
+          "id": "train-train-museum",
+          "label": "A train museum",
+          "symbol": "🚉",
+          "prompt": "a welcoming railway museum"
+        }
+      ]
+    },
+    {
+      "id": "playground",
+      "actions": [
+        {
+          "id": "playground-swing",
+          "label": "Go on a swing",
+          "symbol": "🛝",
+          "prompt": "enjoying an inclusive playground swing"
+        },
+        {
+          "id": "playground-slide",
+          "label": "Try a slide",
+          "symbol": "🛝",
+          "prompt": "playing on a colorful playground slide"
+        },
+        {
+          "id": "playground-climb",
+          "label": "Try climbing",
+          "symbol": "🪜",
+          "prompt": "exploring a low playful climbing structure"
+        },
+        {
+          "id": "playground-make",
+          "label": "Build a play space",
+          "symbol": "🧱",
+          "prompt": "creating a welcoming outdoor play space"
+        },
+        {
+          "id": "playground-play-together",
+          "label": "Play together",
+          "symbol": "🤝",
+          "prompt": "playing together at an inclusive playground"
+        }
+      ],
+      "settings": [
+        {
+          "id": "playground-community-playground",
+          "label": "A local playground",
+          "symbol": "🌳",
+          "prompt": "a welcoming community playground"
+        },
+        {
+          "id": "playground-backyard-playset",
+          "label": "A backyard playset",
+          "symbol": "🛝",
+          "prompt": "a colorful backyard playset"
+        },
+        {
+          "id": "playground-playhouse",
+          "label": "A playhouse",
+          "symbol": "🏡",
+          "prompt": "an imaginative small playhouse"
+        },
+        {
+          "id": "playground-indoor-playground",
+          "label": "An indoor playground",
+          "symbol": "🧸",
+          "prompt": "a bright indoor playground"
+        }
+      ]
+    },
+    {
+      "id": "music",
+      "actions": [
+        {
+          "id": "music-listen",
+          "label": "Listen to music",
+          "symbol": "🎧",
+          "prompt": "listening to favorite music"
+        },
+        {
+          "id": "music-play",
+          "label": "Play an instrument",
+          "symbol": "🎹",
+          "prompt": "playing a musical instrument"
+        },
+        {
+          "id": "music-sing",
+          "label": "Sing a song",
+          "symbol": "🎤",
+          "prompt": "singing a joyful song"
+        },
+        {
+          "id": "music-create",
+          "label": "Make a song",
+          "symbol": "🎼",
+          "prompt": "creating an original song"
+        },
+        {
+          "id": "music-dance",
+          "label": "Move to music",
+          "symbol": "💃",
+          "prompt": "moving happily to music"
+        }
+      ],
+      "settings": [
+        {
+          "id": "music-music-room",
+          "label": "A music room",
+          "symbol": "🎹",
+          "prompt": "a welcoming home music room"
+        },
+        {
+          "id": "music-small-stage",
+          "label": "A small stage",
+          "symbol": "🎤",
+          "prompt": "a cheerful small music stage"
+        },
+        {
+          "id": "music-recording-space",
+          "label": "A song studio",
+          "symbol": "🎙️",
+          "prompt": "a cozy song recording space"
+        },
+        {
+          "id": "music-outdoor-music",
+          "label": "Music outdoors",
+          "symbol": "🌳",
+          "prompt": "a gentle outdoor music gathering"
+        }
+      ]
+    },
+    {
+      "id": "sensory-room",
+      "actions": [
+        {
+          "id": "sensory-room-relax",
+          "label": "Rest and relax",
+          "symbol": "🛋️",
+          "prompt": "relaxing in a peaceful sensory space"
+        },
+        {
+          "id": "sensory-room-lights",
+          "label": "Explore lights",
+          "symbol": "✨",
+          "prompt": "enjoying soft colorful sensory lights"
+        },
+        {
+          "id": "sensory-room-music",
+          "label": "Listen to sounds",
+          "symbol": "🎵",
+          "prompt": "listening to gentle sounds"
+        },
+        {
+          "id": "sensory-room-textures",
+          "label": "Feel textures",
+          "symbol": "🧸",
+          "prompt": "exploring inviting soft textures"
+        },
+        {
+          "id": "sensory-room-move",
+          "label": "Move and play",
+          "symbol": "🟠",
+          "prompt": "exploring playful sensory movement"
+        }
+      ],
+      "settings": [
+        {
+          "id": "sensory-room-calm-room",
+          "label": "A calm room",
+          "symbol": "🛋️",
+          "prompt": "a peaceful softly lit sensory room"
+        },
+        {
+          "id": "sensory-room-play-room",
+          "label": "A sensory playroom",
+          "symbol": "🧸",
+          "prompt": "a colorful welcoming sensory playroom"
+        },
+        {
+          "id": "sensory-room-nature-space",
+          "label": "A nature corner",
+          "symbol": "🌿",
+          "prompt": "a nature inspired sensory corner"
+        },
+        {
+          "id": "sensory-room-music-space",
+          "label": "A sound corner",
+          "symbol": "🎵",
+          "prompt": "a comfortable sensory sound corner"
+        }
+      ]
+    },
+    {
+      "id": "fishing",
+      "actions": [
+        {
+          "id": "fishing-fish",
+          "label": "Try fishing",
+          "symbol": "🎣",
+          "prompt": "enjoying a peaceful fishing activity"
+        },
+        {
+          "id": "fishing-watch",
+          "label": "Watch the water",
+          "symbol": "🌊",
+          "prompt": "watching gentle ripples on water"
+        },
+        {
+          "id": "fishing-learn",
+          "label": "Learn about fish",
+          "symbol": "🐟",
+          "prompt": "learning about fish and their habitats"
+        },
+        {
+          "id": "fishing-picnic",
+          "label": "Have a picnic",
+          "symbol": "🧺",
+          "prompt": "sharing a peaceful waterside picnic"
+        },
+        {
+          "id": "fishing-explore",
+          "label": "Explore the shore",
+          "symbol": "🔎",
+          "prompt": "exploring a gentle lakeshore"
+        }
+      ],
+      "settings": [
+        {
+          "id": "fishing-lake",
+          "label": "A quiet lake",
+          "symbol": "🏞️",
+          "prompt": "a peaceful lake with a welcoming fishing spot"
+        },
+        {
+          "id": "fishing-river",
+          "label": "A gentle river",
+          "symbol": "🏞️",
+          "prompt": "a gentle river with a grassy bank"
+        },
+        {
+          "id": "fishing-pier",
+          "label": "A fishing pier",
+          "symbol": "🎣",
+          "prompt": "a wide welcoming fishing pier"
+        },
+        {
+          "id": "fishing-pond",
+          "label": "A local pond",
+          "symbol": "🌿",
+          "prompt": "a peaceful neighborhood fishing pond"
+        }
+      ]
+    }
+  ],
+  "favorites": [
+    {
+      "id": "color",
+      "label": "Colors I like",
+      "options": [
+        {
+          "id": "favorite-color-blue",
+          "label": "Blue",
+          "symbol": "🔵",
+          "prompt": "blue color accents"
+        },
+        {
+          "id": "favorite-color-pink",
+          "label": "Pink",
+          "symbol": "🩷",
+          "prompt": "pink color accents"
+        },
+        {
+          "id": "favorite-color-purple",
+          "label": "Purple",
+          "symbol": "🟣",
+          "prompt": "purple color accents"
+        },
+        {
+          "id": "favorite-color-green",
+          "label": "Green",
+          "symbol": "🟢",
+          "prompt": "green color accents"
+        },
+        {
+          "id": "favorite-color-red",
+          "label": "Red",
+          "symbol": "🔴",
+          "prompt": "red color accents"
+        },
+        {
+          "id": "favorite-color-yellow",
+          "label": "Yellow",
+          "symbol": "🟡",
+          "prompt": "yellow color accents"
+        }
+      ]
+    },
+    {
+      "id": "food",
+      "label": "Treats I like",
+      "options": [
+        {
+          "id": "favorite-food-pizza",
+          "label": "Pizza",
+          "symbol": "🍕",
+          "prompt": "a slice of pizza as a favorite treat"
+        },
+        {
+          "id": "favorite-food-fruit",
+          "label": "Fruit",
+          "symbol": "🍓",
+          "prompt": "a small bowl of colorful fruit"
+        },
+        {
+          "id": "favorite-food-cake",
+          "label": "Cake",
+          "symbol": "🧁",
+          "prompt": "a cheerful celebration cupcake"
+        },
+        {
+          "id": "favorite-food-ice-cream",
+          "label": "Ice cream",
+          "symbol": "🍦",
+          "prompt": "an ice cream cone"
+        },
+        {
+          "id": "favorite-food-popcorn",
+          "label": "Popcorn",
+          "symbol": "🍿",
+          "prompt": "a small box of popcorn"
+        },
+        {
+          "id": "favorite-food-sandwich",
+          "label": "A sandwich",
+          "symbol": "🥪",
+          "prompt": "a picnic sandwich"
+        }
+      ]
+    },
+    {
+      "id": "animals",
+      "label": "Animals I like",
+      "options": [
+        {
+          "id": "favorite-animals-dog",
+          "label": "Dogs",
+          "symbol": "🐕",
+          "prompt": "a friendly dog"
+        },
+        {
+          "id": "favorite-animals-cat",
+          "label": "Cats",
+          "symbol": "🐈",
+          "prompt": "a friendly cat"
+        },
+        {
+          "id": "favorite-animals-horse",
+          "label": "Horses",
+          "symbol": "🐎",
+          "prompt": "a horse in an appropriate open habitat"
+        },
+        {
+          "id": "favorite-animals-giraffe",
+          "label": "Giraffes",
+          "symbol": "🦒",
+          "prompt": "a giraffe in an appropriate open habitat"
+        },
+        {
+          "id": "favorite-animals-dolphin",
+          "label": "Dolphins",
+          "symbol": "🐬",
+          "prompt": "a dolphin in its ocean habitat"
+        },
+        {
+          "id": "favorite-animals-butterfly",
+          "label": "Butterflies",
+          "symbol": "🦋",
+          "prompt": "colorful butterflies"
+        }
+      ]
+    },
+    {
+      "id": "music",
+      "label": "Music I like",
+      "options": [
+        {
+          "id": "favorite-music-gentle",
+          "label": "Gentle music",
+          "symbol": "🎵",
+          "prompt": "a gentle musical mood"
+        },
+        {
+          "id": "favorite-music-dance",
+          "label": "Dance music",
+          "symbol": "💃",
+          "prompt": "a lively dance music mood"
+        },
+        {
+          "id": "favorite-music-drums",
+          "label": "Drums",
+          "symbol": "🥁",
+          "prompt": "a cheerful drum rhythm"
+        },
+        {
+          "id": "favorite-music-piano",
+          "label": "Piano",
+          "symbol": "🎹",
+          "prompt": "a friendly piano music element"
+        },
+        {
+          "id": "favorite-music-guitar",
+          "label": "Guitar",
+          "symbol": "🎸",
+          "prompt": "a colorful guitar music element"
+        },
+        {
+          "id": "favorite-music-singing",
+          "label": "Singing",
+          "symbol": "🎤",
+          "prompt": "a joyful singing element"
+        }
+      ]
+    },
+    {
+      "id": "game-style",
+      "label": "Games I like",
+      "options": [
+        {
+          "id": "favorite-game-style-action-adventure",
+          "label": "Action adventure",
+          "symbol": "🗺️",
+          "prompt": "an imaginative playful action adventure theme"
+        },
+        {
+          "id": "favorite-game-style-building",
+          "label": "Building games",
+          "symbol": "🧱",
+          "prompt": "a creative building game theme"
+        },
+        {
+          "id": "favorite-game-style-racing",
+          "label": "Racing games",
+          "symbol": "🏎️",
+          "prompt": "a colorful playful racing game theme"
+        },
+        {
+          "id": "favorite-game-style-puzzles",
+          "label": "Puzzle games",
+          "symbol": "🧩",
+          "prompt": "a friendly puzzle game theme"
+        },
+        {
+          "id": "favorite-game-style-team",
+          "label": "Team games",
+          "symbol": "🤝",
+          "prompt": "a cooperative team game theme"
+        },
+        {
+          "id": "favorite-game-style-exploring",
+          "label": "Exploring games",
+          "symbol": "🔎",
+          "prompt": "a curious exploration game theme"
+        }
+      ]
+    },
+    {
+      "id": "adventure",
+      "label": "Adventures I like",
+      "options": [
+        {
+          "id": "favorite-adventure-forest",
+          "label": "Forest adventure",
+          "symbol": "🌲",
+          "prompt": "a playful forest adventure theme"
+        },
+        {
+          "id": "favorite-adventure-space",
+          "label": "Space adventure",
+          "symbol": "🪐",
+          "prompt": "a colorful imaginary space adventure theme"
+        },
+        {
+          "id": "favorite-adventure-ocean",
+          "label": "Ocean adventure",
+          "symbol": "🌊",
+          "prompt": "a playful ocean adventure theme"
+        },
+        {
+          "id": "favorite-adventure-castle",
+          "label": "Castle adventure",
+          "symbol": "🏰",
+          "prompt": "an imaginative storybook castle theme"
+        },
+        {
+          "id": "favorite-adventure-quiet",
+          "label": "A quiet adventure",
+          "symbol": "🌿",
+          "prompt": "a gentle quiet adventure mood"
+        },
+        {
+          "id": "favorite-adventure-colorful",
+          "label": "A colorful adventure",
+          "symbol": "🌈",
+          "prompt": "a bright colorful adventure mood"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "npm ci",
+  "functions": {
+    "api/index.js": {
+      "maxDuration": 120,
+      "supportsCancellation": true,
+      "includeFiles": "src/journey-catalog.json"
+    }
+  },
+  "rewrites": [
+    { "source": "/health", "destination": "/api/index" },
+    { "source": "/v1/catalog", "destination": "/api/index" },
+    { "source": "/v1/wish-preview", "destination": "/api/index" },
+    { "source": "/v1/scene-capabilities", "destination": "/api/index" },
+    { "source": "/v1/wish-scene", "destination": "/api/index" }
+  ]
+}

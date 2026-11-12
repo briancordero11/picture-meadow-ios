@@ -4,6 +4,8 @@
   "privacyPolicyURL": "",
   "supportURL": "",
   "onlinePreviewEnabled": false,
+  "sceneGenerationEnabled": false,
+  "aiProviderName": "Google Vertex AI via Vercel AI Gateway",
   "apiBaseURL": "",
   "audience": {
     "kidsCategory": null,
@@ -21,6 +23,10 @@
     "brandAndArtworkRights": false,
     "nativeDeviceTesting": false,
     "archivePrivacyManifest": false,
-    "backendAndHostingRetention": false
+    "backendAndHostingRetention": false,
+    "aiProviderRetentionAndNoTraining": false,
+    "aiConsentAndAdultReview": false,
+    "aiServiceAccessAndBudget": false,
+    "aiFailureAndCancellation": false
   }
 }

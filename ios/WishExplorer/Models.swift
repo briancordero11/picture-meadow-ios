@@ -45,6 +45,57 @@ struct WishDraft: Codable, Equatable {
     var coasterColor: CoasterColor? = nil
     var animals: [WishAnimal] = []
     var wantsAnimals: Bool? = nil
+    var selectedActionIDs: [String] = []
+    var selectedSettingID: String? = nil
+    var favoriteIDs: [String] = []
+    var essentialChoiceID: String? = nil
+
+    // Older saved drafts predate the action journey. Missing choices remain unanswered.
+    private enum CodingKeys: String, CodingKey {
+        case category, interestID, destinationID, coasterColor, animals, wantsAnimals
+        case selectedActionIDs, selectedSettingID, favoriteIDs, essentialChoiceID
+    }
+    init(category: WishCategory? = nil, interestID: String? = nil, destinationID: String? = nil,
+         coasterColor: CoasterColor? = nil, animals: [WishAnimal] = [], wantsAnimals: Bool? = nil,
+         selectedActionIDs: [String] = [], selectedSettingID: String? = nil,
+         favoriteIDs: [String] = [], essentialChoiceID: String? = nil) {
+        self.category = category; self.interestID = interestID; self.destinationID = destinationID
+        self.coasterColor = coasterColor; self.animals = animals; self.wantsAnimals = wantsAnimals
+        self.selectedActionIDs = selectedActionIDs; self.selectedSettingID = selectedSettingID
+        self.favoriteIDs = favoriteIDs; self.essentialChoiceID = essentialChoiceID
+    }
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        category = try values.decodeIfPresent(WishCategory.self, forKey: .category)
+        interestID = try values.decodeIfPresent(String.self, forKey: .interestID)
+        destinationID = try values.decodeIfPresent(String.self, forKey: .destinationID)
+        coasterColor = try values.decodeIfPresent(CoasterColor.self, forKey: .coasterColor)
+        animals = try values.decodeIfPresent([WishAnimal].self, forKey: .animals) ?? []
+        wantsAnimals = try values.decodeIfPresent(Bool.self, forKey: .wantsAnimals)
+        selectedActionIDs = try values.decodeIfPresent([String].self, forKey: .selectedActionIDs) ?? []
+        selectedSettingID = try values.decodeIfPresent(String.self, forKey: .selectedSettingID)
+        favoriteIDs = try values.decodeIfPresent([String].self, forKey: .favoriteIDs) ?? []
+        essentialChoiceID = try values.decodeIfPresent(String.self, forKey: .essentialChoiceID)
+    }
+
+    var sceneChoices: [JourneyChoice] { JourneyCatalog.shared.choices(for: self) }
+    var canRequestScene: Bool { interest != nil && !sceneChoices.isEmpty }
+    var sceneDescription: String {
+        var parts = ["My \(interest?.label ?? "wish") idea."]
+        if !selectedActionIDs.isEmpty {
+            let actions = selectedActionIDs.compactMap { JourneyCatalog.shared.choice(id: $0)?.label.lowercased() }
+            if !actions.isEmpty { parts.append("I want to \(actions.joined(separator: ", ")).") }
+        }
+        if let setting = selectedSettingID.flatMap({ JourneyCatalog.shared.choice(id: $0) }) {
+            parts.append("I imagine \(setting.label.lowercased()).")
+        }
+        let favorites = favoriteIDs.compactMap { JourneyCatalog.shared.choice(id: $0)?.label.lowercased() }
+        if !favorites.isEmpty { parts.append("I like \(favorites.joined(separator: ", ")).") }
+        if let essential = essentialChoiceID.flatMap({ JourneyCatalog.shared.choice(id: $0) }) {
+            parts.append("\(essential.label) matters most to me.")
+        }
+        return parts.joined(separator: " ")
+    }
 
     var destination: WishDestination? { WishDestination.all.first { $0.id == destinationID } }
     var canPreview: Bool { category == .go }
@@ -79,10 +130,11 @@ struct WishDraft: Codable, Equatable {
 }
 
 enum WishStep: Int, CaseIterable {
-    case welcome, interests, destination, color, animals, postcard, otherWish
+    case welcome, interests, destination, color, animals, postcard, otherWish, journey
     var progress: Double {
         switch self {
         case .welcome, .interests, .otherWish: 0
+        case .journey: 0.25
         case .destination: 0.25
         case .color: 0.5
         case .animals: 0.75
@@ -92,7 +144,7 @@ enum WishStep: Int, CaseIterable {
     var previous: Self {
         switch self {
         case .welcome, .interests: .welcome
-        case .destination, .otherWish: .interests
+        case .destination, .otherWish, .journey: .interests
         case .color: .destination
         case .animals: .color
         case .postcard: .animals

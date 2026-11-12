@@ -61,12 +61,18 @@ def validate(metadata):
     if not isinstance(reviewed, dict):
         reviewed = {}
     required = ["privacyPolicy", "appPrivacyAnswers", "ageAssuranceForLaunchRegions", "parentalGateWithTargetAudience", "brandAndArtworkRights", "nativeDeviceTesting", "archivePrivacyManifest"]
-    if metadata.get("onlinePreviewEnabled") is True:
+    if metadata.get("onlinePreviewEnabled") is True or metadata.get("sceneGenerationEnabled") is True:
         if not public_https(metadata.get("apiBaseURL")) or urlsplit(metadata.get("apiBaseURL", "")).path not in {"", "/"} or urlsplit(metadata.get("apiBaseURL", "")).query:
             problems.append("Online preview requires a reviewed public HTTPS API origin without a query or path.")
         required.append("backendAndHostingRetention")
-    elif metadata.get("onlinePreviewEnabled") is not False:
+    if metadata.get("onlinePreviewEnabled") not in (True, False) or not isinstance(metadata.get("onlinePreviewEnabled"), bool):
         problems.append("Explicitly choose onlinePreviewEnabled true or false; the default app build is offline.")
+    if not isinstance(metadata.get("sceneGenerationEnabled"), bool):
+        problems.append("Explicitly choose sceneGenerationEnabled true or false; the default app build is offline.")
+    if metadata.get("sceneGenerationEnabled") is True:
+        if metadata.get("aiProviderName") != "Google Vertex AI via Vercel AI Gateway":
+            problems.append("AI provider disclosure must match the backend's Google Vertex AI via Vercel AI Gateway route.")
+        required.extend(["aiProviderRetentionAndNoTraining", "aiConsentAndAdultReview", "aiServiceAccessAndBudget", "aiFailureAndCancellation"])
     for item in required:
         if reviewed.get(item) is not True:
             problems.append(f"Complete and record the {item} review.")

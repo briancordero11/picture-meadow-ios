@@ -1,6 +1,7 @@
 import { createServer } from 'node:http';
 import { catalog } from './catalog.js';
 import { buildWishPreview, InputError } from './preview.js';
+import { createSceneService, SceneError } from './scene.js';
 
 class HTTPError extends Error {
   constructor(status, code, message) {
@@ -89,6 +90,18 @@ function readJSON(request, maxBytes) {
       reject(new HTTPError(413, 'payload_too_large', `The request body must be at most ${maxBytes} bytes.`));
       return;
     }
+    // Vercel's Node helper may supply an already-read body. Apply the same size
+    // and JSON checks instead of waiting for an end event that already occurred.
+    if (request.body !== undefined) {
+      try {
+        const body = Buffer.isBuffer(request.body) ? request.body : Buffer.from(typeof request.body === 'string' ? request.body : JSON.stringify(request.body));
+        if (body.length > maxBytes) throw new HTTPError(413, 'payload_too_large', `The request body must be at most ${maxBytes} bytes.`);
+        resolve(JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(body)));
+      } catch (error) {
+        reject(error instanceof HTTPError ? error : new HTTPError(400, 'invalid_json', 'Send a valid UTF-8 JSON object.'));
+      }
+      return;
+    }
     let size = 0;
     let chunks = [];
     let settled = false;
@@ -132,16 +145,19 @@ const endpointMethods = new Map([
   ['/health', 'GET'],
   ['/v1/catalog', 'GET'],
   ['/v1/wish-preview', 'POST'],
+  ['/v1/scene-capabilities', 'GET'],
+  ['/v1/wish-scene', 'POST'],
 ]);
 
 /** Payloads are never written to a database or request log. */
-export function createWishServer({ allowedOrigins = [], bodyLimitBytes = 2_048, rateLimit, now } = {}) {
+export function createWishHandler({ allowedOrigins = [], bodyLimitBytes = 2_048, rateLimit, sceneService = createSceneService(), sceneRateLimit = { windowMs: 60_000, maxRequests: 3 }, now } = {}) {
   if (!Number.isSafeInteger(bodyLimitBytes) || bodyLimitBytes < 128 || bodyLimitBytes > 65_536) {
     throw new Error('bodyLimitBytes must be an integer between 128 and 65536.');
   }
   const origins = new Set(parseAllowedOrigins(allowedOrigins.join(',')));
   const limiter = createRateLimiter(rateLimit, now);
-  const server = createServer(async (request, response) => {
+  const sceneLimiter = createRateLimiter(sceneRateLimit, now);
+  const handler = async (request, response) => {
     response.setHeader('Content-Type', 'application/json; charset=utf-8');
     response.setHeader('Cache-Control', 'no-store');
     response.setHeader('X-Content-Type-Options', 'nosniff');
@@ -167,11 +183,12 @@ export function createWishServer({ allowedOrigins = [], bodyLimitBytes = 2_048, 
       if (request.method === 'OPTIONS') {
         const requestedMethod = request.headers['access-control-request-method'];
         const requestedHeaders = request.headers['access-control-request-headers']?.split(',').map(header => header.trim().toLowerCase()) ?? [];
-        if (!origin || !requestedMethod || requestedMethod !== requiredMethod || requestedHeaders.some(header => header !== 'content-type')) {
+        const allowedHeaders = url.pathname === '/v1/wish-scene' ? ['content-type', 'authorization'] : ['content-type'];
+        if (!origin || !requestedMethod || requestedMethod !== requiredMethod || requestedHeaders.some(header => !allowedHeaders.includes(header))) {
           throw new HTTPError(400, 'invalid_preflight', 'The requested browser operation is not supported.');
         }
         response.setHeader('Access-Control-Allow-Methods', requiredMethod);
-        response.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+        response.setHeader('Access-Control-Allow-Headers', url.pathname === '/v1/wish-scene' ? 'Content-Type, Authorization' : 'Content-Type');
         response.setHeader('Access-Control-Max-Age', '600');
         send(204);
         return;
@@ -196,19 +213,51 @@ export function createWishServer({ allowedOrigins = [], bodyLimitBytes = 2_048, 
         send(200, catalog);
         return;
       }
+      if (url.pathname === '/v1/scene-capabilities') {
+        send(200, sceneService.capabilities);
+        return;
+      }
+      if (url.pathname === '/v1/wish-scene') {
+        sceneService.authorize(request.headers.authorization);
+        const sceneRate = sceneLimiter.check('authenticated-scene-service');
+        if (!sceneRate.allowed) {
+          response.setHeader('Retry-After', String(sceneRate.retryAfter));
+          throw new HTTPError(429, 'generation_busy', 'Please wait before drawing another picture.');
+        }
+        const input = await readJSON(request, bodyLimitBytes);
+        const controller = new AbortController();
+        const cancel = () => { if (!response.writableEnded) controller.abort(); };
+        request.once('aborted', cancel);
+        response.once('close', cancel);
+        try {
+          send(200, await sceneService.generate(input, { signal: controller.signal }));
+        } finally {
+          request.off('aborted', cancel);
+          response.off('close', cancel);
+        }
+        return;
+      }
       const input = await readJSON(request, bodyLimitBytes);
       send(200, buildWishPreview(input));
     } catch (error) {
       // Never reflect bodies, headers, stack traces, or arbitrary input in an error.
       if (error instanceof InputError) send(400, { error: { code: 'invalid_choices', message: error.message } });
-      else if (error instanceof HTTPError) {
+      else if (error instanceof HTTPError || error instanceof SceneError) {
         if (error.status === 413 || error.status === 415) response.setHeader('Connection', 'close');
         send(error.status, { error: { code: error.code, message: error.message } });
       } else send(500, { error: { code: 'internal_error', message: 'The preview could not be created. Please try again.' } });
     }
-  });
-  server.once('listening', () => limiter.start());
-  server.once('close', () => limiter.dispose());
+  };
+  handler.start = () => { limiter.start(); sceneLimiter.start(); };
+  handler.dispose = () => { limiter.dispose(); sceneLimiter.dispose(); };
+  return handler;
+}
+
+export function createWishServer(options) {
+  const handler = createWishHandler(options);
+  const server = createServer(handler);
+  server.once('listening', handler.start);
+  server.once('close', handler.dispose);
   server.requestTimeout = 10_000;
   server.headersTimeout = 5_000;
   server.keepAliveTimeout = 5_000;
