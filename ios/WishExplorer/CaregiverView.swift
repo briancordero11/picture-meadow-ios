@@ -31,6 +31,7 @@ struct CaregiverView: View {
                     Text("The talking board and Read my wish always speak when tapped, even with choice narration off.")
                         .font(.footnote).foregroundStyle(.secondary)
                 }
+                SpeechVoicePreferenceSection()
                 Section("Current wish") {
                     Text("Saving, AI permissions, and forgetting choices are in Privacy & Data. Start a fresh wish clears the current and saved wish while keeping the remembering preference and service access code.")
                     Button("Start a new wish", role: .destructive) { confirmingReset = true }

@@ -16,6 +16,13 @@ final class WishStore: ObservableObject {
     @Published var readChoicesAloud: Bool {
         didSet { defaults.set(readChoicesAloud, forKey: Self.speechKey) }
     }
+    @Published var voicePreset: SpeechVoicePreference {
+        didSet {
+            guard voicePreset != oldValue else { return }
+            stopSpeaking()
+            defaults.set(voicePreset.rawValue, forKey: SpeechVoicePreference.defaultsKey)
+        }
+    }
     @Published var rememberChoices: Bool {
         didSet {
             defaults.set(rememberChoices, forKey: Self.rememberKey)
@@ -61,6 +68,8 @@ final class WishStore: ObservableObject {
         self.sceneAccessToken = sceneAccessToken
         sceneAccessConfigured = sceneAccessToken != nil
         readChoicesAloud = defaults.object(forKey: Self.speechKey) as? Bool ?? true
+        voicePreset = defaults.string(forKey: SpeechVoicePreference.defaultsKey)
+            .flatMap(SpeechVoicePreference.init(rawValue:)) ?? .defaultPreference
         let shouldRemember = defaults.bool(forKey: Self.rememberKey)
         rememberChoices = shouldRemember
         if shouldRemember, let data = defaults.data(forKey: Self.draftKey),
@@ -70,15 +79,28 @@ final class WishStore: ObservableObject {
     }
 
     func say(_ text: String, explicit: Bool = false) {
-        guard readChoicesAloud || explicit else { return }
+        speak(text, explicit: explicit)
+    }
+
+    @discardableResult
+    private func speak(_ text: String, explicit: Bool) -> Bool {
+        guard readChoicesAloud || explicit, let voice = voicePreset.availableVoice() else { return false }
         synthesizer.stopSpeaking(at: .immediate)
         let utterance = AVSpeechUtterance(string: text)
-        utterance.rate = 0.40
-        utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+        utterance.rate = voicePreset.rate
+        utterance.pitchMultiplier = voicePreset.pitchMultiplier
+        utterance.voice = voice
         synthesizer.speak(utterance)
+        return true
     }
 
     func stopSpeaking() { synthesizer.stopSpeaking(at: .immediate) }
+
+    @discardableResult
+    func previewVoice() -> Bool {
+        guard adultSessionActive, sceneIsActive else { return false }
+        return speak("Hello. Let's explore the things you love, at your pace.", explicit: true)
+    }
 
     func chooseInterest(_ interest: InterestChoice) {
         draft.selectInterest(interest)
@@ -265,8 +287,10 @@ final class WishStore: ObservableObject {
     func forgetAllChoices() {
         rememberChoices = false
         readChoicesAloud = true
+        voicePreset = .defaultPreference
         defaults.removeObject(forKey: Self.rememberKey)
         defaults.removeObject(forKey: Self.speechKey)
+        defaults.removeObject(forKey: SpeechVoicePreference.defaultsKey)
         reset()
         SceneAccessKeychain.remove()
         sceneAccessToken = nil

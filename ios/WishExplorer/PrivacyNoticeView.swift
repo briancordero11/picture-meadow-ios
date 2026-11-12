@@ -14,8 +14,8 @@ struct PrivacyNoticeView: View {
                 }
                 Section("Choices and settings on this iPad") {
                     Text("The topic, actions, setting, favorites, and most-important choice stay in memory while the app runs. Older park, color, and animal choices may also be present. Remember choices is off by default. A grown-up can opt in to save those choices in the app's local device settings. Device backups may include app settings under the device owner's backup settings.")
-                    Text("The read-choice-labels setting can also be saved locally. The talking-board sentence is never written to storage or sent online. It clears when you finish, reset, or the app becomes inactive.")
-                    Text("Start a new wish clears the current and saved wish. Turn Remember choices off to remove the saved copy while keeping the current picture on screen. Forget choices in Privacy & Data turns retention off and clears the wish, talking-board sentence, read-aloud setting, AI pictures, and service access code. It works without an internet connection.")
+                    Text("The read-choice-labels setting and selected voice style are also saved locally, independently of remembering wish choices. Forget choices restores their defaults. The talking-board sentence is never written to storage or sent online. It clears when you finish, reset, or the app becomes inactive.")
+                    Text("Start a new wish clears the current and saved wish. Turn Remember choices off to remove the saved copy while keeping the current picture on screen. Forget choices in Privacy & Data turns retention off and clears the wish, talking-board sentence, narration and voice preferences, AI pictures, and service access code. It works without an internet connection.")
                     Text("A grown-up can find Forget choices in Settings → Privacy & Data after the reading check.")
                 }
                 Section("Optional AI pictures") {

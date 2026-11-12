@@ -3,6 +3,7 @@ import SwiftUI
 struct JourneyView: View {
     @EnvironmentObject private var store: WishStore
     @Environment(\.horizontalSizeClass) private var sizeClass
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     private let catalog = JourneyCatalog.shared
 
     private var journey: JourneyInterest? { catalog.interest(id: store.draft.interestID) }
@@ -34,10 +35,18 @@ struct JourneyView: View {
                 title: heading,
                 subtitle: guidance
             )
-            ProgressView(value: Double(stage + 1), total: 4)
-                .tint(WishTheme.blue)
-                .accessibilityLabel("Wish choices")
-                .accessibilityValue("Step \(stage + 1) of 4")
+            GeometryReader { geometry in
+                ZStack(alignment: .leading) {
+                    Capsule().fill(WishTheme.blue.opacity(0.14))
+                    Capsule().fill(WishTheme.blue)
+                        .frame(width: geometry.size.width * CGFloat(stage + 1) / 4)
+                }
+                .animation(reduceMotion ? nil : .smooth(duration: 0.32), value: stage)
+            }
+            .frame(height: 12)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel("Wish progress")
+            .accessibilityValue("\((stage + 1) * 25) percent")
             if let journey {
                 stageChoices(journey)
                 actions

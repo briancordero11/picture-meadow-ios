@@ -1,10 +1,16 @@
 import SwiftUI
 
+@MainActor
 struct WishRootView: View {
     @EnvironmentObject private var store: WishStore
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.horizontalSizeClass) private var sizeClass
+    @State private var backTransition: BackTransition?
+
+    private var pageLocation: PageLocation {
+        PageLocation(step: store.step, journeyStage: store.journeyStage)
+    }
 
     var body: some View {
         GeometryReader { geometry in
@@ -16,22 +22,14 @@ struct WishRootView: View {
                         .accessibilityLabel("Wish journey progress")
                 }
                 ScrollView {
-                    Group {
-                        switch store.step {
-                        case .welcome: WelcomeView()
-                        case .interests: InterestView()
-                        case .destination: DestinationView()
-                        case .color: CoasterColorView()
-                        case .animals: AnimalChoiceView()
-                        case .postcard: PostcardView()
-                        case .otherWish: OtherWishView()
-                        case .journey: JourneyView()
-                        case .favoritesIntake: FavoritesIntakeView()
-                        }
+                    TimelineView(.animation(paused: backTransition == nil)) { context in
+                        let remaining = 1 - backProgress(at: context.date)
+                        let easedRemaining = remaining * remaining * remaining
+                        pageContent
+                            .opacity(1 - 0.5 * easedRemaining)
+                            .offset(x: CGFloat(-18 * easedRemaining))
                     }
-                    .padding(30)
-                    .frame(maxWidth: 1100)
-                    .frame(maxWidth: .infinity)
+                    .task(id: backTransition?.startedAt) { await finishBackTransition() }
                 }
             }
             .background(WishTheme.background)
@@ -47,16 +45,47 @@ struct WishRootView: View {
                 store.endAdultSession()
                 store.clearSettingsRequests()
             }) { AdultSettingsPortal() }
-            .onChange(of: scenePhase) { _, phase in store.handleSceneActivity(phase == .active) }
+            .onChange(of: pageLocation) { _, destination in
+                if let backTransition, backTransition.destination != destination { cancelBackTransition() }
+            }
+            .onChange(of: reduceMotion) { _, enabled in
+                if enabled { cancelBackTransition() }
+            }
+            .onChange(of: store.caregiverPresented) { _, presented in
+                if presented { cancelBackTransition() }
+            }
+            .onChange(of: scenePhase) { _, phase in
+                if phase != .active { cancelBackTransition() }
+                store.handleSceneActivity(phase == .active)
+            }
+            .onDisappear { cancelBackTransition() }
         }
+    }
+
+    private var pageContent: some View {
+        Group {
+            switch store.step {
+            case .welcome: WelcomeView()
+            case .interests: InterestView()
+            case .destination: DestinationView()
+            case .color: CoasterColorView()
+            case .animals: AnimalChoiceView()
+            case .postcard: PostcardView()
+            case .otherWish: OtherWishView()
+            case .journey: JourneyView()
+            case .favoritesIntake: FavoritesIntakeView()
+            }
+        }
+        .padding(30)
+        .frame(maxWidth: 1100)
+        .frame(maxWidth: .infinity)
     }
 
     private var header: some View {
         HStack(spacing: sizeClass == .compact ? 6 : 16) {
             if store.step != .welcome {
                 Button {
-                    store.stopSpeaking()
-                    store.goBack()
+                    navigateBack()
                 } label: {
                     if sizeClass == .compact {
                         Image(systemName: "arrow.left").font(.headline).frame(width: 44, height: 44)
@@ -75,6 +104,41 @@ struct WishRootView: View {
             SettingsStarButton { store.caregiverPresented = true }
         }.padding(.horizontal, sizeClass == .compact ? 12 : 24).padding(.vertical, 16)
     }
+
+    private func navigateBack() {
+        cancelBackTransition()
+        store.stopSpeaking()
+        store.goBack()
+        guard !reduceMotion, scenePhase == .active else { return }
+        backTransition = BackTransition(destination: pageLocation, startedAt: .now)
+    }
+
+    private func backProgress(at date: Date) -> Double {
+        guard let startedAt = backTransition?.startedAt else { return 1 }
+        return min(1, max(0, date.timeIntervalSince(startedAt) / 0.30))
+    }
+
+    private func finishBackTransition() async {
+        guard let startedAt = backTransition?.startedAt else { return }
+        do { try await Task.sleep(for: .milliseconds(300)) }
+        catch { return }
+        guard !Task.isCancelled, backTransition?.startedAt == startedAt else { return }
+        backTransition = nil
+    }
+
+    private func cancelBackTransition() {
+        backTransition = nil
+    }
+}
+
+private struct PageLocation: Equatable {
+    let step: WishStep
+    let journeyStage: Int
+}
+
+private struct BackTransition {
+    let destination: PageLocation
+    let startedAt: Date
 }
 
 private struct SettingsStarButton: View {

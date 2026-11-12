@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Data controls stay in the grown-up area; the notice is also readable from the main screen.
+/// Data controls and the privacy notice stay inside the grown-up settings.
 struct PrivacySettingsView: View {
     @EnvironmentObject private var store: WishStore
     @State private var showingNotice = false
@@ -32,7 +32,7 @@ struct PrivacySettingsView: View {
             Section("Your data controls") {
                 Button("Read privacy notice") { showingNotice = true }
                 Button("Forget choices on this iPad", role: .destructive) { confirmingForget = true }
-                Text("Forget turns remembering off and clears local choices, the talking-board sentence, AI pictures, narration settings, and the service access code. It also closes grown-up settings. It works offline.")
+                Text("Forget turns remembering off and clears local choices, the talking-board sentence, AI pictures, narration and voice preferences, and the service access code. It also closes grown-up settings. It works offline.")
                 Text("This app creates no user accounts. There is no account record to delete. Clearing this iPad does not recall information a provider already processed or erase earlier backups.").font(.footnote).foregroundStyle(.secondary)
                 NavigationLink("Privacy request or report an AI picture") { ReportAIConcernView() }
             }
