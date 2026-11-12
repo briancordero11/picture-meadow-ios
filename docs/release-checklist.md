@@ -1,6 +1,6 @@
 # TestFlight and release checklist
 
-Status: source commit `11506bd` built unsigned and passed 58 native unit tests, one native tab-tap/drag UI test, and 36 backend tests. The native runner used iPad mini (A17 Pro), iOS 26.5. Signing, physical-device validation, live image-generation verification, and TestFlight upload remain pending. [Successful verification run](https://github.com/briancordero11/picture-meadow-ios/actions/runs/43152713228)
+The latest verified native baseline is source commit `c54f7a3`, with an unsigned build, 70 unit tests, and two UI tests passing on iPad mini (A17 Pro), iOS 26.5. Backend checks also passed. Signing, physical-device validation, live image-generation verification, and TestFlight upload remain pending. [Verified baseline run](https://github.com/briancordero11/picture-meadow-ios/actions/runs/43163020697)
 
 Confirmed release direction: United States, published by a **separate, independent LLC, not CanaClaw**, with future white-label versions planned. The LLC's exact legal name is unspecified, and there is no public business email or published privacy-policy URL yet. The intended audience is exactly **"2 - 17+"**; no upper age cap is inferred. This broad span crosses Kids Category bands and extends to older users, so Kids Category must be reviewed deliberately rather than selected automatically. See [white-label distribution](white-label-distribution.md) before choosing public client apps or private Custom Apps; no Apple account enrollment or App Store Connect availability has been verified.
 
@@ -9,16 +9,28 @@ Privacy references include the [Apple requirements review](apple-requirements-re
 ## Implemented source scope
 
 - [x] Route all twenty original home pictures through actions, broad settings or objects, shared favorites, and a most-important choice.
+- [x] Put the yellow favorites-intake card above the twenty topics, with six optional favorite groups and one yellow Save favorites control at the bottom after the groups. Saving keeps current-session favorites and returns to the topics. Disk retention still requires the grown-up's Remember choices opt-in.
+- [x] Place Privacy & Data and the privacy notice inside grown-up Settings after the four-digit code. Header, pause, and code-entry screens have no privacy shortcut.
+- [x] Add the requested client-demo Make-A-Wish logo on blue #0057B8 at cold launch, with a 750 ms hold and 350 ms fade. Reduce Motion skips the fade, and returning from the background does not replay it.
+- [x] Round main picture cards to 16 points and compact board tiles to 12 points, with rounded action controls and the existing picture sizes/grids retained.
+- [x] Add Boy, Girl, Man, and Woman device-voice styles with local preference saving, adult-only fixed preview, stop controls, and honest quality/fallback details. Child styles use slightly higher-pitch adult voices. Forget removes the saved preset.
+- [x] Ease incoming content on Back and animate a rounded progress bar in place of numbered steps. Reduce Motion skips the effects, and the communication board stays outside the page transition.
 - [x] Assemble selected picture concepts into an offline collage and decode older drafts with missing journey fields unanswered.
 - [x] Implement the optional actual AI scene API using catalog IDs, with grown-up one-request permission, review, removal, and cancellation controls.
 - [x] Preserve the legacy park-description API for compatible saved choices while new home routes use the action-led flow.
 - [x] Implement finger-tracking drawer height, spring snapping, tap/accessibility alternatives, and Reduce Motion behavior.
-- [x] Build and pass 58 native unit tests plus the real tap/drag UI test for source commit `11506bd`.
+- [x] Build and pass 70 native unit tests plus two UI tests for baseline source commit `c54f7a3`.
 
 ## Mac build and device verification
 
 - [ ] Use Xcode 26 or later with the iOS 26 SDK or later. Apple's upload minimum is distinct from this app's iOS 17 deployment target.
 - [x] Run `bash ios/scripts/verify.sh` with the gesture UI-test target and direct-provider label; record source and simulator evidence in the linked CI run. Re-run for subsequent app changes.
+- [x] Run native CI for final source `c54f7a3`, including bottom Save favorites, privacy entry, voice preferences, Back motion, and the animated progress bar. All 70 unit tests and both UI tests passed.
+- [ ] Verify the logo intro, transition timing, Reduce Motion, safe areas, background return, and interactive handoff on an iPad.
+- [ ] Listen to all four voice styles on the target iPad, including premium/enhanced availability, fallbacks, preview/stop, interruption handling, and saved/forgotten preference behavior. Validate the voice and speaking rate with intended users.
+- [ ] Check repeated/interrupted Back navigation, stage-only Back, progress fill in both directions, and Reduce Motion on a physical iPad.
+- [ ] Verify favorites intake, its bottom Save action and storage explanation, cross-topic retention, and optional on-device remembering. Confirm that Save favorites alone does not enable disk retention.
+- [ ] Verify that the notice and data controls open after the code through Settings, with no header/pause/code-entry privacy link, and remain usable with assistive technology.
 - [ ] Verify all twenty journeys and skip/back/change paths on a physical iPad in landscape, portrait, split view, and supported text sizes.
 - [ ] Review VoiceOver, Switch Control, Stop speaking, interruption handling, and every No/Stop/Think/Break/Finished control.
 - [ ] Validate drawer finger tracking, interrupted spring snaps, rotation during drag, canceled gestures, tap/accessibility alternatives, and Reduce Motion on device.
@@ -36,7 +48,7 @@ Privacy references include the [Apple requirements review](apple-requirements-re
 
 ## Before publication or a real family pilot
 
-- [ ] Finalize approved visual branding and a release icon; do not imply organizational endorsement without agreement.
+- [ ] Finalize shipping branding and the release icon, including distribution rights for the client-demo Make-A-Wish logo. Its requested demo use does not establish endorsement or public-release permission.
 - [ ] Publish the actual privacy policy and support contact, complete App Privacy answers against the final binary and hosting behavior, and verify the included privacy manifest.
 - [ ] Decide the content age rating and Kids Category treatment for the declared **"2 - 17+"** audience. The span includes multiple Kids bands and older users; do not assign a single Kids band automatically or invent an upper age cap. Implement and validate the resulting requirements.
 - [ ] Review the declared audience and resolve current U.S. state age-assurance, parental-consent, and significant-update obligations for the U.S. launch. Do not substitute the reading gate for legal parental consent or assume a low content rating resolves this. Reassess before expanding to another country.
@@ -47,7 +59,7 @@ Privacy references include the [Apple requirements review](apple-requirements-re
 - [ ] Review the implemented grown-up AI confirmation and result-review flow on device. Reassess permissions and data design if later adding accounts, sharing, photograph uploads, medical fields, or real wish submission.
 - [ ] Prepare iPad screenshots from the real app, accessibility descriptions, store copy, and review instructions.
 
-## Official references checked November 5, 2026
+## Official references reviewed November 11, 2026
 
 - [Apple upcoming requirements](https://developer.apple.com/news/upcoming-requirements/): as of April 28, 2026, uploads require Xcode 26 or later and the iOS 26 SDK or later.
 - [Upload builds](https://developer.apple.com/help/app-store-connect/manage-builds/upload-builds/)

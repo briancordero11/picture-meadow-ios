@@ -1,8 +1,26 @@
 # Action-led wish journeys
 
-The twenty original home pictures now lead into the same four-part exploration. A Super Star can choose up to three actions, one broad setting or object, optional favorites, and the selected picture that matters most. Every part can be skipped or revisited. The final on-device collage brings the chosen concepts together for a conversation with a grown-up.
+The twenty original home pictures lead into the same four-part exploration. A Super Star can choose up to three actions, one broad setting or object, shared favorites, and the selected picture that matters most. Every part can be skipped or revisited. The final on-device collage brings the chosen concepts together for a conversation with a grown-up.
 
-The home retains the supplied twenty pictures and original order. New action, setting, and favorite choices use large labeled emoji cards. The communication drawer retains its thirty-four original concepts. These choices represent picture concepts. The app sends catalog IDs for optional generation and has no photograph-upload step.
+The home begins with a full-width pale-yellow “What are your favorites?” card above the supplied twenty pictures in their original order. New action, setting, and favorite choices use large labeled emoji cards. Main picture cards have 16-point corners and compact communication tiles have 12-point corners. Rounded controls retain the fixed board grids, tile sizes, and unchanged source artwork. The drawer holds its thirty-four original concepts. Optional generation sends catalog IDs and has no photograph-upload step.
+
+## Entry and shared favorites
+
+Cold launch shows the supplied Make-A-Wish client-demo logo in white on blue #0057B8. The SwiftUI overlay holds for about 750 ms and fades for 350 ms into the mounted app. Reduce Motion removes the fade, and background returns or page changes do not replay the intro. The system launch background uses the same blue. The main Create your wish heading remains the existing typeset arch/star wordmark. Demo asset provenance is recorded separately; shipping branding and permission remain release decisions. [Logo provenance](../assets/provenance/client-demo-logo.json).
+
+The yellow first card opens a dedicated favorites page using all six catalog groups. Every choice is optional, with a maximum of ten across the groups. One yellow Save favorites control follows the groups at the bottom, together with the storage explanation. Save returns to the topic grid and keeps the preferences with the current ideas. It does not enable storage or introduce a separate profile. A grown-up can enable Remember choices in Settings to retain them on this iPad across launches.
+
+Favorites carry across topic changes. Journey stage two uses the same choices, so they can be revised without starting a separate intake. Its secondary action says Keep my favorites when selections exist. Skipping that stage preserves those shared preferences. The other journey stages keep their existing skip/clear behavior.
+
+Privacy information, data controls, app information, and support/report actions are reached through grown-up Settings after the four-digit reading check. The main header, pause screen, and code-entry screen have no privacy link. The reading check separates tasks and does not verify guardianship or provide legal consent. Publisher, public contact, policy, and support URLs remain unconfigured.
+
+## Back navigation
+
+Back selects the previous page or journey stage immediately, then the incoming main content fades from half opacity and moves 18 points into place over 300 ms. The header, communication drawer, and settings remain outside this effect. The page remains interactive, and existing scroll/choice state is retained. Reduce Motion uses an immediate update. A new page/stage, opened Settings, or an inactive scene cancels the effect. The native build passed; physical-device motion verification remains pending.
+
+The visible step counter is replaced by a rounded 12-point progress bar. It advances or retreats through 25, 50, 75, and 100 percent as the current journey part changes. The native fill uses a 320 ms smooth animation, skipped under Reduce Motion. Progress remains available to assistive technology without a visible numbered step label.
+
+Grown-up Settings also offers Boy, Girl, Man, and Woman speech styles with preview/stop controls. The app selects an available eligible English voice and shows its real name/quality and any fallback. Boy and Girl are pitch styles of adult voices. The selection is a local preference independent of draft remembering and is reset by Forget choices.
 
 ## Source mapping
 
@@ -70,6 +88,6 @@ Super Star page 2 describes internal and medical approval, safety, and age appro
 
 ## Verification
 
-The contract checker verifies twenty home IDs, choice bounds, required fields, 216 distinct IDs, and matching authoritative/native/backend catalogs. Source commit `11506bd` passed an unsigned native build, all 58 unit tests, one real tap-and-drag UI test, and 36 backend tests. [Successful Mac verification](https://github.com/briancordero11/picture-meadow-ios/actions/runs/43152713228). Seven release-record tests and portable resource checks also passed locally.
+The contract checker verifies twenty home IDs, choice bounds, required fields, 216 distinct IDs, and matching authoritative/native/backend catalogs. The latest verified native baseline is source commit `c54f7a3`, with an unsigned build, 70 unit tests and two UI tests passing on the iPad mini (A17 Pro), iOS 26.5 simulator. The UI tests cover drawer gestures and real-code grown-up Settings navigation to Privacy & Data and App information. Favorites-intake behavior is covered by unit tests. Backend checks also passed. [Verified Mac baseline](https://github.com/briancordero11/picture-meadow-ios/actions/runs/43163020697). Eight release-record tests and portable resource checks also passed locally.
 
-The local browser concept preview was rebuilt from the same catalog. A manual browser check completed Yosemite with two actions, a favorite color, an essential choice, and a combined collage, and verified tab taps and both drag directions without console errors. This preview is separate from the native app. The hosted API's health and disabled direct-provider capabilities returned HTTP 200. Actual OpenAI generation remains unverified because no server key or completed provider review is configured. Physical iPad performance and accessibility review remain pending.
+The local browser concept preview was rebuilt from the same catalog. A manual browser check completed Yosemite with two actions, a favorite color, an essential choice, and a combined collage, and verified tab taps and both drag directions without console errors. Subsequent checks verified bottom-only Save favorites, privacy only after the grown-up code, voice-style selection and preview/stop controls, and progress advancing to 50 percent then returning to 25 percent through Back. The host computer offered Microsoft David and Zira; the browser styles use available local voices and retain the selection in page memory only. This preview is separate from the native app and does not establish iPad audio quality or animation frame rate. The hosted API's health and disabled direct-provider capabilities returned HTTP 200. Actual OpenAI generation remains unverified because no server key or completed provider review is configured. Physical iPad performance and accessibility review remain pending.

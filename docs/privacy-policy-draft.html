@@ -1,23 +1,63 @@
 <!doctype html>
-<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Wish Explorer — Privacy policy draft</title>
-<style>body{font:17px/1.65 system-ui,sans-serif;max-width:760px;margin:40px auto;padding:0 22px;color:#172b3c;background:#fff}h1,h2{line-height:1.25}h1{font-size:32px}h2{font-size:22px;margin-top:30px}aside{padding:16px;background:#fff1c9;border:1px solid #d6b968}mark{background:#fff1c9}a{color:#075cae}</style>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Wish Explorer — Privacy policy draft</title>
+<style>
+body{font:17px/1.65 system-ui,sans-serif;max-width:800px;margin:40px auto;padding:0 22px;color:#172b3c;background:#fff}
+h1,h2{line-height:1.25}h1{font-size:32px}h2{font-size:22px;margin-top:30px}
+aside{padding:16px;background:#fff1c9;border:1px solid #d6b968}mark{background:#fff1c9}a{color:#075cae}li{margin-bottom:10px}
+</style>
+</head>
+<body>
+<main>
 <h1>Wish Explorer privacy policy</h1>
-<aside><strong>Draft — not ready for publication.</strong> Complete the publisher and contact details, choose the release audience and countries, and select the actual offline or online configuration before publishing. This text describes the current prototype, not an approved App Store release.</aside>
-<p>Publisher: <mark>[PUBLISHER NAME]</mark><br>Privacy contact: <mark>[PUBLIC SUPPORT EMAIL]</mark><br>Effective date: <mark>[PUBLICATION DATE]</mark></p>
-<h2>What the app asks for</h2>
-<p>Wish Explorer helps people explore a wish using pictures and communication words. The current app does not ask for a child's name, birthdate, address, photographs, contact details, health information, or an account. It does not include advertising, tracking, analytics, or a social sharing service.</p>
-<h2>Choices on the iPad</h2>
-<p>Choices are kept in memory unless a grown-up turns on “Remember choices on this iPad.” If enabled, the app saves only the selected interest, park, rollercoaster color, and animal ideas. This local copy remains until it is cleared or remembering is turned off. Speech preferences are also stored on the iPad. The communication-board sentence is not saved.</p>
-<p>The app uses the iPad's speech service to speak selected words. It does not record audio, request microphone access, or upload communication-board sentences to our service. Adult-gate answers are temporary and are not recorded or sent to a server.</p>
-<h2>Optional online descriptions</h2>
-<p><strong>Publication choice:</strong> Remove this section for a release in which the online feature is absent, or complete it against the actual service and hosting arrangement.</p>
-<p>The default build works offline. If an online description service is enabled for a later build, an adult must choose that action and confirm the request. It sends only the wish category, park, color, and animal choices. The service also receives connection information such as the IP address and ordinary request metadata. The child's identity and communication-board sentence are not included.</p>
-<p>The prototype service does not keep wish request bodies or generated descriptions. Its abuse-prevention limiter holds a connection address and request count in memory for a short period: normally up to 61 seconds with the default settings, with possible delays if the server is busy. It clears those entries when the process closes. <mark>[IDENTIFY SERVICE OPERATOR, HOSTING PROVIDERS, ANY ADDITIONAL LOGS, PURPOSES, LOCATIONS, RETENTION, AND DELETION CONTACT BEFORE ENABLING THIS FEATURE.]</mark></p>
-<p>No external AI image provider is connected in the current version. Adding one would require a new explanation of its role, data use and retention, and appropriate permission before sending information.</p>
-<h2>Clearing choices and changing your mind</h2>
-<p>A grown-up can turn off remembering or select “Start a fresh wish” to remove the current saved wish choices. Clearing the sentence removes the words in the current communication area. Choosing not to use the online feature does not prevent the offline wish journey. Device backups, if any, are managed separately through the device's backup settings.</p>
-<h2>Children and caregivers</h2>
-<p>The app supports a child-led experience with caregiver assistance. Adult controls are separated from the child's picture journey. The adult gate is an interface safeguard; it does not verify legal guardianship or replace any consent required for a particular use of personal information.</p>
-<h2>Questions and changes</h2>
-<p>Contact <mark>[PUBLIC SUPPORT EMAIL]</mark> with privacy questions or deletion requests relating to a service operated by <mark>[PUBLISHER NAME]</mark>. Before changing how information is handled, update this policy and the app's disclosures and permission flows as appropriate.</p>
+<aside><strong>Unpublished draft — complete before release.</strong> The publisher's legal identity, public contacts, actual hosting and provider settings, support-record retention, and effective date remain to be completed. This source file is not the app's published privacy policy or an approval of its data practices.</aside>
+<p>Publisher <mark>[EXACT LEGAL PUBLISHER NAME]</mark><br>
+Privacy and support contact <mark>[MONITORED PUBLIC SUPPORT EMAIL]</mark><br>
+Public policy address <mark>[PUBLIC PRIVACY POLICY URL]</mark><br>
+Effective date <mark>[PUBLICATION DATE]</mark></p>
+
+<h2>Using pictures to explore ideas</h2>
+<p>Wish Explorer helps a child and a grown-up explore interests, actions, settings, favorites, and a most-important idea using pictures. The picture journey has no fields for a child's name, birth date, address, photograph, health information, or account. It includes no advertising or analytics. The app does not request the camera, photo library, or microphone, and does not record audio.</p>
+<p>The picture board, communication words, system speech, and local wish picture work without the optional online services. Online descriptions and AI picture generation are disabled in the default app build. Using them requires a configured service and the permissions below.</p>
+
+<h2>Choices, words, and images on the iPad</h2>
+<p>Current choices stay in memory. “Remember choices on this iPad” is off by default. If a grown-up turns it on, the app saves the topic, actions, setting, favorites, and most-important choice in local app settings. Older park, roller-coaster color, and animal choices may also be saved. Narration, voice-style, and remembering preferences are saved locally. Device backups may include those settings according to the device owner's backup configuration.</p>
+<p>Grown-up voice preferences offer Boy, Girl, Man, and Woman styles using available Apple English system voices. Boy and Girl slightly increase an adult voice's pitch; no child voice recording is requested or stored. The app uses an Apple identifier compatibility allowlist and excludes custom-provider, personal, and novelty voices, shows the selected device voice and fallback, and offers an adult-only fixed preview. The app has no speech-upload endpoint, recording, or requested voice download. Forget choices resets the preset to Woman and removes its saved value.</p>
+<p>The yellow favorites card opens optional choices before the wish topics. Save favorites returns to the topics and keeps those preferences with the current ideas, including when changing topics. It does not turn remembering on. Keeping choices across app launches requires the grown-up's Remember choices setting.</p>
+<p>The talking-board sentence stays in memory. It is not written to preferences or included in an online request. It clears when the session finishes, the wish is reset, or the app becomes inactive. Speech uses the iPad's system synthesizer. Adult-gate answers and one-request permissions are temporary and are not saved or sent to the service.</p>
+<p>Generated AI pictures and returned descriptions stay in memory. An AI picture needs grown-up review before appearing with the wish. Pending review pictures clear when grown-up access ends. An approved picture can remain in the current app process, including after returning home or switching away. Changing ideas, removing the picture, starting a fresh wish, or using Forget choices clears it. The app does not save AI pictures to Photos, preferences, a server gallery, or an image history.</p>
+<p>If a grown-up enters a service access code, the app stores it persistently in this iPad's Keychain. It can be read only while the device is unlocked and is not synchronized to other devices. It is separate from the provider's API key, which stays on the operator's server.</p>
+
+<h2>Optional AI pictures</h2>
+<p>When AI picture making is configured, a grown-up passes the reading check, supplies service access, and sees the selected concepts, receiving service, and provider before confirming one request. The app sends five catalog-choice fields to the operator's service: topic, actions, setting, favorites, and most-important choice. It also sends the service access code in an authorization header. It excludes source artwork, intake documents, photographs, the talking-board sentence, and child identity or medical fields.</p>
+<p>The service builds a prompt from catalog descriptions and sends it directly to OpenAI's Images API. OpenAI receives the prompt and generates a picture. The app receives that image through the service. The current implementation uses no AI routing intermediary. A grown-up reviews, approves, or discards the result. It represents an imagined idea for discussion.</p>
+<p>OpenAI says API data is not used for training by default unless the API customer opts in. Default abuse-monitoring logs can retain prompts and outputs for up to 30 days, with longer retention for legal requirements or protecting services and others from harm. Zero Data Retention requires OpenAI approval and account/project configuration. No such approval or configuration has been established for this deployment. <a href="https://developers.openai.com/api/docs/guides/your-data">OpenAI API data controls</a>.</p>
+<p><mark>[VERIFY THE ACTUAL OPENAI ACCOUNT'S RETENTION, TRAINING OPT-IN STATE, MODEL CONTROLS, AND SAFEGUARDS FOR THE INTENDED AUDIENCE BEFORE ACTIVATION. UPDATE THIS POLICY WITH THE VERIFIED ARRANGEMENT.]</mark></p>
+
+<h2>The operator's service and hosting</h2>
+<p>The legacy online-description option sends the wish category, park, roller-coaster color, and animal choices after a separate one-request confirmation. It returns a description and deterministic illustration. That route does not call the AI provider, and the native app continues to draw its local picture.</p>
+<p>The service processes request bodies, prompts, descriptions, and image buffers temporarily in memory. Its code has no wish database, image library, file uploads, or payload request logger. Its abuse-prevention limiter keeps a socket connection address, count, and expiry time in memory. At default settings, removal normally follows about 60–61 seconds after the first request in a window. Server suspension or a busy event loop can delay cleanup, so this is not an exact deletion deadline.</p>
+<p>The host separately receives connection/request information, which can include IP addresses, times, paths, headers, and response status. Hosting logs, security records, backups, and provider processing follow the actual operator/account settings. <mark>[IDENTIFY THE OPERATOR AND HOSTING PROVIDER, PROCESSING LOCATIONS, LOG CONTENTS, RETENTION, ACCESS CONTROLS, AND DELETION CONTACT. DO NOT ASSUME A PARTICULAR HOSTING PLAN OR RETENTION PERIOD.]</mark></p>
+
+<h2>Removing local data or withdrawing permission</h2>
+<ul>
+<li>Turn Remember choices off to remove the saved draft while keeping current choices in memory.</li>
+<li>Start a new wish to clear current and saved choices, words, and generated pictures. The remembering, narration and voice preferences, and service access code remain available.</li>
+<li>Remove an AI picture or remove AI service access in grown-up settings. Removing access clears its Keychain code and stops current requests. An already approved picture remains until removed or forgotten.</li>
+<li>Forget choices on this iPad to turn remembering off, clear the draft, words, pictures and narration/voice preferences, remove the service code, and end grown-up access. This works offline.</li>
+</ul>
+<p>Leaving grown-up settings or switching away cancels pending permissions and requests. A service may already have processed a request. Local clearing cannot recall that processing, erase separate provider/hosting records, or remove older backups. The app creates no user accounts. Forget does not send an account-deletion or provider-deletion request.</p>
+
+<h2>Support, privacy questions, and AI concerns</h2>
+<p>The privacy notice, privacy/data controls, app information, and AI-concern report are reached inside grown-up Settings after the four-digit reading check. There is no privacy link on the main header, pause screen, or code-entry screen. Once a real support email is configured, the app can open a mail draft containing a fixed concern selection and app version/build. It attaches no image, wish details, board words, access code, or child information. The grown-up decides whether to edit or send it. The app sends no report automatically and has no report database.</p>
+<p>If you send an email, the publisher and its email provider receive your sender/reply address, the prepared concern and version, and anything you add. Please leave out a child's identity, photographs, medical information, and communication sentence. <mark>[IDENTIFY THE MONITORED ADDRESS, EMAIL PROVIDER, PURPOSE, SUPPORT-CORRESPONDENCE RETENTION, ACCESS/DELETION PROCESS, AND RESPONSE PROCEDURE.]</mark> The prototype has no configured support address, so it cannot prepare a report to the publisher yet.</p>
+<p>Configured external support and policy websites have their own data practices. External access is kept within grown-up controls. A reading gate separates tasks but does not verify identity, guardianship, or legal parental consent.</p>
+
+<h2>Before publication and future changes</h2>
+<p>Complete publisher/contact details, public policy/support pages, the release configuration, and actual service/provider retention review before publication. Review the audience and relevant launch-region requirements with the responsible operator. Update this policy and permission flows before changing how information is handled. Privacy questions and requests should go to <mark>[MONITORED PUBLIC SUPPORT EMAIL]</mark>.</p>
+</main>
+</body>
 </html>
