@@ -27,19 +27,16 @@ struct AdultGateChallenge: Equatable {
 
 struct AdultGateView: View {
     let purpose: String
-    let showsPrivacyNotice: Bool
     var onSuccess: () -> Void
     @Environment(\.dismiss) private var dismiss
     @Environment(\.scenePhase) private var scenePhase
     @State private var challenge = AdultGateChallenge()
     @State private var answer = ""
     @State private var incorrect = false
-    @State private var privacyPresented = false
     @FocusState private var answerIsFocused: Bool
 
-    init(purpose: String, showsPrivacyNotice: Bool = false, onSuccess: @escaping () -> Void) {
+    init(purpose: String, onSuccess: @escaping () -> Void) {
         self.purpose = purpose
-        self.showsPrivacyNotice = showsPrivacyNotice
         self.onSuccess = onSuccess
     }
 
@@ -71,10 +68,6 @@ struct AdultGateView: View {
                         .disabled(answer.count != 4)
                     Text("This reading check keeps grown-up tasks separate. It does not verify identity or provide permission to share information.")
                         .font(.footnote).foregroundStyle(.secondary)
-                    if showsPrivacyNotice {
-                        Button("Read privacy notice") { privacyPresented = true }
-                            .font(.headline).frame(minHeight: 44)
-                    }
                 }.padding(28)
             }
             .toolbar {
@@ -85,7 +78,6 @@ struct AdultGateView: View {
                 }
             }
             .onDisappear { clear() }
-            .sheet(isPresented: $privacyPresented) { PrivacyNoticeView() }
             .onChange(of: scenePhase) { _, phase in
                 if phase != .active { clear(); dismiss() }
             }
@@ -110,7 +102,7 @@ struct AdultSettingsPortal: View {
         ZStack {
             if store.adultSessionActive { CaregiverView() }
             else {
-                AdultGateView(purpose: "Open the grown-up settings.", showsPrivacyNotice: true) { store.beginAdultSession() }
+                AdultGateView(purpose: "Open the grown-up settings.") { store.beginAdultSession() }
             }
         }
         .onDisappear { store.endAdultSession() }

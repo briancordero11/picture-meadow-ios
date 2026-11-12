@@ -10,7 +10,6 @@ final class WishStore: ObservableObject {
     @Published var phrase: [String] = []
     @Published var isPaused = false
     @Published var caregiverPresented = false
-    @Published var privacyPresented = false
     @Published var aiReportRequested = false
     @Published var aiGenerationRequested = false
     @Published private(set) var adultSessionActive = false

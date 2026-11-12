@@ -33,6 +33,9 @@ struct WishRootView: View {
                     .frame(maxWidth: 1100)
                     .frame(maxWidth: .infinity)
                 }
+                .safeAreaInset(edge: .top, spacing: 0) {
+                    if store.step == .favoritesIntake { FavoritesSaveBar() }
+                }
             }
             .background(WishTheme.background)
             .safeAreaInset(edge: .bottom, spacing: 0) {
@@ -47,7 +50,6 @@ struct WishRootView: View {
                 store.endAdultSession()
                 store.clearSettingsRequests()
             }) { AdultSettingsPortal() }
-            .sheet(isPresented: $store.privacyPresented) { PrivacyNoticeView() }
             .onChange(of: scenePhase) { _, phase in store.handleSceneActivity(phase == .active) }
         }
     }
@@ -270,7 +272,6 @@ struct PauseView: View {
                     .font(.title2).multilineTextAlignment(.center).foregroundStyle(WishTheme.secondary)
                 PrimaryWishButton(title: "I'm ready", symbol: "play.fill") { store.isPaused = false }
                 Button("Finished for now") { store.finishSession() }.font(.headline).padding(20)
-                Button("Privacy") { store.privacyPresented = true }.font(.headline).padding(12)
             }.padding(40)
         }.accessibilityAddTraits(.isModal)
     }

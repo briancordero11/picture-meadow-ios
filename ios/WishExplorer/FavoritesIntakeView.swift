@@ -1,8 +1,6 @@
 import SwiftUI
 
 struct FavoritesIntakeView: View {
-    @EnvironmentObject private var store: WishStore
-
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
             ScreenHeading(
@@ -11,12 +9,51 @@ struct FavoritesIntakeView: View {
                 subtitle: "Choose up to ten pictures across all the groups. Every choice is optional."
             )
             FavoriteChoicesView()
-            PrimaryWishButton(title: "Choose a wish picture", symbol: "arrow.right") {
-                store.finishFavoritesIntake()
+            VStack(spacing: 12) {
+                SaveFavoritesButton()
+                Text("Save keeps these favorites with your ideas. A grown-up can use Remember choices in Settings to keep them on this iPad.")
+                    .font(.footnote)
+                    .foregroundStyle(WishTheme.secondary)
+                    .multilineTextAlignment(.center)
             }
             .frame(maxWidth: .infinity)
             .padding(.top, 6)
         }
+    }
+}
+
+struct SaveFavoritesButton: View {
+    @EnvironmentObject private var store: WishStore
+
+    var body: some View {
+        Button(action: store.finishFavoritesIntake) {
+            Text("Save favorites")
+                .font(.headline)
+                .foregroundStyle(WishTheme.ink)
+                .padding(.horizontal, 22).padding(.vertical, 12)
+                .frame(minHeight: 52)
+                .background(WishTheme.yellow, in: RoundedRectangle(cornerRadius: 16))
+        }
+        .buttonStyle(.plain)
+        .accessibilityHint("Keep these favorites with your ideas and choose a wish picture")
+    }
+}
+
+struct FavoritesSaveBar: View {
+    @EnvironmentObject private var store: WishStore
+
+    var body: some View {
+        HStack(spacing: 16) {
+            Text("\(store.draft.favoriteIDs.count) selected")
+                .font(.subheadline.weight(.semibold))
+                .foregroundStyle(WishTheme.ink)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .accessibilityLabel("Favorites selected")
+                .accessibilityValue("\(store.draft.favoriteIDs.count) of 10")
+            SaveFavoritesButton()
+        }
+        .padding(.horizontal, 24).padding(.vertical, 10)
+        .background(WishTheme.background)
     }
 }
 
@@ -82,7 +119,7 @@ struct FavoritesIntakeCard: View {
             .foregroundStyle(WishTheme.ink)
             .padding(24)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(WishTheme.lavender, in: RoundedRectangle(cornerRadius: 24))
+            .background(WishTheme.yellow.opacity(0.25), in: RoundedRectangle(cornerRadius: 24))
             .overlay(RoundedRectangle(cornerRadius: 24).stroke(WishTheme.blue.opacity(0.25), lineWidth: 1))
         }
         .buttonStyle(.plain)
