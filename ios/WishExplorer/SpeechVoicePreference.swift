@@ -69,7 +69,9 @@ struct SpeechVoiceOption {
     var traits: AVSpeechSynthesisVoice.Traits = []
 
     var isEligible: Bool {
-        language.split(separator: "-").first?.lowercased() == "en"
+        // Compatibility allowlist: custom speech extensions can also appear in the system inventory.
+        identifier.hasPrefix("com.apple.")
+            && language.split(separator: "-").first?.lowercased() == "en"
             && !traits.contains(.isNoveltyVoice) && !traits.contains(.isPersonalVoice)
     }
     var qualityRank: Int {
@@ -118,7 +120,7 @@ struct SpeechVoicePreferenceSection: View {
             Button { store.previewVoice() } label: { Label("Preview voice", systemImage: "speaker.wave.2.fill") }
                 .disabled(selected == nil || !store.adultSessionActive)
             Button { store.stopSpeaking() } label: { Label("Stop voice", systemImage: "speaker.slash.fill") }
-            Text("Uses English voices already available on this iPad. Voice names and quality vary by device. Personal and novelty voices are excluded. Choosing a style does not play audio; tap Preview voice to listen. This preference is saved on this iPad even when remembering wish choices is off.")
+            Text("Uses Apple English voices already available on this iPad. Voice names and quality vary by device. Custom-provider, personal, and novelty voices are excluded. Choosing a style does not play audio; tap Preview voice to listen. This preference is saved on this iPad even when remembering wish choices is off.")
                 .font(.footnote).foregroundStyle(.secondary)
         }
     }

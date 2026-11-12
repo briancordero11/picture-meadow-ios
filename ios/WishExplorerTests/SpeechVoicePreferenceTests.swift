@@ -16,14 +16,15 @@ final class SpeechVoicePreferenceTests: XCTestCase {
         XCTAssertEqual(SpeechVoicePreference.woman.pitchMultiplier, 1)
     }
 
-    func testSelectionExcludesPersonalNoveltyAndNonEnglishVoicesBeforeRanking() {
+    func testSelectionExcludesCustomPersonalNoveltyAndNonEnglishVoicesBeforeRanking() {
         let options = [
             option("personal", quality: .premium, traits: [.isPersonalVoice]),
             option("novelty", quality: .premium, traits: [.isNoveltyVoice]),
             option("french", language: "fr-FR", quality: .premium),
+            option("custom-provider", quality: .premium, providerIdentifier: "org.example.speech.English"),
             option("eligible", quality: .default)
         ]
-        XCTAssertEqual(SpeechVoicePreference.woman.preferredOption(from: options)?.identifier, "eligible")
+        XCTAssertEqual(SpeechVoicePreference.woman.preferredOption(from: options)?.name, "eligible")
         XCTAssertNil(SpeechVoicePreference.woman.preferredOption(from: Array(options.dropLast())))
     }
 
@@ -31,16 +32,16 @@ final class SpeechVoicePreferenceTests: XCTestCase {
         let preference = SpeechVoicePreference.man
         let femalePremium = option("female-premium", gender: .female, quality: .premium)
         let maleBasic = option("male-basic", gender: .male)
-        XCTAssertEqual(preference.preferredOption(from: [femalePremium, maleBasic])?.identifier, "male-basic")
+        XCTAssertEqual(preference.preferredOption(from: [femalePremium, maleBasic])?.name, "male-basic")
         let maleEnhanced = option("male-enhanced", gender: .male, quality: .enhanced)
         let malePremiumGB = option("male-premium-gb", language: "en-GB", gender: .male, quality: .premium)
         let malePremiumUSZ = option("z-us", gender: .male, quality: .premium)
         let malePremiumUSA = option("a-us", gender: .male, quality: .premium)
         let inventory = [maleBasic, maleEnhanced, malePremiumGB, malePremiumUSZ, malePremiumUSA]
-        XCTAssertEqual(preference.preferredOption(from: inventory)?.identifier, "a-us")
-        XCTAssertEqual(preference.preferredOption(from: Array(inventory.reversed()))?.identifier, "a-us")
-        XCTAssertEqual(preference.preferredOption(from: [maleBasic, maleEnhanced, malePremiumGB])?.identifier, "male-premium-gb")
-        XCTAssertEqual(preference.preferredOption(from: [femalePremium])?.identifier, "female-premium")
+        XCTAssertEqual(preference.preferredOption(from: inventory)?.name, "a-us")
+        XCTAssertEqual(preference.preferredOption(from: Array(inventory.reversed()))?.name, "a-us")
+        XCTAssertEqual(preference.preferredOption(from: [maleBasic, maleEnhanced, malePremiumGB])?.name, "male-premium-gb")
+        XCTAssertEqual(preference.preferredOption(from: [femalePremium])?.name, "female-premium")
         XCTAssertNotNil(preference.fallbackExplanation(for: femalePremium))
         XCTAssertNotNil(preference.fallbackExplanation(for: nil))
         XCTAssertNil(preference.fallbackExplanation(for: maleBasic))
@@ -87,8 +88,9 @@ final class SpeechVoicePreferenceTests: XCTestCase {
     }
 
     private func option(_ identifier: String, language: String = "en-US", gender: AVSpeechSynthesisVoiceGender = .female,
-                        quality: AVSpeechSynthesisVoiceQuality = .default, traits: AVSpeechSynthesisVoice.Traits = []) -> SpeechVoiceOption {
-        SpeechVoiceOption(identifier: identifier, name: identifier, language: language, gender: gender, quality: quality, traits: traits)
+                        quality: AVSpeechSynthesisVoiceQuality = .default, traits: AVSpeechSynthesisVoice.Traits = [],
+                        providerIdentifier: String? = nil) -> SpeechVoiceOption {
+        SpeechVoiceOption(identifier: providerIdentifier ?? "com.apple.test.\(identifier)", name: identifier, language: language, gender: gender, quality: quality, traits: traits)
     }
 
     private func isolatedDefaults() throws -> (UserDefaults, String) {
