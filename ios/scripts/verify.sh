@@ -10,7 +10,8 @@ if ! command -v xcodegen >/dev/null 2>&1; then
   echo "Install XcodeGen, then rerun: brew install xcodegen"
   exit 2
 fi
-XCODE_MAJOR="$(xcodebuild -version | head -n 1 | awk '{print $2}' | cut -d. -f1)"
+XCODE_VERSION="$(xcodebuild -version)"
+XCODE_MAJOR="$(awk '/^Xcode / {split($2, version, "."); print version[1]}' <<< "$XCODE_VERSION")"
 if [[ "$XCODE_MAJOR" -lt 26 ]]; then
   echo "Use Xcode 26 or later for current iOS upload requirements."
   exit 2
