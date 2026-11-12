@@ -7,7 +7,8 @@ struct JourneyView: View {
     private let catalog = JourneyCatalog.shared
 
     private var journey: JourneyInterest? { catalog.interest(id: store.draft.interestID) }
-    private var stage: Int { min(max(store.journeyStage, 0), 3) }
+    private var stage: Int { min(max(store.journeyStage, 0), 2) }
+    private var progress: Double { Double(stage + 1) / 3 }
     private var columns: [GridItem] {
         Array(repeating: GridItem(.flexible(), spacing: 14), count: sizeClass == .compact ? 2 : 4)
     }
@@ -15,7 +16,6 @@ struct JourneyView: View {
         switch stage {
         case 0: "What would you like to do?"
         case 1: "Choose a place or thing"
-        case 2: "What are your favorites?"
         default: "What matters most?"
         }
     }
@@ -23,7 +23,6 @@ struct JourneyView: View {
         switch stage {
         case 0: "Choose up to three pictures."
         case 1: "Choose a place or thing for your wish."
-        case 2: "These favorites stay with your ideas. Change any picture you like."
         default: "Pick the picture that is most important to you."
         }
     }
@@ -39,14 +38,14 @@ struct JourneyView: View {
                 ZStack(alignment: .leading) {
                     Capsule().fill(WishTheme.blue.opacity(0.14))
                     Capsule().fill(WishTheme.blue)
-                        .frame(width: geometry.size.width * CGFloat(stage + 1) / 4)
+                        .frame(width: geometry.size.width * CGFloat(progress))
                 }
                 .animation(reduceMotion ? nil : .smooth(duration: 0.32), value: stage)
             }
             .frame(height: 12)
             .accessibilityElement(children: .ignore)
             .accessibilityLabel("Wish progress")
-            .accessibilityValue("\((stage + 1) * 25) percent")
+            .accessibilityValue("\(Int((progress * 100).rounded())) percent")
             if let journey {
                 stageChoices(journey)
                 actions
@@ -65,8 +64,6 @@ struct JourneyView: View {
             choiceGrid(journey.settings, selected: [store.draft.selectedSettingID].compactMap { $0 }) {
                 store.selectJourneySetting($0)
             }
-        case 2:
-            FavoriteChoicesView()
         default:
             let selectedChoices = catalog.choices(for: store.draft)
             if selectedChoices.isEmpty {
@@ -98,13 +95,13 @@ struct JourneyView: View {
     }
 
     private var skipButton: some View {
-        Button(stage == 2 && !store.draft.favoriteIDs.isEmpty ? "Keep my favorites" : "Skip this part", action: store.skipJourneyStage)
+        Button("Skip this part", action: store.skipJourneyStage)
             .font(.headline).foregroundStyle(WishTheme.blue)
             .padding(16).frame(minHeight: 54)
     }
 
     private var nextButton: some View {
-        PrimaryWishButton(title: stage == 3 ? "See my wish picture" : "Next", symbol: stage == 3 ? "photo" : "arrow.right") {
+        PrimaryWishButton(title: stage == 2 ? "See my wish picture" : "Next", symbol: stage == 2 ? "photo" : "arrow.right") {
             store.advanceJourney()
         }
     }

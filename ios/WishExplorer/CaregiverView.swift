@@ -64,7 +64,7 @@ struct CaregiverView: View {
                 }
                 Section("About this prototype") {
                     Text("Wish Explorer is an independent exploration prototype inspired by the reference wish materials. It is not an official Make-A-Wish app and does not submit a wish, determine eligibility, promise a trip, or arrange care.")
-                    Text("All 20 interest pictures lead to actions, broad settings, favorites, and the most-important idea. The drawer holds 34 communication pictures. Tap its center tab or drag it up or down. Stop, break, and finished remain in the drawer. Scenes are imagined ideas; they are not attraction listings, product availability, sponsor offers, or approval decisions. Communication support needs review with Super Stars, caregivers, and an AAC professional before real-world use.")
+                    Text("All 20 interest pictures lead to actions, broad settings, and the most-important idea. Favorites from the dedicated home section carry into each wish automatically. The drawer holds 34 communication pictures. Tap its center tab or drag it up or down. Stop, break, and finished remain in the drawer. Scenes are imagined ideas; they are not attraction listings, product availability, sponsor offers, or approval decisions. Communication support needs review with Super Stars, caregivers, and an AAC professional before real-world use.")
                 }
             }
             .navigationTitle("For grown-ups")

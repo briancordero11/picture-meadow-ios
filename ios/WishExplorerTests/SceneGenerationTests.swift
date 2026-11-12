@@ -229,7 +229,7 @@ final class SceneGenerationTests: XCTestCase {
         let store = makeStore(storage, service: service)
         store.rememberChoices = true
         store.phrase = ["I", "want"]
-        store.journeyStage = 3
+        store.journeyStage = 2
         authorize(store)
         let disclosure = try XCTUnwrap(store.prepareSceneGeneration())
         XCTAssertTrue(store.confirmSceneGeneration(disclosure.id))

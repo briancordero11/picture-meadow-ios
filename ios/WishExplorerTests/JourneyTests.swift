@@ -32,13 +32,13 @@ final class JourneyTests: XCTestCase {
         let storage = try JourneyTestStorage()
         let store = makeStore(storage)
         for interest in InterestChoice.allCases {
-            store.journeyStage = 3
+            store.journeyStage = 2
             store.boardExpanded = true
             store.chooseInterest(interest)
             XCTAssertEqual(store.step, .journey, interest.id)
             XCTAssertEqual(store.journeyStage, 0, interest.id)
             XCTAssertFalse(store.boardExpanded, interest.id)
-            for _ in 0..<4 { store.skipJourneyStage() }
+            for _ in 0..<3 { store.skipJourneyStage() }
             XCTAssertEqual(store.step, .postcard, interest.id)
             XCTAssertEqual(store.draft.interest, interest)
             XCTAssertFalse(store.draft.canRequestScene, interest.id)
@@ -132,8 +132,8 @@ final class JourneyTests: XCTestCase {
         let action = topic.actions[0].id
         let setting = topic.settings[0].id
         let favorite = try XCTUnwrap(JourneyCatalog.shared.favoriteOptions.first).id
-        let essentials = [action, setting, favorite, action]
-        for stage in 0..<4 {
+        let essentials = [action, setting, favorite]
+        for stage in 0..<3 {
             store.draft = WishDraft(interestID: InterestChoice.art.id, selectedActionIDs: [action],
                                    selectedSettingID: setting, favoriteIDs: [favorite], essentialChoiceID: essentials[stage])
             store.step = .journey
@@ -142,9 +142,9 @@ final class JourneyTests: XCTestCase {
             XCTAssertEqual(store.draft.selectedActionIDs, stage == 0 ? [] : [action])
             XCTAssertEqual(store.draft.selectedSettingID, stage == 1 ? nil : setting)
             XCTAssertEqual(store.draft.favoriteIDs, [favorite])
-            XCTAssertEqual(store.draft.essentialChoiceID, stage == 2 ? favorite : nil)
-            XCTAssertEqual(store.step, stage == 3 ? .postcard : .journey)
-            XCTAssertEqual(store.journeyStage, min(stage + 1, 3))
+            XCTAssertNil(store.draft.essentialChoiceID)
+            XCTAssertEqual(store.step, stage == 2 ? .postcard : .journey)
+            XCTAssertEqual(store.journeyStage, min(stage + 1, 2))
         }
     }
 
@@ -153,7 +153,7 @@ final class JourneyTests: XCTestCase {
         let storage = try JourneyTestStorage()
         let store = makeStore(storage)
         store.chooseInterest(.art)
-        for expectedStage in 1...3 {
+        for expectedStage in 1...2 {
             store.advanceJourney()
             XCTAssertEqual(store.journeyStage, expectedStage)
             XCTAssertEqual(store.step, .journey)
@@ -162,8 +162,8 @@ final class JourneyTests: XCTestCase {
         XCTAssertEqual(store.step, .postcard)
         store.goBack()
         XCTAssertEqual(store.step, .journey)
-        XCTAssertEqual(store.journeyStage, 3)
-        for expectedStage in stride(from: 2, through: 0, by: -1) {
+        XCTAssertEqual(store.journeyStage, 2)
+        for expectedStage in stride(from: 1, through: 0, by: -1) {
             store.goBack()
             XCTAssertEqual(store.journeyStage, expectedStage)
             XCTAssertEqual(store.step, .journey)
@@ -183,7 +183,7 @@ final class JourneyTests: XCTestCase {
         store.draft = original
         store.chooseInterest(.art)
         XCTAssertEqual(store.draft, original)
-        store.journeyStage = 3
+        store.journeyStage = 2
         store.chooseInterest(.camp)
         XCTAssertEqual(store.draft, WishDraft(interestID: InterestChoice.camp.id, favoriteIDs: [favorite]))
         XCTAssertEqual(store.journeyStage, 0)
@@ -243,6 +243,50 @@ final class JourneyTests: XCTestCase {
         XCTAssertNil(restored.draft.interest)
         XCTAssertEqual(restored.draft.favoriteIDs, [favorite])
         XCTAssertFalse(restored.draft.canRequestScene)
+    }
+
+    @MainActor
+    func testEveryInterestKeepsIntakeFavoritesAcrossItsThreeStageJourney() throws {
+        let storage = try JourneyTestStorage()
+        let store = makeStore(storage)
+        let favorite = try XCTUnwrap(JourneyCatalog.shared.favoriteOptions.first)
+        store.openFavoritesIntake()
+        store.toggleFavorite(favorite.id)
+        store.finishFavoritesIntake()
+
+        for interest in InterestChoice.allCases {
+            let topic = try XCTUnwrap(JourneyCatalog.shared.interest(id: interest.id))
+            store.chooseInterest(interest)
+            XCTAssertEqual(store.journeyStage, 0, interest.id)
+            XCTAssertEqual(store.draft.favoriteIDs, [favorite.id], interest.id)
+            store.toggleJourneyAction(try XCTUnwrap(topic.actions.first).id)
+            store.advanceJourney()
+            XCTAssertEqual(store.step, .journey, interest.id)
+            XCTAssertEqual(store.journeyStage, 1, interest.id)
+            store.selectJourneySetting(try XCTUnwrap(topic.settings.first).id)
+            store.advanceJourney()
+            XCTAssertEqual(store.step, .journey, interest.id)
+            XCTAssertEqual(store.journeyStage, 2, interest.id)
+            XCTAssertTrue(store.draft.sceneChoices.contains { $0.id == favorite.id }, interest.id)
+            store.selectEssential(favorite.id)
+            XCTAssertEqual(store.draft.essentialChoiceID, favorite.id, interest.id)
+            store.advanceJourney()
+            XCTAssertEqual(store.step, .postcard, interest.id)
+            XCTAssertEqual(store.journeyStage, 2, interest.id)
+            XCTAssertTrue(store.draft.sceneDescription.contains(favorite.label.lowercased()), interest.id)
+            let sceneRequest = WishSceneRequest(draft: store.draft)
+            XCTAssertEqual(sceneRequest.favoriteIds, [favorite.id], interest.id)
+            XCTAssertEqual(sceneRequest.essentialChoiceId, favorite.id, interest.id)
+
+            store.goBack()
+            XCTAssertEqual(store.step, .journey, interest.id)
+            XCTAssertEqual(store.journeyStage, 2, interest.id)
+            XCTAssertEqual(store.draft.essentialChoiceID, favorite.id, interest.id)
+            store.skipJourneyStage()
+            XCTAssertEqual(store.step, .postcard, interest.id)
+            XCTAssertNil(store.draft.essentialChoiceID, interest.id)
+            XCTAssertEqual(store.draft.favoriteIDs, [favorite.id], interest.id)
+        }
     }
 
     @MainActor

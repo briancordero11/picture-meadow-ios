@@ -115,7 +115,7 @@ final class WishStore: ObservableObject {
     func goBack() {
         stopSpeaking()
         if step == .journey, journeyStage > 0 { journeyStage -= 1 }
-        else if step == .postcard, draft.interest != nil { journeyStage = 3; step = .journey }
+        else if step == .postcard, draft.interest != nil { journeyStage = 2; step = .journey }
         else { step = step.previous }
     }
 
@@ -159,13 +159,12 @@ final class WishStore: ObservableObject {
     }
     func advanceJourney() {
         stopSpeaking()
-        if journeyStage < 3 { journeyStage += 1 } else { step = .postcard }
+        if journeyStage < 2 { journeyStage += 1 } else { step = .postcard }
     }
     func skipJourneyStage() {
         switch journeyStage {
         case 0: draft.selectedActionIDs = []
         case 1: draft.selectedSettingID = nil
-        case 2: break // Intake favorites remain available across wish ideas.
         default: draft.essentialChoiceID = nil
         }
         sanitizeEssential(); invalidatePreview(); advanceJourney()
