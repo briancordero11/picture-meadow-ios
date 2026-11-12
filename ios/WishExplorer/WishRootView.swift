@@ -33,9 +33,6 @@ struct WishRootView: View {
                     .frame(maxWidth: 1100)
                     .frame(maxWidth: .infinity)
                 }
-                .safeAreaInset(edge: .top, spacing: 0) {
-                    if store.step == .favoritesIntake { FavoritesSaveBar() }
-                }
             }
             .background(WishTheme.background)
             .safeAreaInset(edge: .bottom, spacing: 0) {

@@ -39,24 +39,6 @@ struct SaveFavoritesButton: View {
     }
 }
 
-struct FavoritesSaveBar: View {
-    @EnvironmentObject private var store: WishStore
-
-    var body: some View {
-        HStack(spacing: 16) {
-            Text("\(store.draft.favoriteIDs.count) selected")
-                .font(.subheadline.weight(.semibold))
-                .foregroundStyle(WishTheme.ink)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .accessibilityLabel("Favorites selected")
-                .accessibilityValue("\(store.draft.favoriteIDs.count) of 10")
-            SaveFavoritesButton()
-        }
-        .padding(.horizontal, 24).padding(.vertical, 10)
-        .background(WishTheme.background)
-    }
-}
-
 struct FavoriteChoicesView: View {
     @EnvironmentObject private var store: WishStore
     @Environment(\.horizontalSizeClass) private var sizeClass
