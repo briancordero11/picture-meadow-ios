@@ -12,7 +12,7 @@ struct WishBuildConfiguration {
 
     static var current: Self { Self(values: Bundle.main.infoDictionary ?? [:]) }
     var onlinePreviewAvailable: Bool { onlinePreviewEnabled && apiBaseURL != nil }
-    var sceneGenerationAvailable: Bool { sceneGenerationEnabled && apiBaseURL != nil && aiProviderName == "Google Vertex AI via Vercel AI Gateway" }
+    var sceneGenerationAvailable: Bool { sceneGenerationEnabled && apiBaseURL != nil && aiProviderName == "OpenAI (direct)" }
 
     init(values: [String: Any]) {
         publisherName = Self.publicText(values["WishPublisherName"])

@@ -3,12 +3,14 @@ import assert from 'node:assert/strict';
 import { once } from 'node:events';
 import { request as httpRequest } from 'node:http';
 import { createWishServer } from '../src/server.js';
-import { composeScene, createGatewaySceneProvider, createSceneService, loadJourneyCatalog, MAX_SCENE_IMAGE_BYTES, safeSceneImage, sceneServiceFromEnvironment, sceneTokenAuthorized, validateScene } from '../src/scene.js';
+import { composeScene, createOpenAISceneProvider, createSceneService, DEFAULT_SCENE_MODEL, loadJourneyCatalog, MAX_SCENE_IMAGE_BYTES, safeSceneImage, sceneServiceFromEnvironment, sceneTokenAuthorized, validateScene } from '../src/scene.js';
 
 const catalog = loadJourneyCatalog();
 const token = 'test-access-code-with-at-least-32-characters';
 const png = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4z8DwHwAFgAI/ScLbtAAAAABJRU5ErkJggg==', 'base64');
 const picture = { mimeType: 'image/png', bytes: png };
+const jpeg = Buffer.from('/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD3+iiigD//2Q==', 'base64');
+const imageResponse = () => Response.json({ data: [{ b64_json: jpeg.toString('base64') }], output_format: 'jpeg' });
 const choose = (interest = catalog.interests.find(item => item.id === 'camp')) => ({
   interestId: interest.id,
   actionIds: interest.actions.slice(0, 2).map(item => item.id),
@@ -61,50 +63,113 @@ test('scene authorization requires a fixed-size secure code and fails closed whe
   assert.throws(() => createSceneService({ accessToken: 'short' }));
   assert.throws(() => createSceneService({ accessToken: 'x'.repeat(257) }));
   assert.equal(sceneTokenAuthorized(`Bearer ${'x'.repeat(257)}`, 'x'.repeat(257)), false);
-  for (const env of [{}, { SCENE_GENERATION_ENABLED: 'true' }, { SCENE_GENERATION_ENABLED: 'false', SCENE_ACCESS_TOKEN: token, AI_GATEWAY_MODEL: 'google/gemini-nano-banana-2.1', AI_GATEWAY_API_KEY: 'test' }]) {
+  for (const env of [{}, { SCENE_GENERATION_ENABLED: 'true' }, { SCENE_GENERATION_ENABLED: 'false', SCENE_ACCESS_TOKEN: token, OPENAI_IMAGE_MODEL: DEFAULT_SCENE_MODEL, OPENAI_API_KEY: 'test-only', SCENE_PROVIDER_REVIEWED: 'true' }]) {
     const service = sceneServiceFromEnvironment(env);
     assert.equal(service.capabilities.enabled, false);
     assert.throws(() => service.authorize(`Bearer ${token}`), { status: 503 });
   }
 });
 
-test('Vercel invocation OIDC enables configured scenes without an environment credential', () => {
-  const options = { SCENE_GENERATION_ENABLED: 'true', SCENE_ACCESS_TOKEN: token, AI_GATEWAY_MODEL: 'google/gemini-nano-banana-2.1' };
-  assert.equal(sceneServiceFromEnvironment(options).capabilities.enabled, false);
-  const deployed = sceneServiceFromEnvironment({ ...options, VERCEL: '1' });
-  assert.equal(deployed.capabilities.enabled, true);
-  assert.equal(deployed.capabilities.mode, 'ai-scene');
-  assert.doesNotThrow(() => deployed.authorize(`Bearer ${token}`));
-  // A plain external process must supply credentials; VERCEL=0 isn't a deployment.
-  assert.equal(sceneServiceFromEnvironment({ ...options, VERCEL: '0' }).capabilities.enabled, false);
-  assert.equal(sceneServiceFromEnvironment({ ...options, AI_GATEWAY_API_KEY: 'test-only' }).capabilities.enabled, true);
-  assert.equal(sceneServiceFromEnvironment({ ...options, VERCEL_OIDC_TOKEN: 'test-only' }).capabilities.enabled, true);
-  assert.equal(sceneServiceFromEnvironment({ ...options, VERCEL: '1', SCENE_GENERATION_ENABLED: 'false' }).capabilities.enabled, false);
+test('direct provider requires both enable/review flags, an access code, a model, and a server key', () => {
+  const options = { SCENE_GENERATION_ENABLED: 'true', SCENE_PROVIDER_REVIEWED: 'true', SCENE_ACCESS_TOKEN: token, OPENAI_IMAGE_MODEL: DEFAULT_SCENE_MODEL, OPENAI_API_KEY: 'test-only' };
+  const configured = sceneServiceFromEnvironment(options);
+  assert.equal(configured.capabilities.enabled, true);
+  assert.equal(configured.capabilities.provider, 'OpenAI (direct)');
+  assert.doesNotThrow(() => configured.authorize(`Bearer ${token}`));
+  for (const field of Object.keys(options)) {
+    const incomplete = { ...options }; delete incomplete[field];
+    assert.equal(sceneServiceFromEnvironment(incomplete).capabilities.enabled, false);
+  }
+  assert.equal(sceneServiceFromEnvironment({ ...options, SCENE_PROVIDER_REVIEWED: 'false' }).capabilities.enabled, false);
+  assert.equal(sceneServiceFromEnvironment({ ...options, SCENE_GENERATION_ENABLED: 'false' }).capabilities.enabled, false);
+  const noKey = { ...options }; delete noKey.OPENAI_API_KEY;
+  assert.equal(sceneServiceFromEnvironment({ ...noKey, VERCEL: '1', VERCEL_OIDC_TOKEN: 'test-only' }).capabilities.enabled, false);
 });
 
-test('real SDK adapter pins Vertex with ZDR/no training and disables cost-multiplying retries', async () => {
-  let supplied;
-  const provider = createGatewaySceneProvider({ model: 'google/gemini-nano-banana-2.1', generate: async options => {
-    supplied = options;
-    return { finishReason: 'stop', files: [{ mediaType: 'image/png', uint8Array: png }] };
+test('direct adapter uses only the fixed official API, one moderated JPEG, and no redirects/retries', async () => {
+  let supplied; let calls = 0;
+  const provider = createOpenAISceneProvider({ apiKey: 'test-only', fetchImpl: async (url, options) => {
+    supplied = { url, options }; calls += 1; return imageResponse();
   } });
   const signal = new AbortController().signal;
-  assert.deepEqual(await provider({ prompt: 'DRAW', signal }), picture);
-  assert.equal(supplied.model, 'google/gemini-nano-banana-2.1');
-  assert.equal(supplied.prompt, 'DRAW');
-  assert.equal(supplied.abortSignal, signal);
-  assert.equal(supplied.maxRetries, 0);
-  assert.deepEqual(supplied.providerOptions.gateway, { only: ['vertex'], zeroDataRetention: true, disallowPromptTraining: true });
-  assert.deepEqual(supplied.providerOptions.google, { responseModalities: ['IMAGE'], imageConfig: { aspectRatio: '4:3', imageSize: '1K' } });
-  assert.equal(supplied.telemetry.isEnabled, false);
-  assert.throws(() => createGatewaySceneProvider({ model: 'arbitrary/unknown' }));
+  assert.deepEqual(await provider({ prompt: 'DRAW', signal }), { mimeType: 'image/jpeg', bytes: jpeg });
+  assert.equal(supplied.url, 'https://api.openai.com/v1/images/generations');
+  assert.equal(supplied.options.headers.Authorization, 'Bearer test-only');
+  assert.equal(supplied.options.redirect, 'error');
+  assert.equal(supplied.options.cache, 'no-store');
+  assert.equal(supplied.options.credentials, 'omit');
+  assert.deepEqual(JSON.parse(supplied.options.body), { model: DEFAULT_SCENE_MODEL, prompt: 'DRAW', n: 1, size: '1536x1024', quality: 'medium', output_format: 'jpeg', output_compression: 80, moderation: 'auto' });
+  assert.equal(calls, 1);
+  assert.throws(() => createOpenAISceneProvider({ apiKey: 'test-only', model: 'gpt-image-2.6-flare' }));
+  assert.throws(() => createOpenAISceneProvider({ apiKey: '' }));
 });
 
 test('model refusals and missing image output are actionable without leaking model text', async () => {
-  for (const output of [{ finishReason: 'content-filter', text: 'PRIVATE' }, { finishReason: 'stop', text: 'PRIVATE', files: [] }]) {
-    const provider = createGatewaySceneProvider({ model: 'google/gemini-nano-banana-2.1', generate: async () => output });
+  for (const [status, output] of [[400, { error: { code: 'moderation_blocked', message: 'PRIVATE' } }], [200, { data: [], text: 'PRIVATE' }]]) {
+    const provider = createOpenAISceneProvider({ apiKey: 'test-only', fetchImpl: async () => Response.json(output, { status }) });
     await assert.rejects(provider({ prompt: 'DRAW' }), error => error.status === 422 && error.code === 'generation_refused' && !error.message.includes('PRIVATE'));
   }
+});
+
+test('direct adapter bounds announced and streamed response bodies and cancels oversized streams', async () => {
+  for (const announced of [true, false]) {
+    let cancelled = false;
+    const stream = new ReadableStream({
+      start(controller) { if (!announced) controller.enqueue(new Uint8Array(4_000_001)); },
+      cancel() { cancelled = true; },
+    });
+    const response = new Response(stream, { headers: { 'Content-Type': 'application/json', ...(announced ? { 'Content-Length': '4000001' } : {}) } });
+    const provider = createOpenAISceneProvider({ apiKey: 'test-only', fetchImpl: async () => response });
+    await assert.rejects(provider({ prompt: 'DRAW' }), error => error.status === 502);
+    assert.equal(cancelled, true);
+  }
+});
+
+test('direct adapter rejects malformed/non-image outputs and never follows image URLs', async () => {
+  for (const response of [
+    new Response('PRIVATE', { headers: { 'Content-Type': 'text/plain' } }),
+    new Response('{', { headers: { 'Content-Type': 'application/json' } }),
+    Response.json({ data: [{ b64_json: 'PRIVATE' }] }),
+    Response.json({ data: [{ b64_json: png.toString('base64') }] }),
+    Response.json({ data: [{ url: 'https://private.invalid/child-photo' }] }),
+  ]) {
+    let calls = 0;
+    const provider = createOpenAISceneProvider({ apiKey: 'test-only', fetchImpl: async () => { calls += 1; return response; } });
+    await assert.rejects(provider({ prompt: 'DRAW' }), error => [422, 502].includes(error.status) && !error.message.includes('PRIVATE'));
+    assert.equal(calls, 1);
+  }
+});
+
+test('direct API failures preserve only status, distinguish exhausted budgets, and never retry', async () => {
+  for (const status of [401, 402, 403, 429, 500]) {
+    let calls = 0;
+    const provider = createOpenAISceneProvider({ apiKey: 'test-only', fetchImpl: async () => { calls += 1; return Response.json({ error: { message: 'PRIVATE prompt and secret' } }, { status }); } });
+    const service = createSceneService({ accessToken: token, provider });
+    await assert.rejects(service.generate(choose()), error => !error.message.includes('PRIVATE') && !error.message.includes('secret') && [429, 502, 503].includes(error.status));
+    assert.equal(calls, 1);
+  }
+  for (const code of ['insufficient_quota', 'credit_balance_exhausted', 'organization_spend_limit_exceeded', 'project_spend_limit_exceeded', 'organization_usage_limit_exceeded']) {
+    const provider = createOpenAISceneProvider({ apiKey: 'test-only', fetchImpl: async () => Response.json({ error: { code, message: 'PRIVATE' } }, { status: 429 }) });
+    await assert.rejects(provider({ prompt: 'DRAW' }), { code: 'generation_budget_unavailable' });
+  }
+});
+
+test('direct fetch receives caller cancellation and a bounded provider deadline', async () => {
+  const controller = new AbortController();
+  let observed;
+  const fetchImpl = (_, { signal }) => new Promise((resolve, reject) => {
+    observed = signal;
+    const keepAlive = setTimeout(() => resolve(imageResponse()), 80);
+    signal.addEventListener('abort', () => { clearTimeout(keepAlive); reject(signal.reason); }, { once: true });
+  });
+  const provider = createOpenAISceneProvider({ apiKey: 'test-only', fetchImpl });
+  const pending = provider({ prompt: 'DRAW', signal: controller.signal });
+  controller.abort();
+  await assert.rejects(pending, { code: 'generation_cancelled' });
+  assert.equal(observed.aborted, true);
+  const timed = createOpenAISceneProvider({ apiKey: 'test-only', fetchImpl, timeoutMs: 10 });
+  await assert.rejects(timed({ prompt: 'DRAW' }), { code: 'generation_timeout' });
+  assert.equal(observed.aborted, true);
 });
 
 test('only bounded PNG/JPEG/WebP bytes can become response data', () => {
@@ -154,6 +219,20 @@ test('provider failures return fixed errors without exposing credentials or prom
   const response = await post(base);
   assert.equal(response.status, 502);
   assert.doesNotMatch(await response.text(), /PRIVATE|test-access-code/);
+});
+
+test('provider authentication, credit, and access failures have distinct sanitized operator guidance', async t => {
+  for (const [providerStatus, expectedCode] of [[401, 'generation_not_authorized'], [402, 'generation_budget_unavailable'], [403, 'generation_access_denied']]) {
+    const base = await start(t, { sceneService: createSceneService({ accessToken: token, provider: async () => {
+      throw Object.assign(new Error(`PRIVATE prompt and ${token}`), { statusCode: providerStatus, responseBody: 'PRIVATE_PROVIDER_BODY' });
+    } }) });
+    const response = await post(base);
+    assert.equal(response.status, 503);
+    const body = await response.text();
+    assert.equal(JSON.parse(body).error.code, expectedCode);
+    assert.doesNotMatch(body, /PRIVATE|test-access-code|responseBody|stack/);
+    assert.match(JSON.parse(body).error.message, /operator/i);
+  }
 });
 
 test('scene rate limit prevents excess paid calls and accepts Authorization in explicit CORS preflight', async t => {

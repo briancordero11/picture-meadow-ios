@@ -5,7 +5,7 @@
   "supportURL": "",
   "onlinePreviewEnabled": false,
   "sceneGenerationEnabled": false,
-  "aiProviderName": "Google Vertex AI via Vercel AI Gateway",
+  "aiProviderName": "OpenAI (direct)",
   "apiBaseURL": "",
   "audience": {
     "kidsCategory": null,

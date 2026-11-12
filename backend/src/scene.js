@@ -1,10 +1,13 @@
 import { readFileSync } from 'node:fs';
 import { createHash, randomUUID, timingSafeEqual } from 'node:crypto';
-import { generateText } from 'ai';
 import { InputError } from './preview.js';
 
 export const MAX_SCENE_IMAGE_BYTES = Math.floor(2.8 * 1024 * 1024);
-export const SCENE_PROVIDER = 'Google Vertex AI via Vercel AI Gateway';
+export const SCENE_PROVIDER = 'OpenAI (direct)';
+export const DEFAULT_SCENE_MODEL = 'gpt-image-2.5-flare';
+const sceneModels = new Set([DEFAULT_SCENE_MODEL, 'gpt-image-2.5-flare-2026-09-08']);
+const OPENAI_IMAGES_URL = 'https://api.openai.com/v1/images/generations';
+const MAX_PROVIDER_RESPONSE_BYTES = 4_000_000;
 const fields = new Set(['interestId', 'actionIds', 'settingId', 'favoriteIds', 'essentialChoiceId']);
 
 export class SceneError extends Error {
@@ -80,26 +83,70 @@ export function safeSceneImage(image) {
   return { mimeType: image.mimeType, data: bytes.toString('base64') };
 }
 
-/** Calls the real Gateway API. SDK telemetry and automatic retries are disabled. */
-export function createGatewaySceneProvider({ model, generate = generateText } = {}) {
-  if (typeof model !== 'string' || !/^google\/[a-z0-9.-]+$/.test(model)) throw new Error('AI_GATEWAY_MODEL must be a verified Google multimodal image-output model ID.');
+async function boundedProviderJSON(response, maximum, signal) {
+  if (Number(response.headers.get('content-length')) > maximum || !response.headers.get('content-type')?.toLowerCase().startsWith('application/json') || !response.body) {
+    await response.body?.cancel();
+    throw new SceneError(502, 'generation_failed', 'The image service returned an unsupported response. Please try again.');
+  }
+  const reader = response.body.getReader();
+  const chunks = [];
+  let bytes = 0;
+  try {
+    for (;;) {
+      signal.throwIfAborted();
+      const chunk = await reader.read();
+      if (chunk.done) break;
+      bytes += chunk.value.byteLength;
+      if (bytes > maximum) throw new SceneError(502, 'image_too_large', 'The generated picture could not be used. Please try again.');
+      chunks.push(Buffer.from(chunk.value));
+    }
+    signal.throwIfAborted();
+    try { return JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(Buffer.concat(chunks))); }
+    catch { throw new SceneError(502, 'generation_failed', 'The image service returned an unsupported response. Please try again.'); }
+  } finally {
+    await reader.cancel().catch(() => {});
+    reader.releaseLock();
+  }
+}
+
+/** One direct request to the fixed official Images API. No router, retry, or uploaded file. */
+export function createOpenAISceneProvider({ apiKey, model = DEFAULT_SCENE_MODEL, fetchImpl = fetch, timeoutMs = 90_000 } = {}) {
+  if (!sceneModels.has(model)) throw new Error('OPENAI_IMAGE_MODEL must be an allowlisted GPT Image 2.5 Flare model.');
+  if (typeof apiKey !== 'string' || !apiKey.trim() || /\s/.test(apiKey)) throw new Error('Configure a server-only OPENAI_API_KEY.');
+  if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 90_000) throw new Error('Provider timeout must be between 1 and 90000 ms.');
   return async ({ prompt, signal }) => {
-    const result = await generate({
-      model,
-      prompt,
-      maxRetries: 0,
-      abortSignal: signal,
-      timeout: 90_000,
-      providerOptions: {
-        gateway: { only: ['vertex'], zeroDataRetention: true, disallowPromptTraining: true },
-        google: { responseModalities: ['IMAGE'], imageConfig: { aspectRatio: '4:3', imageSize: '1K' } },
-      },
-      telemetry: { isEnabled: false },
-    });
-    if (result.finishReason === 'content-filter') throw new SceneError(422, 'generation_refused', 'The image service could not draw this idea. Try different picture choices.');
-    const file = result.files?.find(item => ['image/png', 'image/jpeg', 'image/webp'].includes(item.mediaType));
-    if (!file) throw new SceneError(422, 'generation_refused', 'The image service did not draw a picture. Try different picture choices.');
-    return { mimeType: file.mediaType, bytes: file.uint8Array };
+    const deadline = AbortSignal.timeout(timeoutMs);
+    const combined = signal ? AbortSignal.any([signal, deadline]) : deadline;
+    try {
+      combined.throwIfAborted();
+      const response = await fetchImpl(OPENAI_IMAGES_URL, {
+        method: 'POST', redirect: 'error', cache: 'no-store', credentials: 'omit', signal: combined,
+        headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ model, prompt, n: 1, size: '1536x1024', quality: 'medium', output_format: 'jpeg', output_compression: 80, moderation: 'auto' }),
+      });
+      if (!response.ok) {
+        // Only stable, allowlisted error codes affect handling. Provider messages,
+        // request IDs, moderation categories, and response bodies are discarded.
+        if ([400, 422, 429].includes(response.status)) {
+          const result = await boundedProviderJSON(response, 16_384, combined);
+          if (result?.error?.code === 'moderation_blocked') throw new SceneError(422, 'generation_refused', 'The image service could not draw this idea. Try different picture choices.');
+          if (['insufficient_quota', 'credit_balance_exhausted', 'organization_spend_limit_exceeded', 'project_spend_limit_exceeded', 'organization_usage_limit_exceeded'].includes(result?.error?.code)) throw new SceneError(503, 'generation_budget_unavailable', 'Image generation credits or a spending allowance are unavailable. The operator can check the service budget.');
+        } else await response.body?.cancel();
+        throw Object.assign(new Error('Image provider request failed.'), { statusCode: response.status });
+      }
+      const result = await boundedProviderJSON(response, MAX_PROVIDER_RESPONSE_BYTES, combined);
+      const encoded = result?.data?.length === 1 ? result.data[0]?.b64_json : undefined;
+      if (typeof encoded !== 'string' || !encoded) throw new SceneError(422, 'generation_refused', 'The image service did not draw a picture. Try different picture choices.');
+      if (encoded.length > Math.ceil(MAX_SCENE_IMAGE_BYTES / 3) * 4) throw new SceneError(502, 'image_too_large', 'The generated picture could not be used. Please try again.');
+      const decoded = Buffer.from(encoded, 'base64');
+      if (decoded.toString('base64') !== encoded) throw new SceneError(502, 'generation_failed', 'The image service returned an unsupported picture. Please try again.');
+      const image = { mimeType: 'image/jpeg', bytes: decoded };
+      safeSceneImage(image);
+      return image;
+    } catch (error) {
+      if (combined.aborted) throw new SceneError(deadline.aborted ? 504 : 499, deadline.aborted ? 'generation_timeout' : 'generation_cancelled', deadline.aborted ? 'Drawing took too long. You can try again.' : 'Drawing was cancelled.');
+      throw error;
+    }
   };
 }
 
@@ -148,7 +195,9 @@ export function createSceneService({ accessToken, provider, catalog, enabled = t
         if (combined.aborted) throw new SceneError(deadline.aborted ? 504 : 499, deadline.aborted ? 'generation_timeout' : 'generation_cancelled', deadline.aborted ? 'Drawing took too long. You can try again.' : 'Drawing was cancelled.');
         // Provider errors can include request content or credentials. Return only fixed messages.
         if (error?.statusCode === 429) throw new SceneError(429, 'generation_busy', 'The image service is busy. Please wait before trying again.');
-        if ([401, 402, 403].includes(error?.statusCode)) throw new SceneError(503, 'generation_unavailable', 'The image service is not available. A grown-up can check its connection.');
+        if (error?.statusCode === 401) throw new SceneError(503, 'generation_not_authorized', 'The image service could not authenticate with its provider. The operator can check the server connection.');
+        if (error?.statusCode === 402) throw new SceneError(503, 'generation_budget_unavailable', 'Image generation credits or a spending allowance are unavailable. The operator can check the service budget.');
+        if (error?.statusCode === 403) throw new SceneError(503, 'generation_access_denied', 'The provider did not allow this image request. The operator can check model access and data-handling eligibility.');
         throw new SceneError(502, 'generation_failed', 'The picture could not be drawn. Your choices are still here. Please try again.');
       } finally {
         if (abort) combined.removeEventListener('abort', abort);
@@ -160,13 +209,13 @@ export function createSceneService({ accessToken, provider, catalog, enabled = t
 
 export function sceneServiceFromEnvironment(env = process.env) {
   const enabled = env.SCENE_GENERATION_ENABLED === 'true';
-  // Deployed Functions receive OIDC on each invocation, not necessarily as an
-  // environment variable. The AI SDK obtains the current request's token.
-  const credentialPath = env.VERCEL === '1' || env.AI_GATEWAY_API_KEY || env.VERCEL_OIDC_TOKEN;
-  const configured = Boolean(enabled && env.SCENE_ACCESS_TOKEN && env.AI_GATEWAY_MODEL && credentialPath);
+  // This attestation records an operator's review; it does not activate OpenAI
+  // Zero Data Retention. That requires approval and account/project settings.
+  const reviewed = env.SCENE_PROVIDER_REVIEWED === 'true';
+  const configured = Boolean(enabled && reviewed && env.SCENE_ACCESS_TOKEN && env.OPENAI_IMAGE_MODEL && env.OPENAI_API_KEY);
   return createSceneService({
     accessToken: env.SCENE_ACCESS_TOKEN || undefined,
     enabled: configured,
-    provider: configured ? createGatewaySceneProvider({ model: env.AI_GATEWAY_MODEL }) : undefined,
+    provider: configured ? createOpenAISceneProvider({ model: env.OPENAI_IMAGE_MODEL, apiKey: env.OPENAI_API_KEY }) : undefined,
   });
 }

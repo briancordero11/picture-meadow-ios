@@ -70,8 +70,8 @@ def validate(metadata):
     if not isinstance(metadata.get("sceneGenerationEnabled"), bool):
         problems.append("Explicitly choose sceneGenerationEnabled true or false; the default app build is offline.")
     if metadata.get("sceneGenerationEnabled") is True:
-        if metadata.get("aiProviderName") != "Google Vertex AI via Vercel AI Gateway":
-            problems.append("AI provider disclosure must match the backend's Google Vertex AI via Vercel AI Gateway route.")
+        if metadata.get("aiProviderName") != "OpenAI (direct)":
+            problems.append("AI provider disclosure must match the backend's OpenAI (direct) route.")
         required.extend(["aiProviderRetentionAndNoTraining", "aiConsentAndAdultReview", "aiServiceAccessAndBudget", "aiFailureAndCancellation"])
     for item in required:
         if reviewed.get(item) is not True:

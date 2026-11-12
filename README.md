@@ -7,10 +7,10 @@ The home screen retains the 20 illustrated topic pictures from the supplied refe
 ## Project status
 
 - **Native app:** SwiftUI iPad source with 20 journeys, 100 actions, 80 settings, 36 shared favorites, an offline collage, speech, a 34-concept communication drawer, opt-in local drafts, and caregiver controls. Older saved drafts decode with the new choices unanswered.
-- **Backend:** Node service with a shared journey catalog and authenticated AI scene endpoint, plus the compatible legacy park-description API. The AI SDK dependency, container, deployment files, and automated API tests are included.
-- **Optional AI picture:** a grown-up confirms sending selected concept IDs, reviews the generated scene, and decides whether to show it. Original photos and source PDFs are not uploaded. The app defaults to offline with an empty API origin and scene generation disabled. Live provider connectivity remains under verification.
+- **Backend:** Node service with a shared journey catalog and authenticated AI scene endpoint, plus the compatible legacy park-description API. Container/deployment files and automated API tests are included. The selected scene provider is direct OpenAI Images API access with target model `gpt-image-2.5-flare`.
+- **Optional AI picture:** a grown-up confirms sending selected concept IDs, reviews the generated scene, and decides whether to show it. Original photos and source PDFs are not uploaded. The app defaults to offline with an empty API origin and scene generation disabled. Direct OpenAI credentials remain unconfigured and a successful production image request remains unverified.
 - **Drawer:** its height follows a finger drag and springs to open or closed, with tap and accessibility alternatives and Reduce Motion support. Physical iPad interaction validation remains pending.
-- **Verification and distribution:** the current native changes await a new Mac CI run. An earlier unsigned build and 30 tests passed for commit `bbf5ed5` in [GitHub Actions](https://github.com/briancordero11/picture-meadow-ios/actions/runs/43135189389). That historical result predates the action journeys and scene-generation changes. Physical-device testing, signing, and TestFlight submission remain pending.
+- **Verification and distribution:** an unsigned native build and 58 unit tests passed for commit `fa3aab0`. The subsequently added tap/drag UI-test target and provider-label change await a second CI result. Physical-device testing, signing, and TestFlight submission remain pending. [58-test Mac CI result](https://github.com/briancordero11/picture-meadow-ios/actions/runs/43149946910)
 
 The working name is **Wish Explorer**. This is an independent development prototype; the supplied organization materials inform the experience. Branding and publication details can be finalized with the project owner before release.
 
@@ -25,7 +25,7 @@ npm test
 npm start
 ```
 
-The local service listens on `http://127.0.0.1:8787` by default. The deployed API origin is [picture-meadow-scene-api.vercel.app](https://picture-meadow-scene-api.vercel.app). Deployment does not establish successful live image generation. Provider credentials and the complete native connection still require verification. See [backend/README.md](backend/README.md) for configuration and API details.
+The local service listens on `http://127.0.0.1:8787` by default. The deployed API origin is [picture-meadow-scene-api.vercel.app](https://picture-meadow-scene-api.vercel.app). Direct OpenAI credentials and a production image-generation result remain outstanding. Provider account access and data-handling terms require review for the intended deployment. See [backend/README.md](backend/README.md) for configuration and API details.
 
 ## Run the iPad app on a Mac
 

@@ -58,7 +58,7 @@ The WVC guidance is dated February 22, 2023. Some historical destination example
 
 The offline collage combines the chosen cards. Optional generation requires a grown-up's per-request confirmation and subsequent image review. Only catalog IDs are sent. The server resolves them into authored prompt fragments for one coherent imagined scene, emphasizing the most-important concept. The AI image can be removed independently of the selections.
 
-Live AI generation awaits credentials and configuration. The server requires its generation flag, access token, model, and AI Gateway credentials. Native configuration requires the generation flag, HTTPS API origin, provider name, and grown-up-configured service access token. A successful live request remains to be verified.
+The selected integration uses the direct OpenAI Images API with target model `gpt-image-2.5-flare` and native provider label `OpenAI (direct)`. Direct OpenAI credentials remain unconfigured. The server requires its generation flag and service access token alongside provider credentials. Native configuration requires the generation flag, HTTPS API origin, provider name, and grown-up-configured service access token. The hosted API exists, while native defaults keep the origin empty and scenes disabled. A successful production image request remains unverified. Actual provider-account access and data-handling approval, including any required Zero Data Retention arrangement, require account-level verification.
 
 The intake form is blank, including its form field values. Its name, birth date, address, phone, email, medical-provider fields, family notes, and volunteer records do not enter the catalog or scene payload. Published children, ages, and diagnoses in the Super Star guide are also excluded from the new options and prompts.
 
@@ -70,4 +70,4 @@ Super Star page 2 describes internal and medical approval, safety, and age appro
 
 ## Verification
 
-The contract checker compares `assets/journey-catalog.json` with native and available backend copies. It verifies twenty home IDs and order, count bounds, required fields, slug IDs, and 216 distinct choice IDs. Final validation results will be appended from actual runs. Native simulator, physical iPad, and live-provider verification remain separate checks.
+The contract checker compares `assets/journey-catalog.json` with native and available backend copies. It verifies twenty home IDs and order, count bounds, required fields, slug IDs, and 216 distinct choice IDs. An unsigned native build and 58 unit tests passed for commit `fa3aab0`. The subsequent tap/drag UI-test target and direct-provider label await a second CI result. Physical iPad and live-provider verification remain pending. [58-test Mac CI result](https://github.com/briancordero11/picture-meadow-ios/actions/runs/43149946910)

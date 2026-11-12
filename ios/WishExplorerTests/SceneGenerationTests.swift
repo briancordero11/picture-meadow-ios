@@ -3,7 +3,7 @@ import XCTest
 
 final class SceneGenerationTests: XCTestCase {
     private let token = String(repeating: "a", count: 32)
-    private let provider = "Google Vertex AI via Vercel AI Gateway"
+    private let provider = "OpenAI (direct)"
 
     private var enabledConfiguration: WishBuildConfiguration {
         WishBuildConfiguration(values: ["WishAPIBaseURL": "https://service.test",

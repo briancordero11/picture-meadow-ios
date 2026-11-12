@@ -34,15 +34,17 @@ The script checks macOS and Xcode 26+, generates the project, validates property
 WISH_TEST_DESTINATION='platform=iOS Simulator,name=iPad Pro 13-inch (M4)' bash scripts/verify.sh
 ```
 
-**The action journeys, scene-generation integration, migration, and new drawer behavior await a fresh Mac CI result.** An earlier unsigned build and 30 tests passed on November 11, 2026 for commit `bbf5ed5`, with Xcode 26.6 and the iPad mini (A17 Pro) simulator on iOS 26.5. That historical run predates these changes. [Earlier GitHub Actions result](https://github.com/briancordero11/picture-meadow-ios/actions/runs/43135189389)
+**An unsigned native build and 58 unit tests passed for commit `fa3aab0`.** That baseline covers the action journeys, migration, scene-service boundaries, and drawer geometry. The newly added `WishExplorerUITests` target exercises launch, tab taps, coordinate drags, and word visibility. Its execution and the subsequent provider-label change await a second Mac CI result. [58-test Mac CI result](https://github.com/briancordero11/picture-meadow-ios/actions/runs/43149946910)
 
 The native suite includes catalog/resource, migration, journey selection, persistence, and privacy behavior. Speech, VoiceOver, Switch Control, portrait/landscape, and physical-device behavior need hands-on iPad verification. `python3 scripts/check_resources.py` checks portable resources and unchanged source images. The root contract checker compares the native, authoritative, and backend journey catalogs. Neither portable checker compiles Swift.
 
 ## Backend connection
 
-Offline mode is the default. `WISH_API_BASE_URL` is empty, `WISH_SCENE_GENERATION_ENABLED` is `"NO"`, and the collage works without a server. The deployed API origin is `https://picture-meadow-scene-api.vercel.app`. Its live provider connection and the complete native request still require verification.
+Offline mode is the default. `WISH_API_BASE_URL` is empty, `WISH_SCENE_GENERATION_ENABLED` is `"NO"`, and the collage works without a server. The deployed API origin is `https://picture-meadow-scene-api.vercel.app`. Direct OpenAI credentials are unconfigured, and a production image-generation request and the complete native connection remain unverified.
 
-Optional AI scenes require a valid HTTPS origin, `WISH_SCENE_GENERATION_ENABLED: "YES"`, and an accurate `WISH_AI_PROVIDER_NAME`. Regenerate and rebuild after changing these settings. A grown-up then supplies the service access token in Settings. `SceneAccessKeychain` stores that token with `kSecAttrAccessibleWhenUnlockedThisDeviceOnly`; provider credentials stay on the server. The service also needs its generation flag, token, model, and AI Gateway credentials configured.
+Optional AI scenes require a valid HTTPS origin, `WISH_SCENE_GENERATION_ENABLED: "YES"`, and an accurate `WISH_AI_PROVIDER_NAME`, currently `OpenAI (direct)`. Regenerate and rebuild after changing these settings. A grown-up then supplies the service access token in Settings. `SceneAccessKeychain` stores that token with `kSecAttrAccessibleWhenUnlockedThisDeviceOnly`; the OpenAI API key stays on the server. The selected service integration calls the direct OpenAI Images API with target model `gpt-image-2.5-flare`. It requires the server generation flag, service access token, and direct provider credentials.
+
+Provider account access, retention terms, and any required data-handling approval must be verified for the actual account. An application setting alone does not establish Zero Data Retention eligibility or approval.
 
 After a fresh adult gate, each request shows the receiving service, provider, selected concepts, and connection-metadata disclosure. Confirming authorizes one request. The native client sends fixed catalog IDs to `POST /v1/wish-scene`, for example:
 
@@ -100,7 +102,7 @@ The yellow star at the top right opens **Settings** through the existing adult g
 
 Adult access is revoked on settings dismissal and whenever the scene is not active. Pending confirmations and active network work are canceled; re-entry requires a new gate. The default build remains offline. The planned first release is U.S.-only under a separate LLC, with stated audience ages 2–17+ and no upper cap entered. Exact legal publisher name, public contact/policy/support pages, the Kids Category approach for this broad audience, hosting retention, and the root release-record validation are still required before distribution. No claim of completed Apple/legal compliance is made. The current privacy manifest describes the offline baseline with no tracking/data-collection declarations and app-only UserDefaults reason `CA92.1`; reassess declarations before enabling a deployed online feature.
 
-See [Apple requirements review](../docs/apple-requirements-review.md), [backend privacy review](../docs/backend-privacy-review.md), [policy draft](../docs/privacy-policy-draft.html), and [release checklist](../docs/release-checklist.md). Privacy tests cover URL configuration, one-use confirmations, gate non-persistence, revocation before service invocation, stale responses, and offline forgetting. The earlier 30-test result is historical. Current native results must be recorded from a new run.
+See [Apple requirements review](../docs/apple-requirements-review.md), [backend privacy review](../docs/backend-privacy-review.md), [policy draft](../docs/privacy-policy-draft.html), and [release checklist](../docs/release-checklist.md). The 58-test baseline includes privacy checks for URL configuration, one-use confirmations, gate non-persistence, revocation before service invocation, stale responses, and offline forgetting. The new gesture UI-test target awaits its actual run result.
 
 ## Retention and accessibility
 

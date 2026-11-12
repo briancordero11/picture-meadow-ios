@@ -13,8 +13,5 @@
     "catalog:sync": "node scripts/sync-journey-catalog.mjs",
     "catalog:check": "node scripts/sync-journey-catalog.mjs --check",
     "check": "node --check src/main.js && node --check src/server.js && node --check src/preview.js && node --check src/catalog.js && node --check src/scene.js && node --check api/index.js"
-  },
-  "dependencies": {
-    "ai": "^7.0.170"
   }
 }

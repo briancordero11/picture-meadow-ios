@@ -62,7 +62,7 @@ struct SceneGenerationConsentView: View {
                 Section("Where it goes") {
                     Text("Service: \(disclosure.serviceHost)")
                     Text("Image provider: \(disclosure.providerName)")
-                    Text("The service turns the chosen concepts into an image prompt. The service, hosting provider, AI gateway, and image provider process this request. Connection information such as IP address and request time can be received by the service and hosting provider.")
+                    Text("The service turns the chosen concepts into an image prompt and sends it directly to the disclosed image provider. Connection information such as IP address and request time can be received by the service and hosting provider.")
                     Text("Names, photographs, medical details, saved talking-board sentences, and the intake documents are not sent. The generated picture stays in app memory and is cleared when the wish changes or is forgotten. Clearing this iPad cannot recall information already processed by an external service.")
                     Text("A grown-up will review the result before showing it. This permission covers one request. It does not submit or approve a wish.")
                 }
