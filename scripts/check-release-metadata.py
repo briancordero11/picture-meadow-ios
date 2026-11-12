@@ -72,7 +72,7 @@ def validate(metadata):
     if metadata.get("sceneGenerationEnabled") is True:
         if metadata.get("aiProviderName") != "OpenAI (direct)":
             problems.append("AI provider disclosure must match the backend's OpenAI (direct) route.")
-        required.extend(["aiProviderRetentionAndNoTraining", "aiConsentAndAdultReview", "aiServiceAccessAndBudget", "aiFailureAndCancellation"])
+        required.extend(["aiProviderRetentionAndNoTraining", "aiConsentAndAdultReview", "aiServiceAccessAndBudget", "aiFailureAndCancellation", "aiReportingAndResponse"])
     for item in required:
         if reviewed.get(item) is not True:
             problems.append(f"Complete and record the {item} review.")

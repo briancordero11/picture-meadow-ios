@@ -50,6 +50,12 @@ class ReleaseMetadataTests(unittest.TestCase):
         record["apiBaseURL"] = "https://api.apple.com/some-path"
         self.assertTrue(any("API origin" in problem for problem in module.validate(record)))
 
+    def test_ai_release_requires_reporting_and_response_review(self):
+        record = self.valid_record()
+        record.update(sceneGenerationEnabled=True, apiBaseURL="https://api.apple.com")
+        record["reviewed"]["aiReportingAndResponse"] = False
+        self.assertIn("Complete and record the aiReportingAndResponse review.", module.validate(record))
+
     def test_audience_and_boolean_decisions_are_explicit(self):
         record = self.valid_record()
         record["audience"]["launchCountries"] = []

@@ -11,6 +11,7 @@ final class WishStore: ObservableObject {
     @Published var isPaused = false
     @Published var caregiverPresented = false
     @Published var privacyPresented = false
+    @Published var aiReportRequested = false
     @Published private(set) var adultSessionActive = false
     @Published var readChoicesAloud: Bool {
         didSet { defaults.set(readChoicesAloud, forKey: Self.speechKey) }
@@ -205,6 +206,7 @@ final class WishStore: ObservableObject {
     func reset() {
         cancelNetworkWork()
         stopSpeaking()
+        aiReportRequested = false
         journeyStage = 0
         draft = WishDraft()
         defaults.removeObject(forKey: Self.draftKey)
@@ -241,6 +243,7 @@ final class WishStore: ObservableObject {
     func handleSceneActivity(_ isActive: Bool) {
         sceneIsActive = isActive
         if !isActive {
+            aiReportRequested = false
             endAdultSession()
             caregiverPresented = false
             phrase = []
@@ -390,6 +393,12 @@ final class WishStore: ObservableObject {
     func discardGeneratedScene() {
         pendingGeneratedScene = nil; generatedScene = nil; generatedSceneDraft = nil
         sceneStatus = "AI picture removed. Your chosen pictures are still here."
+    }
+
+    func requestAIReport() {
+        stopSpeaking()
+        aiReportRequested = true
+        caregiverPresented = true
     }
 
     private func saveDraft() {

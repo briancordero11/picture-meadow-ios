@@ -6,19 +6,30 @@ struct CaregiverView: View {
     @State private var confirmingReset = false
     @State private var onlineDisclosure: OnlinePreviewDisclosure?
     @State private var privacyPresented = false
+    @State private var settingsPath: [GrownUpPage] = []
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $settingsPath) {
             Form {
+                Section("Privacy and app information") {
+                    NavigationLink(value: GrownUpPage.privacy) {
+                        Label("Privacy & Data", systemImage: "hand.raised.fill")
+                    }
+                    NavigationLink(value: GrownUpPage.information) {
+                        Label("App Information & Help", systemImage: "info.circle")
+                    }
+                    NavigationLink(value: GrownUpPage.report) {
+                        Label("Report an AI picture or privacy concern", systemImage: "exclamationmark.bubble")
+                    }
+                }
                 Section("Explore at their pace") {
                     Text("Follow your Super Star's lead. Every step can be skipped, changed, or paused. A tap is an expression to explore together; it is not an eligibility decision or a final wish approval.")
                     Toggle("Read choice labels aloud", isOn: $store.readChoicesAloud)
                     Text("The talking board and Read my wish always speak when tapped, even with choice narration off.")
                         .font(.footnote).foregroundStyle(.secondary)
                 }
-                Section("Choices on this iPad") {
-                    Toggle("Remember choices on this iPad", isOn: $store.rememberChoices)
-                    Text("Off by default. This saves the chosen topic, actions, setting, favorites, and most-important choice, including older park choices. Names, photographs, contact details, and medical information are not requested. The talking-board sentence and AI pictures are not saved.")
+                Section("Current wish") {
+                    Text("Saving, AI permissions, and forgetting choices are in Privacy & Data. Start a fresh wish clears the current and saved wish while keeping the remembering preference and service access code.")
                     Button("Start a fresh wish", role: .destructive) { confirmingReset = true }
                 }
                 SceneGenerationSettingsView()
@@ -54,6 +65,13 @@ struct CaregiverView: View {
                 }
             }
             .navigationTitle("For grown-ups")
+            .navigationDestination(for: GrownUpPage.self) { page in
+                switch page {
+                case .privacy: PrivacySettingsView()
+                case .information: AppInformationView()
+                case .report: ReportAIConcernView()
+                }
+            }
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
             .sheet(item: $onlineDisclosure) { disclosure in OnlinePreviewConsentView(disclosure: disclosure) }
             .sheet(isPresented: $privacyPresented) { PrivacyNoticeView() }
@@ -63,6 +81,16 @@ struct CaregiverView: View {
             } message: {
                 Text("This clears the choices saved on this iPad and the current talking-board sentence.")
             }
+            .onAppear { openRequestedReport() }
+            .onChange(of: store.aiReportRequested) { _, _ in openRequestedReport() }
         }
     }
+
+    private func openRequestedReport() {
+        guard store.adultSessionActive, store.aiReportRequested else { return }
+        store.aiReportRequested = false
+        settingsPath.append(.report)
+    }
 }
+
+private enum GrownUpPage: Hashable { case privacy, information, report }

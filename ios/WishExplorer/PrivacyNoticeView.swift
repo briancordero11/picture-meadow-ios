@@ -23,7 +23,8 @@ struct PrivacyNoticeView: View {
                     Text("AI picture making is disabled in the default build. When configured, a grown-up must pass the reading check, have service access, and confirm each request. Only the selected catalog topic, actions, setting, favorites, and most-important choice shown in the confirmation are sent to the service. The service composes an image prompt for the disclosed AI provider and calls it directly. No picture files, intake documents, identity, medical information, or talking-board sentence are sent.")
                     Text("The generated picture is held in memory. It needs grown-up review before appearing with the wish. You can discard it at any time; changing or forgetting the wish also clears it. AI pictures are not saved to Photos, device preferences, or a public gallery by this app. Closing settings or switching away cancels in-flight requests, although a provider may already have processed a request.")
                     Text("The service and hosting provider receive connection details including IP address and time. The image provider processes the image prompt and output. Your operator must verify the actual account's retention settings, eligibility, and safeguards for minors and publish those details before enabling it. Zero Data Retention requires the provider's approval and account configuration; an app setting cannot enable it. Forgetting choices does not recall data already processed externally.")
-                    Text("A service access code, if entered, is stored in this iPad's Keychain while unlocked and is not synchronized to other devices. It is separate from the provider's API credentials. Remove it in grown-up settings or use Forget choices.")
+                    Text("A service access code, if entered, is stored persistently in this iPad's Keychain and can be read only while the iPad is unlocked. It is not synchronized to other devices. It is separate from the provider's API credentials. Remove it in grown-up settings or use Forget choices.")
+                    Text("OpenAI's standard API abuse-monitoring records may ordinarily be retained for up to 30 days. Approved Zero Data Retention changes that account's treatment. This prototype has not established or enabled that approval. Hosting logs and support correspondence can have separate retention periods, which the operator must publish before launch.")
                     if let provider = store.configuration.aiProviderName, store.configuration.sceneGenerationAvailable { Text("Configured image provider: \(provider)") }
                 }
                 Section("Optional online descriptions") {
@@ -35,6 +36,10 @@ struct PrivacyNoticeView: View {
                     } else {
                         Text("Online descriptions are unavailable in this build.").foregroundStyle(.secondary)
                     }
+                }
+                Section("Support and reporting") {
+                    Text("A grown-up can report an unsuitable AI picture or privacy concern from App Information & Help. Where a real support address is configured, the app prepares a generic email draft with the selected issue and app version. It does not attach the picture, choices, talking-board sentence, identity, or service code. You control any additional details and sending in your mail app. The publisher receives correspondence you choose to send, including your reply address.")
+                    Text("This app creates no user accounts. Forget choices removes local app data and access; it does not send a provider-deletion request or erase older device backups.")
                 }
                 Section("Publisher and help") {
                     if let name = store.configuration.publisherName { Text(verbatim: name) }

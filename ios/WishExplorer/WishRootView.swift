@@ -42,7 +42,10 @@ struct WishRootView: View {
             .overlay {
                 if store.isPaused { PauseView() }
             }
-            .sheet(isPresented: $store.caregiverPresented, onDismiss: { store.endAdultSession() }) { AdultSettingsPortal() }
+            .sheet(isPresented: $store.caregiverPresented, onDismiss: {
+                store.endAdultSession()
+                store.aiReportRequested = false
+            }) { AdultSettingsPortal() }
             .sheet(isPresented: $store.privacyPresented) { PrivacyNoticeView() }
             .onChange(of: scenePhase) { _, phase in store.handleSceneActivity(phase == .active) }
         }

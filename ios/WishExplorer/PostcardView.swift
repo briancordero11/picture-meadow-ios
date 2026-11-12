@@ -12,6 +12,7 @@ struct PostcardView: View {
                         .accessibilityLabel("AI illustration of my chosen wish ideas")
                     Text("AI imagined picture").font(.headline).foregroundStyle(WishTheme.secondary)
                     Button("Remove AI picture") { store.discardGeneratedScene() }.frame(minHeight: 44)
+                    Button("Report this AI picture") { store.requestAIReport() }.frame(minHeight: 44)
                 }
                 if let interest = store.draft.interest {
                     PictureSymbol(label: interest.label).frame(height: 110).accessibilityLabel(interest.label)

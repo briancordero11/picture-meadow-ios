@@ -27,6 +27,7 @@
     "aiProviderRetentionAndNoTraining": false,
     "aiConsentAndAdultReview": false,
     "aiServiceAccessAndBudget": false,
-    "aiFailureAndCancellation": false
+    "aiFailureAndCancellation": false,
+    "aiReportingAndResponse": false
   }
 }
