@@ -1,6 +1,6 @@
 # TestFlight and release checklist
 
-The latest verified native baseline is source commit `c54f7a3`, with an unsigned build, 70 unit tests, and two UI tests passing on iPad mini (A17 Pro), iOS 26.5. Backend checks also passed. Signing, physical-device validation, live image-generation verification, and TestFlight upload remain pending. [Verified baseline run](https://github.com/briancordero11/picture-meadow-ios/actions/runs/43163020697)
+The latest verified native baseline is source commit `9488d64`, with an unsigned build, 71 unit tests, and two UI tests passing on iPad mini (A17 Pro), iOS 26.5. Backend checks also passed. Signing, physical-device validation, live image-generation verification, and TestFlight upload remain pending. [Verified baseline run](https://github.com/briancordero11/picture-meadow-ios/actions/runs/43165928709)
 
 Confirmed release direction: United States, published by a **separate, independent LLC, not CanaClaw**, with future white-label versions planned. The LLC's exact legal name is unspecified, and there is no public business email or published privacy-policy URL yet. The intended audience is exactly **"2 - 17+"**; no upper age cap is inferred. This broad span crosses Kids Category bands and extends to older users, so Kids Category must be reviewed deliberately rather than selected automatically. See [white-label distribution](white-label-distribution.md) before choosing public client apps or private Custom Apps; no Apple account enrollment or App Store Connect availability has been verified.
 
@@ -10,6 +10,7 @@ Privacy references include the [Apple requirements review](apple-requirements-re
 
 - [x] Route all twenty original home pictures through actions, broad settings or objects, shared favorites, and a most-important choice.
 - [x] Put the yellow favorites-intake card above the twenty topics, with six optional favorite groups and one yellow Save favorites control at the bottom after the groups. Saving keeps current-session favorites and returns to the topics. Disk retention still requires the grown-up's Remember choices opt-in.
+- [x] Remove the repeated favorites question from all twenty topic flows. Each route now has actions, a setting/object, and the most-important choice. Saved intake favorites carry into the collage and AI request and remain eligible as the most-important choice.
 - [x] Place Privacy & Data and the privacy notice inside grown-up Settings after the four-digit code. Header, pause, and code-entry screens have no privacy shortcut.
 - [x] Add the requested client-demo Make-A-Wish logo on blue #0057B8 at cold launch, with a 750 ms hold and 350 ms fade. Reduce Motion skips the fade, and returning from the background does not replay it.
 - [x] Round main picture cards to 16 points and compact board tiles to 12 points, with rounded action controls and the existing picture sizes/grids retained.
@@ -19,13 +20,13 @@ Privacy references include the [Apple requirements review](apple-requirements-re
 - [x] Implement the optional actual AI scene API using catalog IDs, with grown-up one-request permission, review, removal, and cancellation controls.
 - [x] Preserve the legacy park-description API for compatible saved choices while new home routes use the action-led flow.
 - [x] Implement finger-tracking drawer height, spring snapping, tap/accessibility alternatives, and Reduce Motion behavior.
-- [x] Build and pass 70 native unit tests plus two UI tests for baseline source commit `c54f7a3`.
+- [x] Build and pass 71 native unit tests plus two UI tests for baseline source commit `9488d64`.
 
 ## Mac build and device verification
 
 - [ ] Use Xcode 26 or later with the iOS 26 SDK or later. Apple's upload minimum is distinct from this app's iOS 17 deployment target.
 - [x] Run `bash ios/scripts/verify.sh` with the gesture UI-test target and direct-provider label; record source and simulator evidence in the linked CI run. Re-run for subsequent app changes.
-- [x] Run native CI for final source `c54f7a3`, including bottom Save favorites, privacy entry, voice preferences, Back motion, and the animated progress bar. All 70 unit tests and both UI tests passed.
+- [x] Run native CI for final source `9488d64`, including bottom Save favorites, privacy entry, voice preferences, Back motion, and the animated progress bar. All 71 unit tests and both UI tests passed.
 - [ ] Verify the logo intro, transition timing, Reduce Motion, safe areas, background return, and interactive handoff on an iPad.
 - [ ] Listen to all four voice styles on the target iPad, including premium/enhanced availability, fallbacks, preview/stop, interruption handling, and saved/forgotten preference behavior. Validate the voice and speaking rate with intended users.
 - [ ] Check repeated/interrupted Back navigation, stage-only Back, progress fill in both directions, and Reduce Motion on a physical iPad.

@@ -2,7 +2,7 @@
 
 Reviewed November 11, 2026 against current source. This engineering audit describes the offline app, legacy description endpoint, direct OpenAI image endpoint, and current settings update. Actual hosting logs, provider account controls, and App Store privacy answers remain to be verified for the shipping configuration.
 
-The latest verified native baseline is commit c54f7a3, with 70 unit tests and two UI tests passing on an iPad mini (A17 Pro) simulator with iOS 26.5. Physical-device review remains pending. [Baseline CI evidence](https://github.com/briancordero11/picture-meadow-ios/actions/runs/43163020697).
+The latest verified native baseline is commit 9488d64, with 71 unit tests and two UI tests passing on an iPad mini (A17 Pro) simulator with iOS 26.5. Physical-device review remains pending. [Baseline CI evidence](https://github.com/briancordero11/picture-meadow-ios/actions/runs/43165928709).
 
 ## Local processing and retention
 
