@@ -35,3 +35,11 @@ jobs:
         run: brew install xcodegen
       - name: Build and test iPad app
         run: bash ios/scripts/verify.sh
+      - name: Save native failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: native-test-results
+          path: ios/build/DerivedData/Logs/Test/*.xcresult
+          retention-days: 3
+          if-no-files-found: ignore

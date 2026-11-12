@@ -53,12 +53,16 @@ final class WishExplorerUITests: XCTestCase {
         XCTAssertTrue(input.waitForExistence(timeout: 5))
         input.tap()
         input.typeText(code)
+        XCTAssertEqual(input.value as? String, code, "The visible reading-check answer must be entered before continuing.")
         app.buttons["Continue"].tap()
 
-        let privacy = app.buttons["Privacy & Data"]
-        let information = app.buttons["App Information & Help"]
-        XCTAssertTrue(privacy.waitForExistence(timeout: 5))
-        XCTAssertTrue(information.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.navigationBars["For grown-ups"].waitForExistence(timeout: 10),
+                      "The real reading check must open grown-up settings.\n\(app.debugDescription)")
+        // NavigationLink's AX type can vary; its explicit identifier stays stable.
+        let privacy = app.descendants(matching: .any).matching(identifier: "grownup-privacy-data").firstMatch
+        let information = app.descendants(matching: .any).matching(identifier: "grownup-app-information").firstMatch
+        XCTAssertTrue(privacy.waitForExistence(timeout: 5), app.debugDescription)
+        XCTAssertTrue(information.waitForExistence(timeout: 5), app.debugDescription)
         privacy.tap()
         let remember = app.switches["Remember choices on this iPad"]
         XCTAssertTrue(remember.waitForExistence(timeout: 5))
@@ -67,8 +71,8 @@ final class WishExplorerUITests: XCTestCase {
 
         XCTAssertTrue(information.waitForExistence(timeout: 5))
         information.tap()
-        XCTAssertTrue(app.staticTexts["Version"].waitForExistence(timeout: 5))
-        XCTAssertTrue(app.staticTexts["Build"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.descendants(matching: .any).matching(NSPredicate(format: "label BEGINSWITH %@", "Version")).firstMatch.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.descendants(matching: .any).matching(NSPredicate(format: "label BEGINSWITH %@", "Build")).firstMatch.waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts["Publisher details are not configured in this prototype."].waitForExistence(timeout: 5))
     }
 

@@ -14,13 +14,13 @@ struct CaregiverView: View {
                 Section("Privacy and app information") {
                     NavigationLink(value: GrownUpPage.privacy) {
                         Label("Privacy & Data", systemImage: "hand.raised.fill")
-                    }
+                    }.accessibilityIdentifier("grownup-privacy-data")
                     NavigationLink(value: GrownUpPage.information) {
                         Label("App Information & Help", systemImage: "info.circle")
-                    }
+                    }.accessibilityIdentifier("grownup-app-information")
                     NavigationLink(value: GrownUpPage.report) {
                         Label("Report an AI picture or privacy concern", systemImage: "exclamationmark.bubble")
-                    }
+                    }.accessibilityIdentifier("grownup-report-concern")
                 }
                 Section("Explore at their pace") {
                     Text("Follow your Super Star's lead. Every step can be skipped, changed, or paused. A tap is an expression to explore together; it is not an eligibility decision or a final wish approval.")
