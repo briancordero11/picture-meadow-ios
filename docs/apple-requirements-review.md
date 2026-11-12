@@ -6,9 +6,9 @@ The owner confirmed a U.S. first release under a separate independent LLC, with 
 
 ## Verified baseline and current changes
 
-The latest verified native baseline is commit 9488d64, with an unsigned build, 71 unit tests and two UI tests passing on an iPad mini (A17 Pro) simulator with iOS 26.5. UI coverage includes the drawer gestures and grown-up Settings navigation. [Verified native baseline](https://github.com/briancordero11/picture-meadow-ios/actions/runs/43165928709).
+The latest verified native baseline is commit 9b00e20, with an unsigned build, 73 unit tests and two UI tests passing on an iPad mini (A17 Pro) simulator with iOS 26.5. UI coverage includes the drawer gestures and grown-up Settings navigation. [Verified native baseline](https://github.com/briancordero11/picture-meadow-ios/actions/runs/43169927668).
 
-The verified source includes the four voice styles, Apple voice eligibility checks, Back motion, and animated progress bar. The native build and all 71 unit/two UI tests passed. Physical iPad testing, VoiceOver/Switch Control evaluation, device speech, a signed archive, and TestFlight remain outstanding.
+The verified source includes the four voice styles, Apple voice eligibility checks, Back motion, and animated progress bar. The native build and all 73 unit/two UI tests passed. Physical iPad testing, VoiceOver/Switch Control evaluation, device speech, a signed archive, and TestFlight remain outstanding.
 
 ## Requirement and implementation review
 

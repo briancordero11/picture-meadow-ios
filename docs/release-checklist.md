@@ -1,6 +1,6 @@
 # TestFlight and release checklist
 
-The latest verified native baseline is source commit `9488d64`, with an unsigned build, 71 unit tests, and two UI tests passing on iPad mini (A17 Pro), iOS 26.5. Backend checks also passed. Signing, physical-device validation, live image-generation verification, and TestFlight upload remain pending. [Verified baseline run](https://github.com/briancordero11/picture-meadow-ios/actions/runs/43165928709)
+The latest verified native baseline is source commit `9b00e20`, with an unsigned build, 73 unit tests, and two UI tests passing on iPad mini (A17 Pro), iOS 26.5. Backend checks also passed. Signing, physical-device validation, live image-generation verification, and TestFlight upload remain pending. [Verified baseline run](https://github.com/briancordero11/picture-meadow-ios/actions/runs/43169927668)
 
 Confirmed release direction: United States, published by a **separate, independent LLC, not CanaClaw**, with future white-label versions planned. The LLC's exact legal name is unspecified, and there is no public business email or published privacy-policy URL yet. The intended audience is exactly **"2 - 17+"**; no upper age cap is inferred. This broad span crosses Kids Category bands and extends to older users, so Kids Category must be reviewed deliberately rather than selected automatically. See [white-label distribution](white-label-distribution.md) before choosing public client apps or private Custom Apps; no Apple account enrollment or App Store Connect availability has been verified.
 
@@ -16,23 +16,24 @@ Privacy references include the [Apple requirements review](apple-requirements-re
 - [x] Round main picture cards to 16 points and compact board tiles to 12 points, with rounded action controls and the existing picture sizes/grids retained.
 - [x] Add Boy, Girl, Man, and Woman device-voice styles with local preference saving, adult-only fixed preview, stop controls, and honest quality/fallback details. Child styles use slightly higher-pitch adult voices. Forget removes the saved preset.
 - [x] Ease incoming content on Back and animate a rounded progress bar in place of numbered steps. Reduce Motion skips the effects, and the communication board stays outside the page transition.
+- [x] Replace Skip with footer Back and add the fixed top-left Home house icon. Home returns to the wish grid, closes the board, stops speech, and preserves choices, words, preferences, saved data, and pictures. Next still allows unanswered questions.
 - [x] Assemble selected picture concepts into an offline collage and decode older drafts with missing journey fields unanswered.
 - [x] Implement the optional actual AI scene API using catalog IDs, with grown-up one-request permission, review, removal, and cancellation controls.
 - [x] Preserve the legacy park-description API for compatible saved choices while new home routes use the action-led flow.
 - [x] Implement finger-tracking drawer height, spring snapping, tap/accessibility alternatives, and Reduce Motion behavior.
-- [x] Build and pass 71 native unit tests plus two UI tests for baseline source commit `9488d64`.
+- [x] Build and pass 73 native unit tests plus two UI tests for baseline source commit `9b00e20`.
 
 ## Mac build and device verification
 
 - [ ] Use Xcode 26 or later with the iOS 26 SDK or later. Apple's upload minimum is distinct from this app's iOS 17 deployment target.
 - [x] Run `bash ios/scripts/verify.sh` with the gesture UI-test target and direct-provider label; record source and simulator evidence in the linked CI run. Re-run for subsequent app changes.
-- [x] Run native CI for final source `9488d64`, including bottom Save favorites, privacy entry, voice preferences, Back motion, and the animated progress bar. All 71 unit tests and both UI tests passed.
+- [x] Run native CI for final source `9b00e20`, including bottom Save favorites, privacy entry, voice preferences, Back motion, and the animated progress bar. All 73 unit tests and both UI tests passed.
 - [ ] Verify the logo intro, transition timing, Reduce Motion, safe areas, background return, and interactive handoff on an iPad.
 - [ ] Listen to all four voice styles on the target iPad, including premium/enhanced availability, fallbacks, preview/stop, interruption handling, and saved/forgotten preference behavior. Validate the voice and speaking rate with intended users.
 - [ ] Check repeated/interrupted Back navigation, stage-only Back, progress fill in both directions, and Reduce Motion on a physical iPad.
 - [ ] Verify favorites intake, its bottom Save action and storage explanation, cross-topic retention, and optional on-device remembering. Confirm that Save favorites alone does not enable disk retention.
 - [ ] Verify that the notice and data controls open after the code through Settings, with no header/pause/code-entry privacy link, and remain usable with assistive technology.
-- [ ] Verify all twenty journeys and skip/back/change paths on a physical iPad in landscape, portrait, split view, and supported text sizes.
+- [ ] Verify all twenty journeys and Next/Back/Home/change paths on a physical iPad in landscape, portrait, split view, and supported text sizes.
 - [ ] Review VoiceOver, Switch Control, Stop speaking, interruption handling, and every No/Stop/Think/Break/Finished control.
 - [ ] Validate drawer finger tracking, interrupted spring snaps, rotation during drag, canceled gestures, tap/accessibility alternatives, and Reduce Motion on device.
 - [ ] Verify offline launch, migration of older drafts, opt-in retention, favorite/essential-choice consistency, forgetting, and reset behavior.

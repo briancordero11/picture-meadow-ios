@@ -8,13 +8,15 @@ The client-demo opening shows the supplied Make-A-Wish logo in white on blue `#0
 
 Grown-up Settings offers Boy, Girl, Man, and Woman speaking styles with explicit preview and stop controls. The native app prefers available premium/enhanced English voices of the requested gender, excludes custom-provider, personal, and novelty voices, and explains fallbacks. Boy and Girl slightly raise an adult voice's pitch. Voice preferences are saved locally and reset by Forget choices. Back uses a short incoming fade/slide, and a rounded progress bar animates through the journey. Reduce Motion skips these animations.
 
+The header's top-left house icon returns to the wish grid while keeping choices. Back sits beside Next at the bottom of each journey page, and is also available beside Save favorites and on the final picture. There is no Skip control; Next can still leave a question unanswered.
+
 ## Project status
 
 - **Native app:** SwiftUI iPad source with 20 journeys, 100 actions, 80 settings, 36 shared favorites, an offline collage, speech, a 34-concept communication drawer, opt-in local drafts, and caregiver controls. Older saved drafts decode with the new choices unanswered.
 - **Backend:** Node service with a shared journey catalog and authenticated AI scene endpoint, plus the compatible legacy park-description API. Container/deployment files and automated API tests are included. The selected scene provider is direct OpenAI Images API access with target model `gpt-image-2.5-flare`.
 - **Optional AI picture:** a grown-up confirms sending selected concept IDs, reviews the generated scene, and decides whether to show it. Original photos and source PDFs are not uploaded. The app defaults to offline with an empty API origin and scene generation disabled. Direct OpenAI credentials remain unconfigured and a successful production image request remains unverified.
 - **Drawer:** its height follows a finger drag and springs to open or closed, with tap and accessibility alternatives and Reduce Motion support. Physical iPad interaction validation remains pending.
-- **Verification and distribution:** the latest verified baseline, source commit `9488d64`, passed 71 native unit tests and two UI tests on the Mac runner, with backend checks also passing. Physical-device testing, signing, and TestFlight submission remain pending. [Verified baseline run](https://github.com/briancordero11/picture-meadow-ios/actions/runs/43165928709)
+- **Verification and distribution:** the latest verified baseline, source commit `9b00e20`, passed 73 native unit tests and two UI tests on the Mac runner, with backend checks also passing. Physical-device testing, signing, and TestFlight submission remain pending. [Verified baseline run](https://github.com/briancordero11/picture-meadow-ios/actions/runs/43169927668)
 
 The working name is **Wish Explorer**. This is an independent development prototype; the supplied organization materials inform the experience. Branding and publication details can be finalized with the project owner before release.
 

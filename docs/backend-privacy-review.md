@@ -2,7 +2,7 @@
 
 Reviewed November 11, 2026 against current source. This engineering audit describes the offline app, legacy description endpoint, direct OpenAI image endpoint, and current settings update. Actual hosting logs, provider account controls, and App Store privacy answers remain to be verified for the shipping configuration.
 
-The latest verified native baseline is commit 9488d64, with 71 unit tests and two UI tests passing on an iPad mini (A17 Pro) simulator with iOS 26.5. Physical-device review remains pending. [Baseline CI evidence](https://github.com/briancordero11/picture-meadow-ios/actions/runs/43165928709).
+The latest verified native baseline is commit 9b00e20, with 73 unit tests and two UI tests passing on an iPad mini (A17 Pro) simulator with iOS 26.5. Physical-device review remains pending. [Baseline CI evidence](https://github.com/briancordero11/picture-meadow-ios/actions/runs/43169927668).
 
 ## Local processing and retention
 
@@ -10,10 +10,10 @@ The default app has an empty API origin and both online flags disabled in ios/pr
 
 | Item | Actual storage and lifetime | User control or limit |
 | --- | --- | --- |
-| Active choices | WishDraft in memory, including topic, actions, setting, favorites, essential choice, and compatible older park fields. | Changing interest resets unrelated choices. Finish returns home and retains the current wish. |
+| Active choices | WishDraft in memory, including topic, actions, setting, favorites, essential choice, and compatible older park fields. | Changing interest resets unrelated choices. Home returns to the wish grid and Finish to the welcome screen; both retain the current wish. Back/Next preserve answers. |
 | Saved draft | UserDefaults only when Remember choices is enabled, which defaults to off. | Turning remembering off removes the saved copy. Start a fresh wish clears the current/saved draft but preserves the remembering preference. Backups can include app settings. |
 | Narration, voice style, and remembering preferences | UserDefaults independently of draft opt-in. The voice preset is Boy, Girl, Man, or Woman; no voice recording is stored. | Forget removes their keys and restores defaults. Starting a new wish preserves these preferences. |
-| Talking-board sentence | Memory only. | Cleared on Finish, reset, and scene inactivity. Excluded from service requests. |
+| Talking-board sentence | Memory only. | Home preserves it. Finish, reset, and scene inactivity clear it. Excluded from service requests. |
 | Adult challenge and request permission | View/store memory only. | One-use confirmation, exact-draft binding, and revocation on adult-session exit or inactivity. |
 | Pending AI picture | Image Data and review metadata in memory. | Requires adult approval before display with the wish. Adult-session exit clears pending review. |
 | Approved AI picture and description | Memory only. No Photos export, gallery, image file, or UserDefaults image storage. | Can survive Finish/backgrounding in the current process. Discard, changed choices, reset, Forget, or process termination clears it. |
