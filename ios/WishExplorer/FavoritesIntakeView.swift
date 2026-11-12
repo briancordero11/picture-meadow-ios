@@ -10,7 +10,10 @@ struct FavoritesIntakeView: View {
             )
             FavoriteChoicesView()
             VStack(spacing: 12) {
-                SaveFavoritesButton()
+                ViewThatFits(in: .horizontal) {
+                    HStack(spacing: 20) { WishBackButton(); SaveFavoritesButton() }
+                    VStack(spacing: 16) { SaveFavoritesButton(); WishBackButton() }
+                }
                 Text("Save keeps these favorites with your ideas. A grown-up can use Remember choices in Settings to keep them on this iPad.")
                     .font(.footnote)
                     .foregroundStyle(WishTheme.secondary)

@@ -43,6 +43,7 @@ struct PostcardView: View {
         }
     }
     @ViewBuilder private var actions: some View {
+        WishBackButton()
         PrimaryWishButton(title: "Read my wish", symbol: "speaker.wave.2.fill") {
             store.say(store.draft.interest != nil ? store.draft.sceneDescription : store.draft.postcardDescription, explicit: true)
         }

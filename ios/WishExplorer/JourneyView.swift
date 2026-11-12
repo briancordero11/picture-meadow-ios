@@ -87,17 +87,11 @@ struct JourneyView: View {
 
     private var actions: some View {
         ViewThatFits(in: .horizontal) {
-            HStack(spacing: 20) { skipButton; nextButton }
-            VStack(spacing: 16) { nextButton; skipButton }
+            HStack(spacing: 20) { WishBackButton(); nextButton }
+            VStack(spacing: 16) { nextButton; WishBackButton() }
         }
         .frame(maxWidth: .infinity)
         .padding(.top, 6)
-    }
-
-    private var skipButton: some View {
-        Button("Skip this part", action: store.skipJourneyStage)
-            .font(.headline).foregroundStyle(WishTheme.blue)
-            .padding(16).frame(minHeight: 54)
     }
 
     private var nextButton: some View {

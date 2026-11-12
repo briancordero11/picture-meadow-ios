@@ -31,6 +31,7 @@ struct WishRootView: View {
                     }
                     .task(id: backTransition?.startedAt) { await finishBackTransition() }
                 }
+                .environment(\.wishBack, WishBackAction(perform: { navigateBack() }))
             }
             .background(WishTheme.background)
             .safeAreaInset(edge: .bottom, spacing: 0) {
@@ -83,19 +84,23 @@ struct WishRootView: View {
 
     private var header: some View {
         HStack(spacing: sizeClass == .compact ? 6 : 16) {
-            if store.step != .welcome {
-                Button {
-                    navigateBack()
-                } label: {
-                    if sizeClass == .compact {
-                        Image(systemName: "arrow.left").font(.headline).frame(width: 44, height: 44)
-                    } else {
-                        Label("Back", systemImage: "arrow.left").font(.headline).padding(14)
-                            .background(.white, in: RoundedRectangle(cornerRadius: 16))
-                    }
-                }.buttonStyle(.plain)
-                    .foregroundStyle(WishTheme.blue).accessibilityLabel("Back")
+            Button {
+                cancelBackTransition()
+                store.goHome()
+            } label: {
+                Image(systemName: "house.fill")
+                    .font(.title2)
+                    .frame(width: 48, height: 48)
+                    .background(.white, in: RoundedRectangle(cornerRadius: 16))
             }
+            .buttonStyle(.plain)
+            .foregroundStyle(WishTheme.blue)
+            .disabled(store.step == .interests)
+            .opacity(store.step == .interests ? 0.45 : 1)
+            .accessibilityLabel("Home")
+            .accessibilityIdentifier("home-navigation")
+            .accessibilityIdentifier("home-navigation")
+            .accessibilityHint("Return to wish pictures and keep your choices")
             HStack(spacing: 9) {
                 WishStar().fill(WishTheme.yellow).frame(width: sizeClass == .compact ? 20 : 30, height: sizeClass == .compact ? 20 : 30).accessibilityHidden(true)
                 Text("wish explorer").font(sizeClass == .compact ? .headline : .title2.weight(.heavy)).foregroundStyle(WishTheme.ink)
@@ -139,6 +144,40 @@ private struct PageLocation: Equatable {
 private struct BackTransition {
     let destination: PageLocation
     let startedAt: Date
+}
+
+struct WishBackAction: Sendable {
+    let perform: @MainActor @Sendable () -> Void
+
+    @MainActor func callAsFunction() { perform() }
+}
+
+private struct WishBackActionKey: EnvironmentKey {
+    static let defaultValue = WishBackAction(perform: {})
+}
+
+extension EnvironmentValues {
+    var wishBack: WishBackAction {
+        get { self[WishBackActionKey.self] }
+        set { self[WishBackActionKey.self] = newValue }
+    }
+}
+
+struct WishBackButton: View {
+    @Environment(\.wishBack) private var goBack
+
+    var body: some View {
+        Button { goBack() } label: {
+            Label("Back", systemImage: "arrow.left")
+                .font(.headline)
+                .foregroundStyle(WishTheme.blue)
+                .padding(.horizontal, 20).padding(.vertical, 14)
+                .frame(minHeight: 54)
+                .background(.white, in: RoundedRectangle(cornerRadius: 16))
+                .overlay(RoundedRectangle(cornerRadius: 16).stroke(WishTheme.blue.opacity(0.2), lineWidth: 1))
+        }
+        .buttonStyle(.plain)
+    }
 }
 
 private struct SettingsStarButton: View {
@@ -230,7 +269,7 @@ struct DestinationView: View {
                     }
                 }
             }
-            JourneyActions(next: "Let's add some color", skip: "I'm not sure yet", skipAction: store.skipDestination) { store.step = .color }
+            JourneyActions(next: "Let's add some color") { store.step = .color }
         }
     }
 }
@@ -252,7 +291,7 @@ struct CoasterColorView: View {
                     }.accessibilityLabel("\(color.label) roller coaster")
                 }
             }
-            JourneyActions(next: "What else do you like?", skip: "Skip color for now", skipAction: store.skipColor) { store.step = .animals }
+            JourneyActions(next: "What else do you like?") { store.step = .animals }
         }
     }
 }
@@ -284,15 +323,13 @@ struct AnimalChoiceView: View {
             }
             Text("Animal ideas can be a separate adventure. They might not be at the park you chose.")
                 .font(.body).foregroundStyle(WishTheme.secondary)
-            JourneyActions(next: "See my wish picture", skip: "Skip animals for now", skipAction: store.skipAnimals) { store.step = .postcard }
+            JourneyActions(next: "See my wish picture") { store.step = .postcard }
         }
     }
 }
 
 struct JourneyActions: View {
     let next: String
-    let skip: String
-    var skipAction: () -> Void
     var action: () -> Void
     var body: some View {
         ViewThatFits(in: .horizontal) {
@@ -301,8 +338,8 @@ struct JourneyActions: View {
         }.padding(.top, 10)
     }
     @ViewBuilder private var buttons: some View {
+        WishBackButton()
         PrimaryWishButton(title: next, action: action)
-        Button(skip, action: skipAction).font(.headline).padding(18).frame(minHeight: 64)
     }
 }
 

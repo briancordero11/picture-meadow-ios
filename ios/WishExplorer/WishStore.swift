@@ -119,6 +119,14 @@ final class WishStore: ObservableObject {
         else { step = step.previous }
     }
 
+    func goHome() {
+        stopSpeaking()
+        boardExpanded = false
+        isPaused = false
+        journeyStage = 0
+        step = .interests
+    }
+
     func openFavoritesIntake() {
         stopSpeaking()
         boardExpanded = false
@@ -160,14 +168,6 @@ final class WishStore: ObservableObject {
     func advanceJourney() {
         stopSpeaking()
         if journeyStage < 2 { journeyStage += 1 } else { step = .postcard }
-    }
-    func skipJourneyStage() {
-        switch journeyStage {
-        case 0: draft.selectedActionIDs = []
-        case 1: draft.selectedSettingID = nil
-        default: draft.essentialChoiceID = nil
-        }
-        sanitizeEssential(); invalidatePreview(); advanceJourney()
     }
     func editJourney() {
         journeyStage = 0

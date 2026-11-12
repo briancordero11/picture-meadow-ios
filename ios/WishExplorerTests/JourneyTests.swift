@@ -38,7 +38,7 @@ final class JourneyTests: XCTestCase {
             XCTAssertEqual(store.step, .journey, interest.id)
             XCTAssertEqual(store.journeyStage, 0, interest.id)
             XCTAssertFalse(store.boardExpanded, interest.id)
-            for _ in 0..<3 { store.skipJourneyStage() }
+            for _ in 0..<3 { store.advanceJourney() }
             XCTAssertEqual(store.step, .postcard, interest.id)
             XCTAssertEqual(store.draft.interest, interest)
             XCTAssertFalse(store.draft.canRequestScene, interest.id)
@@ -125,27 +125,33 @@ final class JourneyTests: XCTestCase {
     }
 
     @MainActor
-    func testSkippingWishQuestionsKeepsSharedIntakeFavorites() throws {
+    func testBackAndNextKeepAnswersAcrossAllThreeJourneyStages() throws {
         let storage = try JourneyTestStorage()
         let store = makeStore(storage)
         let topic = try XCTUnwrap(JourneyCatalog.shared.interest(id: InterestChoice.art.id))
         let action = topic.actions[0].id
         let setting = topic.settings[0].id
         let favorite = try XCTUnwrap(JourneyCatalog.shared.favoriteOptions.first).id
-        let essentials = [action, setting, favorite]
+        let answeredDraft = WishDraft(interestID: InterestChoice.art.id, selectedActionIDs: [action],
+                                      selectedSettingID: setting, favoriteIDs: [favorite], essentialChoiceID: favorite)
+        store.draft = answeredDraft
+        store.step = .journey
         for stage in 0..<3 {
-            store.draft = WishDraft(interestID: InterestChoice.art.id, selectedActionIDs: [action],
-                                   selectedSettingID: setting, favoriteIDs: [favorite], essentialChoiceID: essentials[stage])
-            store.step = .journey
-            store.journeyStage = stage
-            store.skipJourneyStage()
-            XCTAssertEqual(store.draft.selectedActionIDs, stage == 0 ? [] : [action])
-            XCTAssertEqual(store.draft.selectedSettingID, stage == 1 ? nil : setting)
-            XCTAssertEqual(store.draft.favoriteIDs, [favorite])
-            XCTAssertNil(store.draft.essentialChoiceID)
+            XCTAssertEqual(store.journeyStage, stage)
+            store.advanceJourney()
+            XCTAssertEqual(store.draft, answeredDraft)
             XCTAssertEqual(store.step, stage == 2 ? .postcard : .journey)
             XCTAssertEqual(store.journeyStage, min(stage + 1, 2))
         }
+        for stage in stride(from: 2, through: 0, by: -1) {
+            store.goBack()
+            XCTAssertEqual(store.step, .journey)
+            XCTAssertEqual(store.journeyStage, stage)
+            XCTAssertEqual(store.draft, answeredDraft)
+        }
+        store.goBack()
+        XCTAssertEqual(store.step, .interests)
+        XCTAssertEqual(store.draft, answeredDraft)
     }
 
     @MainActor
@@ -282,11 +288,84 @@ final class JourneyTests: XCTestCase {
             XCTAssertEqual(store.step, .journey, interest.id)
             XCTAssertEqual(store.journeyStage, 2, interest.id)
             XCTAssertEqual(store.draft.essentialChoiceID, favorite.id, interest.id)
-            store.skipJourneyStage()
+            store.advanceJourney()
             XCTAssertEqual(store.step, .postcard, interest.id)
-            XCTAssertNil(store.draft.essentialChoiceID, interest.id)
+            XCTAssertEqual(store.draft.essentialChoiceID, favorite.id, interest.id)
             XCTAssertEqual(store.draft.favoriteIDs, [favorite.id], interest.id)
         }
+    }
+
+    @MainActor
+    func testHomePreservesDraftPreferencesAndExactSavedDefaults() throws {
+        let storage = try JourneyTestStorage()
+        let store = makeStore(storage)
+        let topic = try XCTUnwrap(JourneyCatalog.shared.interest(id: InterestChoice.amusementPark.id))
+        let favorite = try XCTUnwrap(JourneyCatalog.shared.favoriteOptions.first).id
+        let answeredDraft = WishDraft(category: .go, interestID: InterestChoice.amusementPark.id,
+                                      destinationID: "disney-world", coasterColor: .purple,
+                                      animals: [.tiger], wantsAnimals: true,
+                                      selectedActionIDs: [try XCTUnwrap(topic.actions.first).id],
+                                      selectedSettingID: try XCTUnwrap(topic.settings.first).id,
+                                      favoriteIDs: [favorite], essentialChoiceID: favorite)
+        store.voicePreset = .boy
+        store.readChoicesAloud = false
+        store.rememberChoices = true
+        store.draft = answeredDraft
+        store.phrase = ["I", "want"]
+        store.step = .postcard
+        store.journeyStage = 2
+        store.boardExpanded = true
+        store.isPaused = true
+        let savedBefore = NSDictionary(dictionary: try XCTUnwrap(storage.defaults.persistentDomain(forName: storage.suite)))
+
+        store.goHome()
+
+        XCTAssertEqual(store.step, .interests)
+        XCTAssertEqual(store.journeyStage, 0)
+        XCTAssertFalse(store.boardExpanded)
+        XCTAssertFalse(store.isPaused)
+        XCTAssertEqual(store.draft, answeredDraft)
+        XCTAssertEqual(store.phrase, ["I", "want"])
+        XCTAssertEqual(store.voicePreset, .boy)
+        XCTAssertFalse(store.readChoicesAloud)
+        XCTAssertTrue(store.rememberChoices)
+        let savedAfter = NSDictionary(dictionary: try XCTUnwrap(storage.defaults.persistentDomain(forName: storage.suite)))
+        XCTAssertEqual(savedAfter, savedBefore)
+    }
+
+    @MainActor
+    func testHomeKeepsPendingAndApprovedSceneImagesInMemory() async throws {
+        let storage = try JourneyTestStorage()
+        let imageData = try XCTUnwrap(Data(base64Encoded: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGNIW9XxHwAFqgKYLi7uYwAAAABJRU5ErkJggg=="))
+        let scene = GeneratedWishScene(imageData: imageData, description: "A test illustration", provider: "OpenAI (direct)")
+        let configuration = WishBuildConfiguration(values: ["WishAPIBaseURL": "https://service.test",
+                                                            "WishSceneGenerationEnabled": "YES",
+                                                            "WishAIProviderName": "OpenAI (direct)"])
+        let store = WishStore(defaults: storage.defaults, configuration: configuration,
+                              sceneService: ImmediateJourneySceneService(scene: scene),
+                              sceneAccessToken: String(repeating: "a", count: 32))
+        store.readChoicesAloud = false
+        store.chooseInterest(.art)
+        let topic = try XCTUnwrap(JourneyCatalog.shared.interest(id: InterestChoice.art.id))
+        store.toggleJourneyAction(try XCTUnwrap(topic.actions.first).id)
+        store.caregiverPresented = true
+        store.beginAdultSession()
+        let disclosure = try XCTUnwrap(store.prepareSceneGeneration())
+        XCTAssertTrue(store.confirmSceneGeneration(disclosure.id))
+        for _ in 0..<200 {
+            if store.pendingGeneratedScene != nil { break }
+            try await Task.sleep(for: .milliseconds(10))
+        }
+        XCTAssertEqual(try XCTUnwrap(store.pendingGeneratedScene).imageData, imageData)
+
+        store.goHome()
+        XCTAssertEqual(try XCTUnwrap(store.pendingGeneratedScene).imageData, imageData)
+        store.approveGeneratedScene()
+        XCTAssertNil(store.pendingGeneratedScene)
+        XCTAssertEqual(try XCTUnwrap(store.generatedScene).imageData, imageData)
+        store.step = .postcard
+        store.goHome()
+        XCTAssertEqual(try XCTUnwrap(store.generatedScene).imageData, imageData)
     }
 
     @MainActor
@@ -294,6 +373,14 @@ final class JourneyTests: XCTestCase {
         let store = WishStore(defaults: storage.defaults, configuration: .init(values: [:]), sceneAccessToken: nil)
         store.readChoicesAloud = false
         return store
+    }
+}
+
+private struct ImmediateJourneySceneService: WishSceneServicing {
+    let scene: GeneratedWishScene
+
+    func generateScene(for draft: WishDraft, accessToken: String) async throws -> GeneratedWishScene {
+        scene
     }
 }
 

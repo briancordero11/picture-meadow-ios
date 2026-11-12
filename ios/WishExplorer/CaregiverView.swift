@@ -26,7 +26,7 @@ struct CaregiverView: View {
                     }.accessibilityIdentifier("grownup-report-concern")
                 }
                 Section("Explore at their pace") {
-                    Text("Follow your Super Star's lead. Every step can be skipped, changed, or paused. A tap is an expression to explore together; it is not an eligibility decision or a final wish approval.")
+                    Text("Follow your Super Star's lead. Every question is optional: Next can leave it unanswered, Back revisits it, and Home returns to the wish pictures while keeping choices. You can pause at any time. A tap is an expression to explore together; it is not an eligibility decision or a final wish approval.")
                     Toggle("Read choice labels aloud", isOn: $store.readChoicesAloud)
                     Text("The talking board and Read my wish always speak when tapped, even with choice narration off.")
                         .font(.footnote).foregroundStyle(.secondary)
