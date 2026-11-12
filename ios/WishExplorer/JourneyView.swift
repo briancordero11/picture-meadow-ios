@@ -132,8 +132,7 @@ struct JourneyChoiceTile: View {
             .overlay(RoundedRectangle(cornerRadius: 13).stroke(selected ? WishTheme.blue : WishTheme.line, lineWidth: selected ? 4 : 1.5))
             .overlay(alignment: .bottomTrailing) {
                 if selected {
-                    Image(systemName: "checkmark.circle.fill").font(.system(size: 22))
-                        .foregroundStyle(WishTheme.blue, .white).padding(6).accessibilityHidden(true)
+                    WishSelectionBadge().padding(6)
                 }
             }
         }

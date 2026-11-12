@@ -108,11 +108,11 @@ struct SceneChoiceCollage: View {
         LazyVGrid(columns: columns, spacing: 10) {
             ForEach(draft.sceneChoices) { choice in
                 VStack(spacing: 8) {
+                    JourneyArtwork(choice: choice).frame(width: 46, height: 46).accessibilityHidden(true)
                     Text(choice.label)
                         .font(WishTheme.cardFont(size: 15, weight: .bold, relativeTo: .headline))
                         .multilineTextAlignment(.center)
                         .fixedSize(horizontal: false, vertical: true)
-                    JourneyArtwork(choice: choice).frame(width: 46, height: 46).accessibilityHidden(true)
                     if draft.essentialChoiceID == choice.id {
                         Text("♥ Most important")
                             .font(WishTheme.bodyFont(size: 12, weight: .bold, relativeTo: .caption))

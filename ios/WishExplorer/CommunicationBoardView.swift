@@ -193,7 +193,7 @@ struct CommunicationBoardView: View {
 
     private var phraseText: some View {
         Text(store.phrase.isEmpty ? "My words…" : store.phrase.joined(separator: " "))
-            .font(WishTheme.cardFont(size: 16)).foregroundStyle(WishTheme.ink)
+            .font(WishTheme.bodyFont(size: 16)).foregroundStyle(WishTheme.ink)
             .frame(maxWidth: .infinity, alignment: .leading)
             .accessibilityLabel("Sentence: \(store.phrase.joined(separator: " "))")
     }
@@ -208,7 +208,7 @@ struct CommunicationBoardView: View {
         Button { if !store.phrase.isEmpty { store.phrase.removeLast() } } label: {
             WishUIIcon(name: "delete")
         }.disabled(store.phrase.isEmpty).accessibilityLabel("Remove last word")
-        Button("Clear") { store.phrase = [] }.font(WishTheme.cardFont(size: 13)).disabled(store.phrase.isEmpty)
+        Button("Clear") { store.phrase = [] }.font(WishTheme.bodyFont(size: 13)).disabled(store.phrase.isEmpty)
     }
 }
 

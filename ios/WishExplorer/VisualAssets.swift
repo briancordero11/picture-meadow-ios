@@ -51,6 +51,15 @@ struct WishUIIcon: View {
     }
 }
 
+struct WishSelectionBadge: View {
+    var body: some View {
+        Circle().fill(.white)
+            .overlay { WishTheme.blue.mask { WishUIIcon(name: "check", size: 18) } }
+            .frame(width: 22, height: 22)
+            .accessibilityHidden(true)
+    }
+}
+
 extension WishTheme {
     static func cardFont(size: CGFloat, weight: Font.Weight = .regular, relativeTo: Font.TextStyle = .body) -> Font {
         .custom(isBold(weight) ? "ComicNeue-Bold" : "ComicNeue-Regular", size: size, relativeTo: relativeTo)

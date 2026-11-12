@@ -10,6 +10,8 @@ Grown-up Settings offers Boy, Girl, Man, and Woman speaking styles with explicit
 
 The header's top-left house icon returns to the wish grid while keeping choices. Back sits beside Next at the bottom of each journey page, and is also available beside Save favorites and on the final picture. There is no Skip control; Next can still leave a question unanswered.
 
+SwiftUI and the portable browser preview share fixed PNG artwork, four bundled fonts, and the warm cream/peach/yellow palette. Journey pictures load from 106 checked-in illustrations rather than a device's emoji font. The original 29 source picture files remain unchanged. Grown-up pages use the same custom cream panel and rounded controls instead of default platform forms. See [shared visuals](assets/visual/README.md) and [browser preview](preview/README.md).
+
 ## Project status
 
 - **Native app:** SwiftUI iPad source with 20 journeys, 100 actions, 80 settings, 36 shared favorites, an offline collage, speech, a 34-concept communication drawer, opt-in local drafts, and caregiver controls. Older saved drafts decode with the new choices unanswered.

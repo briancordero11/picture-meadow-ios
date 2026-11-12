@@ -113,8 +113,9 @@ struct SpeechVoicePreferenceSection: View {
                     Button { store.voicePreset = preference } label: {
                         HStack(spacing: 10) {
                             Text(preference.label).frame(maxWidth: .infinity, alignment: .leading)
-                            Circle().stroke(WishSettingsAppearance.ink, lineWidth: 1)
-                                .overlay { if store.voicePreset == preference { Circle().fill(WishSettingsAppearance.ink).padding(5) } }
+                            Circle().fill(.white)
+                                .overlay(Circle().stroke(store.voicePreset == preference ? WishTheme.blue : WishSettingsAppearance.outline, lineWidth: 1))
+                                .overlay { if store.voicePreset == preference { Circle().fill(WishTheme.blue).padding(5) } }
                                 .frame(width: 22, height: 22)
                         }
                         .font(WishTheme.bodyFont(size: 16))
@@ -139,6 +140,10 @@ struct SpeechVoicePreferenceSection: View {
                 HStack(spacing: 8) { WishUIIcon(name: "volume-off", size: 20); Text("Stop speaking") }
             }.accessibilityLabel("Stop voice")
             Text("Uses Apple English voices already available on this iPad. Voice names and quality vary by device. Custom-provider, personal, and novelty voices are excluded. Choosing a style does not play audio; tap Preview voice to listen. This preference is saved on this iPad even when remembering wish choices is off.")
+                .font(WishTheme.bodyFont(size: 14)).foregroundStyle(WishSettingsAppearance.secondary)
+            Toggle("Read choice labels aloud", isOn: $store.readChoicesAloud)
+                .toggleStyle(WishSettingsToggleStyle())
+            Text("The talking board and Read my wish always speak when tapped, even with choice narration off.")
                 .font(WishTheme.bodyFont(size: 14)).foregroundStyle(WishSettingsAppearance.secondary)
         }
     }

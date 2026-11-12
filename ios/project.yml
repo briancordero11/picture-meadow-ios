@@ -15,6 +15,9 @@ settings:
     MARKETING_VERSION: 0.1.0
     CURRENT_PROJECT_VERSION: 1
     GENERATE_INFOPLIST_FILE: NO
+    # Retain the supplied/shared PNG bytes, including their recorded digests.
+    COMPRESS_PNG_FILES: NO
+    STRIP_PNG_TEXT: NO
     WISH_API_BASE_URL: ""
     WISH_ONLINE_PREVIEW_ENABLED: "NO"
     WISH_SCENE_GENERATION_ENABLED: "NO"

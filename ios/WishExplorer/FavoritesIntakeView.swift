@@ -103,7 +103,6 @@ struct FavoritesIntakeCard: View {
             .overlay(RoundedRectangle(cornerRadius: 13).stroke(WishTheme.line, lineWidth: 1.5))
         }
         .buttonStyle(.plain)
-        .accessibilityElement(children: .ignore)
         .accessibilityLabel("What are your favorites?")
         .accessibilityValue("\(store.draft.favoriteIDs.count) favorites selected")
         .accessibilityHint("Choose colors, food, animals, music, games, and adventures")

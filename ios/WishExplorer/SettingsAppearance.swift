@@ -29,13 +29,9 @@ struct WishSettingsPanel<Content: View>: View {
 
     var body: some View {
         GeometryReader { geometry in
-            let appWidth = min(820, max(0, geometry.size.width - 32))
-            let appHeight = min(1050, max(0, geometry.size.height - 56))
-            let panelWidth = min(410, max(0, appWidth - 24))
-            let availableHeight = max(0, appHeight - 32)
+            let panelWidth = min(410, max(0, geometry.size.width - 24))
+            let availableHeight = max(0, geometry.size.height - 32)
             let panelHeight = min(availableHeight, contentHeight > 0 ? contentHeight : availableHeight)
-            let appMinY = (geometry.size.height - appHeight) / 2
-            let appMaxX = (geometry.size.width + appWidth) / 2
             ZStack(alignment: .topLeading) {
                 Color(red: 51 / 255, green: 37 / 255, blue: 27 / 255).opacity(0.33)
                     .ignoresSafeArea().contentShape(Rectangle()).onTapGesture { }
@@ -50,8 +46,8 @@ struct WishSettingsPanel<Content: View>: View {
                     .shadow(color: WishSettingsAppearance.ink.opacity(0.19), radius: 20, x: 0, y: 12)
                     .accessibilityAddTraits(.isModal)
                     .accessibilityAction(.escape, onClose)
-                    .position(x: appMaxX - 12 - panelWidth / 2,
-                              y: appMinY + 16 + panelHeight / 2)
+                    .position(x: geometry.size.width - 12 - panelWidth / 2,
+                              y: 16 + panelHeight / 2)
             }
             .onPreferenceChange(WishSettingsContentHeightKey.self) { height in
                 if height > 0 { contentHeight = ceil(height) }
@@ -187,10 +183,10 @@ struct WishSettingsActionStyle: ButtonStyle {
     }
     private func foreground(for actionKind: Kind) -> Color {
         guard isEnabled else { return Color(red: 98 / 255, green: 86 / 255, blue: 72 / 255) }
-        return actionKind == .destructive ? Color(red: 141 / 255, green: 45 / 255, blue: 38 / 255) : WishSettingsAppearance.ink
+        return actionKind == .destructive ? Color(red: 141 / 255, green: 45 / 255, blue: 38 / 255) : WishTheme.line
     }
     private func border(for actionKind: Kind) -> Color {
-        actionKind == .destructive && isEnabled ? Color(red: 180 / 255, green: 97 / 255, blue: 81 / 255) : WishSettingsAppearance.outline
+        actionKind == .destructive && isEnabled ? Color(red: 180 / 255, green: 97 / 255, blue: 81 / 255) : WishTheme.line
     }
 }
 
@@ -200,9 +196,14 @@ struct WishSettingsToggleStyle: ToggleStyle {
             HStack(alignment: .center, spacing: 16) {
                 configuration.label.frame(maxWidth: .infinity, alignment: .leading)
                 RoundedRectangle(cornerRadius: 4)
-                    .fill(configuration.isOn ? WishSettingsAppearance.green : .white)
-                    .overlay(RoundedRectangle(cornerRadius: 4).stroke(WishSettingsAppearance.outline, lineWidth: 1.5))
-                    .overlay { if configuration.isOn { WishUIIcon(name: "check", size: 18) } }
+                    .fill(configuration.isOn ? WishTheme.blue : .white)
+                    .overlay(RoundedRectangle(cornerRadius: 4).stroke(configuration.isOn ? WishTheme.blue : WishSettingsAppearance.outline, lineWidth: 1.5))
+                    .overlay {
+                        if configuration.isOn {
+                            Color.white.frame(width: 18, height: 18)
+                                .mask(WishUIIcon(name: "check", size: 18))
+                        }
+                    }
                     .frame(width: 24, height: 24)
             }.frame(minHeight: 56).contentShape(Rectangle())
         }

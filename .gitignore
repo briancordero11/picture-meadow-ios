@@ -22,3 +22,4 @@ ios/WishExplorer.xcodeproj/
 ios/WishExplorer.xcworkspace/
 config/release-metadata.local.json
 __pycache__/
+preview/dist/

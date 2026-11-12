@@ -15,6 +15,16 @@ struct AppInformationView: View {
                 LabeledContent("Version", value: AppSupportContext.version)
                 LabeledContent("Build", value: AppSupportContext.build)
             }
+            WishSettingsSection("Explore at their pace") {
+                Text("Follow your Super Star's lead. Every question is optional: Next can leave it unanswered, Back revisits it, and Home returns to the wish pictures while keeping choices. You can pause at any time. A tap is an expression to explore together; it is not an eligibility decision or a final wish approval.")
+                Text("All 20 interest pictures lead to actions, broad settings, and the most-important idea. Favorites from the dedicated home section carry into each wish automatically. The drawer holds 34 communication pictures. Tap its center tab or drag it up or down. Stop, break, and finished remain in the drawer.")
+            }
+            WishSettingsSection("About this prototype") {
+                Text("Wish Explorer is an independent exploration prototype inspired by the reference wish materials. It is not an official Make-A-Wish app and does not submit a wish, determine eligibility, promise a trip, or arrange care.")
+                Text("Scenes are imagined ideas; they are not attraction listings, product availability, sponsor offers, or approval decisions. Communication support needs review with Super Stars, caregivers, and an AAC professional before real-world use.")
+                Text("Saving, AI permissions, and forgetting choices are in Privacy & Data. Start a new wish clears the current and saved wish while keeping the remembering preference and service access code.")
+                Text("Grown-up access lasts only while these settings are open and the app stays active. Each online request needs its own confirmation.")
+            }
             WishSettingsSection("Publisher and help") {
                 if let publisher = store.configuration.publisherName {
                     Text(verbatim: publisher)

@@ -23,6 +23,8 @@ jobs:
         working-directory: backend
       - name: Check native and server choice consistency
         run: node scripts/check-contracts.cjs
+      - name: Build portable browser preview with shared assets
+        run: node preview/build.cjs
       - name: Verify release metadata gate
         run: python3 -m unittest discover -s scripts -p test_release_metadata.py
 
