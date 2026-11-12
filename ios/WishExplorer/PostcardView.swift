@@ -54,6 +54,11 @@ struct PostcardView: View {
         PrimaryWishButton(title: "Read my wish", symbol: "speaker.wave.2.fill") {
             store.say(store.draft.category == .go ? (store.remoteDescription ?? store.draft.postcardDescription) : (store.draft.interest?.label ?? "I am still thinking"), explicit: true)
         }
+        Button { store.stopSpeaking() } label: {
+            Label("Stop speaking", systemImage: "speaker.slash.fill")
+                .font(.headline).padding(18)
+                .frame(minWidth: 44, minHeight: 44)
+        }
         Button("Change my choices") { store.step = store.draft.category == .go ? .destination : .interests }
             .font(.headline).padding(18)
         Button("Choose another wish") { store.step = .interests }.font(.headline).padding(18)

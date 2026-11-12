@@ -104,6 +104,10 @@ struct CommunicationBoardView: View {
         Button { store.say(store.phrase.joined(separator: " "), explicit: true) } label: {
             Image(systemName: "speaker.wave.2.fill").font(.title2).padding(12)
         }.disabled(store.phrase.isEmpty).accessibilityLabel("Speak sentence")
+        Button { store.stopSpeaking() } label: {
+            Image(systemName: "speaker.slash.fill").font(.title2).padding(12)
+                .frame(minWidth: 44, minHeight: 44)
+        }.accessibilityLabel("Stop speaking")
         Button { if !store.phrase.isEmpty { store.phrase.removeLast() } } label: {
             Image(systemName: "delete.left").font(.title2).padding(12)
         }.disabled(store.phrase.isEmpty).accessibilityLabel("Remove last word")
