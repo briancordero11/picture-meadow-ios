@@ -11,6 +11,10 @@
   <key>CFBundleVersion</key><string>$(CURRENT_PROJECT_VERSION)</string>
   <key>ITSAppUsesNonExemptEncryption</key><false/>
   <key>LSRequiresIPhoneOS</key><true/>
+  <key>UIAppFonts</key><array>
+    <string>ComicNeue-Regular.ttf</string><string>ComicNeue-Bold.ttf</string>
+    <string>WishBody-Regular.ttf</string><string>WishBody-Bold.ttf</string>
+  </array>
   <key>UIApplicationSceneManifest</key><dict><key>UIApplicationSupportsMultipleScenes</key><false/></dict>
   <key>UILaunchScreen</key><dict><key>UIColorName</key><string>LaunchBackground</string></dict>
   <key>UIRequiresFullScreen</key><false/>

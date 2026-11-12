@@ -1,0 +1,867 @@
+{
+  "version": 1,
+  "notoCommit": "99701e07d3d1fe1bdbcdb14964547f0fd592966f",
+  "fontsCommit": "c30b221beb0c1da59d563feb91ec8656a1fa972a",
+  "symbols": {
+    "⚽": {
+      "file": "journey-26bd.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u26bd.svg",
+      "sourceSHA256": "07f69528d790b680f6ea4d07afa9d21b9e4a6670cbcc7b9749cb192c175510d5",
+      "sha256": "8450f4808eaa5a92065ee9a1ecec554256a99d15dcef3bf73a9765af36e8968f"
+    },
+    "⛺": {
+      "file": "journey-26fa.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u26fa.svg",
+      "sourceSHA256": "2bc818bf835269821884c9c3bcc8b22fc0aeafa54545582ee05514944dd9601e",
+      "sha256": "e6b12b7529af56fbdd7600c15e29d2e759693094b2a2270c4607f6a94419f19c"
+    },
+    "✂️": {
+      "file": "journey-2702.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u2702.svg",
+      "sourceSHA256": "3fc88d29fa96dad6d92f45460e4d741f54dadae361cfe092701820ae158659e1",
+      "sha256": "df0bddbd1f6ce9f6cfb2589df184e32bcd3812e10c8319f44827d09a81019670"
+    },
+    "✏️": {
+      "file": "journey-270f.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u270f.svg",
+      "sourceSHA256": "5adac2395f2be13ba9bd93cf106597352668126d2b9ac0fa1a72f2365bdb2c60",
+      "sha256": "978237116ca0f876777aca516c92ddd7dcc7eafcea91f9c2842c9faf019ee1eb"
+    },
+    "✨": {
+      "file": "journey-2728.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u2728.svg",
+      "sourceSHA256": "e17f4ea67fb41fd082235eae90f03722980342d478c817e1359ec068d2fa64ab",
+      "sha256": "78a2496e8af46e508dfdddd96436c3aceea71ff0d202d93f52f2b298dbbf4d27"
+    },
+    "🌈": {
+      "file": "journey-1f308.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f308.svg",
+      "sourceSHA256": "23a80becfb38d89ebf3ab8aa57136dce162bc74daac358668694e07499101fba",
+      "sha256": "cf5bae121c95d6510fad376657b5321b4a7a9b005c687fdd80af77c1389d83f7"
+    },
+    "🌊": {
+      "file": "journey-1f30a.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f30a.svg",
+      "sourceSHA256": "7b0fc7d603b6c324a79f2ed4c0bcb4b0ed9d39ab28811f5e51efa5de182aca01",
+      "sha256": "5088fa666f92b6025122fbf37ad11031336f985393c00abc13a69173f53c9b55"
+    },
+    "🌌": {
+      "file": "journey-1f30c.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f30c.svg",
+      "sourceSHA256": "7ec45beb5d0749193caad7d02a2ba1b7cbae346b817a01319a5bb318cfa837c7",
+      "sha256": "eb278ae47ae753be83f8e3b932d3808e81e4b0d4adc1a4be5eea8e2aacc98ec4"
+    },
+    "🌎": {
+      "file": "journey-1f30e.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f30e.svg",
+      "sourceSHA256": "a98e96c2bb5c9bee4794bbb18ce304ae439e6fd81ab3411ee98e2cf654949a10",
+      "sha256": "5ad9d5de0ac3e4a7872d8ba8700ebffd34ab487ba5f28e0c02a0489de964cd76"
+    },
+    "🌱": {
+      "file": "journey-1f331.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f331.svg",
+      "sourceSHA256": "cd0992fa3de629e3887cdf003f879875a9dfa6041a81072055fd0e92a6b5eca7",
+      "sha256": "1ad44828533a25791eee791ab1196d76c17c2c50faf933431115781db245571d"
+    },
+    "🌲": {
+      "file": "journey-1f332.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f332.svg",
+      "sourceSHA256": "3189e48d6d3aac0948743a0ff050017267905948ac2141a2c406aee38e4f770e",
+      "sha256": "94a3ef0c57d8fb43b630b6bc54c8f07649b4258a5239958c45db040668533d0e"
+    },
+    "🌳": {
+      "file": "journey-1f333.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f333.svg",
+      "sourceSHA256": "9e1a171b2d64100143265e7df251f4f74d598d84f904e807a7f02f1bb837ef8b",
+      "sha256": "5dd292407e994e9a59d73b85a86675f931d79ccf241c64bb016fde7f8ee796d3"
+    },
+    "🌻": {
+      "file": "journey-1f33b.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f33b.svg",
+      "sourceSHA256": "95c16aa44685e1a0999a0b9739a485aee2468983ea2bd9f59b5a97e4a492ed56",
+      "sha256": "4c79104e7d72ba760c738fc8e37b64a933168714a6f53f1e2329453b6503b2e6"
+    },
+    "🌿": {
+      "file": "journey-1f33f.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f33f.svg",
+      "sourceSHA256": "34d3dd811644685688b50fa0ef60e772a6b6fa747a5a855e24cf1239d6a5fce6",
+      "sha256": "5bcaecb0ad1a9569c486b9dd17aae56f7a4d59792987641f94d2e699f99905bd"
+    },
+    "🍓": {
+      "file": "journey-1f353.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f353.svg",
+      "sourceSHA256": "34ac09e00cee6975c054bebcfe5ac043e2e8adc6c158e551277fbd236dc1b37f",
+      "sha256": "87bedeed388de60fb9d7e07ed16073fdaf63c0d19bdcc583f06e0cf6ae47cf5d"
+    },
+    "🍕": {
+      "file": "journey-1f355.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f355.svg",
+      "sourceSHA256": "7f9ce32866b27bc9af776d92b8cf536588622da865bb8f8a9a4a3153d9fcfe59",
+      "sha256": "c204c7995256b077209f1b671d966cbe32e5dc79ca9b5ecf48d1a645a5d2b1f9"
+    },
+    "🍦": {
+      "file": "journey-1f366.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f366.svg",
+      "sourceSHA256": "81e0729e6deb5ececc6aa8776a5afa42a7fd11b3f1de5a062646bad2dd50deda",
+      "sha256": "2963290a52b11155f64324286e40444ee3f3294b2115910ef029d03ba8f7262e"
+    },
+    "🍿": {
+      "file": "journey-1f37f.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f37f.svg",
+      "sourceSHA256": "cfed47ccbf1c8b630939396d5ba1b5fcc8ebf988b71bd46943c681c2a55f96c7",
+      "sha256": "4117ed77fe43fb9aa6c190f2ee81eae71679414bcc48c1074c5dc4bbf2f0287a"
+    },
+    "🎁": {
+      "file": "journey-1f381.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f381.svg",
+      "sourceSHA256": "f8df9f99dd7e8582de860c15f037a141f1b7f4c531e5f80f1624d5aa472ba38b",
+      "sha256": "46039765ebc9313fdbdfd81be55656c5f4b1d58c9c80c1b46cd6b2436aa4959b"
+    },
+    "🎈": {
+      "file": "journey-1f388.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f388.svg",
+      "sourceSHA256": "1557f246f5714cdae0ef14fc9a1fa04a12800577a64e7867163d6526ecc4ce1f",
+      "sha256": "b6b4d5a9796a5145cb5d50ddbec3790d9093a5431a461009a9a844ef809b424b"
+    },
+    "🎙️": {
+      "file": "journey-1f399.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f399.svg",
+      "sourceSHA256": "eb2c38cc9fdbeeb4cf532bda40588681258f3ba9624c5419035e112caf861d5a",
+      "sha256": "3a5dbf348993cdfbf1e62f708e8d0a72408d154ff9583587b651e38c75a96fd7"
+    },
+    "🎠": {
+      "file": "journey-1f3a0.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f3a0.svg",
+      "sourceSHA256": "6f5784cdbdfa19ebb21213e6b86de2f016b4600f4c07b946525e7283fc151ae7",
+      "sha256": "c77f32a6cba7a4b922a88c948296cc41bbe7e90688351cca3bd746b0ec4acf78"
+    },
+    "🎡": {
+      "file": "journey-1f3a1.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f3a1.svg",
+      "sourceSHA256": "e1ef85d67a24931c6058f1cb5e8f0502e1c07a87483601c45606ec7480004629",
+      "sha256": "ef83df1334268bbb252a96aacf462498f12b916e053fbc240073769c28d198a9"
+    },
+    "🎢": {
+      "file": "journey-1f3a2.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f3a2.svg",
+      "sourceSHA256": "bb48147e71455f4be781ba5d86361749372dceeaf8f99473c03979c355bc14aa",
+      "sha256": "84b388ce300e5b4f79d715ac503101205ae2198a0fe1ffacda087ea833ea1b77"
+    },
+    "🎣": {
+      "file": "journey-1f3a3.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f3a3.svg",
+      "sourceSHA256": "a0f0360a146ae6c1b721261f4bd937e10d8b02dad784ca4ca166bc141a9d1689",
+      "sha256": "473954444888641f0fb3831e5c3bb39e85571611bab450c52d561c12cf20d124"
+    },
+    "🎤": {
+      "file": "journey-1f3a4.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f3a4.svg",
+      "sourceSHA256": "8e58f4ee925adc2445106c1f55defec97a36b20b0a4a3dd8a15bb1b6a01d151a",
+      "sha256": "cb22f6212c1ab380e0d3fdbf75dd6bba0be8fe85a6ef2b7416f7fdf877e3d92c"
+    },
+    "🎧": {
+      "file": "journey-1f3a7.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f3a7.svg",
+      "sourceSHA256": "9dd6e65d930cbea916662c0b876f80e4790e5fbd15d205487e79293046c2fa7a",
+      "sha256": "cdd4ec302abeee4c98a7d8ca54e35f8557360374d5e0c8bc0fea6ebd4ba7f6eb"
+    },
+    "🎨": {
+      "file": "journey-1f3a8.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f3a8.svg",
+      "sourceSHA256": "89ae84aac36991e11404f638c55bbcd2a7efe0e0efbc3c4ca46e1e11e6ba8c62",
+      "sha256": "bab08ddb7ecdacb6eeb26ffab849b13a9354c0635689ed19bdf1c5bdc447298a"
+    },
+    "🎬": {
+      "file": "journey-1f3ac.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f3ac.svg",
+      "sourceSHA256": "6ebf25dadd1a580b846210a044801786bb0f08449b2bf74f4fde18ac8cca5394",
+      "sha256": "580adbed84e5b2f77939fae16939741bd02f5a43870398c51c920f445654110a"
+    },
+    "🎭": {
+      "file": "journey-1f3ad.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f3ad.svg",
+      "sourceSHA256": "5f6eebcbaca77780814ec3b3f57f9bc7c8b0113f57c6e1df9985ddce85aea126",
+      "sha256": "ec2b434165fce81453f1d814b8d96f407952b79c1444a1865942950531de91ec"
+    },
+    "🎮": {
+      "file": "journey-1f3ae.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f3ae.svg",
+      "sourceSHA256": "a67547089fcc6684047e218d8a87c429fbb17ec8db9db58b87adec30e3485a03",
+      "sha256": "00c77f757c08857eaaaa49a3146b523ec03b2b1c61aee95f9133e2a53e1d3e46"
+    },
+    "🎯": {
+      "file": "journey-1f3af.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f3af.svg",
+      "sourceSHA256": "1c57c13919572c9cc81d666d78e02d1298dbda8bcb82a1cbdfba41f436b3a455",
+      "sha256": "11c2b49f574fa309bdb4fcd8037b78e10519a0af696da5671c05c0d5b536f407"
+    },
+    "🎵": {
+      "file": "journey-1f3b5.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f3b5.svg",
+      "sourceSHA256": "62fbf0b5800653d86fc36a473abd96cae08257655e89cba8a2dae79259b1b89d",
+      "sha256": "ac9616672671f0c02f7d42550707f83abe3b86f334d1634a588d01f9c6236b59"
+    },
+    "🎸": {
+      "file": "journey-1f3b8.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f3b8.svg",
+      "sourceSHA256": "9819b03b27a9b55906e22439cb2264175ef84882a7502cf410afc50c062069f9",
+      "sha256": "9a4516b5e707cd9bf00b5919ca919f74eb090b5b4dfcae37b65739fa75b58ffd"
+    },
+    "🎹": {
+      "file": "journey-1f3b9.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f3b9.svg",
+      "sourceSHA256": "f232cdf4a01744a4177f02d940e81572afec9d8afeb1108a868e4be7b5b7fe5b",
+      "sha256": "3db71055c4301344d9cc28bab5f4b86aff77ee31c1e4f3debe463885c4aa4fc0"
+    },
+    "🎼": {
+      "file": "journey-1f3bc.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f3bc.svg",
+      "sourceSHA256": "001c62538689b15e34e9a81acc6e615318551838928977a8c4476f6206421a0e",
+      "sha256": "58520a26b77b8ad22b9565815d143da7adfb14bd8043193dc528c3573cf186d6"
+    },
+    "🏀": {
+      "file": "journey-1f3c0.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f3c0.svg",
+      "sourceSHA256": "5d908316a564b3dc295b7d734098aedc95264520025e3d0da6b5f6d3016c61ec",
+      "sha256": "a48dc35ab3e9928bf26f718b9e4c93eb9464505677b4d7fb5f160f3e278d813d"
+    },
+    "🏃": {
+      "file": "journey-1f3c3.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f3c3.svg",
+      "sourceSHA256": "628c8c6648a958c34c50defe523f643624308bfb34f5773bb856a8984e30537b",
+      "sha256": "d5deeee96b87eb313f0cdf7fe4efebc4f6dd7bf42faf941b08f90ea39d551768"
+    },
+    "🏅": {
+      "file": "journey-1f3c5.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f3c5.svg",
+      "sourceSHA256": "3952a5ea94390a0170cfaa768739a2759f4499ae90a948e4934a2b752289ab2b",
+      "sha256": "f48c78a89f220062412e4d9a0f04b4b69a63493f479f8b56c287f51a326d20b9"
+    },
+    "🏊": {
+      "file": "journey-1f3ca.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f3ca.svg",
+      "sourceSHA256": "ab50dbb0bddadba92e51c4f79716eef15947fc73ec85630095dcc2d1412d73b5",
+      "sha256": "ebd91401f567ae00ddb893137f9af1657b08c3ffdb4540a9f792def887eb8390"
+    },
+    "🏋️": {
+      "file": "journey-1f3cb.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f3cb.svg",
+      "sourceSHA256": "3e7dadb5dbd5b5e5492eb43edf21f2d95e7b20f6e3ead07b48ece9ed8fb09b50",
+      "sha256": "cc19e1c9522071317b8c5de73e2bda030b13101ef963e94db3c67db1b9e70af6"
+    },
+    "🏎️": {
+      "file": "journey-1f3ce.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f3ce.svg",
+      "sourceSHA256": "fa3f6228a6c8913e76a147b11aa5c4a2f70e9c581efb9b2624c96312a54d9573",
+      "sha256": "60c058c2b074842035d2131529e6c66ad4df87261dbada7b48baf4f705f91252"
+    },
+    "🏕️": {
+      "file": "journey-1f3d5.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f3d5.svg",
+      "sourceSHA256": "3f63f311fc8d6809552d3e6de5ca91f0701341ed143d458fdb22752f7750af63",
+      "sha256": "80194c5e3744290a7f47cc658043409cca89954c1a2de8d39d93d9fc02717900"
+    },
+    "🏖️": {
+      "file": "journey-1f3d6.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f3d6.svg",
+      "sourceSHA256": "86748857b91c4243b9f333fce89723a655849415c160ce3dc64c4b16bf10e1f9",
+      "sha256": "0ac92c4384f4e2b41c87fb794bb08094b27d7685c69da5d7245e9dc04005efeb"
+    },
+    "🏞️": {
+      "file": "journey-1f3de.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f3de.svg",
+      "sourceSHA256": "089a1527f476a23ecba055b59edbe4d0225c06d1c53dcc1fb6967006f3459c75",
+      "sha256": "cd2b3870d0948f1bc7c8466d0eca0c8070ef22643ddf98ad9b8a12e2f288b731"
+    },
+    "🏟️": {
+      "file": "journey-1f3df.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f3df.svg",
+      "sourceSHA256": "812cd734be824b87d972c067d4fff5e8b8e3197ed70d9832fb8dbee0533c1b77",
+      "sha256": "ed41c2a12f661933754c0b9e315893f851f710375a22d304b83533b8eb1e28d0"
+    },
+    "🏡": {
+      "file": "journey-1f3e1.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f3e1.svg",
+      "sourceSHA256": "44c68a18562340fb485297b61ec198461a897d08f643f9db32b4badce3270823",
+      "sha256": "cda7070d631bbb68850aafca8469abbe1f9cfc6ffe8ed46955e1dca8590d0dc1"
+    },
+    "🏫": {
+      "file": "journey-1f3eb.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f3eb.svg",
+      "sourceSHA256": "dbac97747f4effe378786fef616e35f102ed515b86e107aa31651620ec3f246b",
+      "sha256": "dafeb49013600dc311ba9a24d7a88414b8b2e5ea27d75f50eaacf1441a38bbd5"
+    },
+    "🏰": {
+      "file": "journey-1f3f0.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f3f0.svg",
+      "sourceSHA256": "16078a87ebed610c6f8c38fe9e9a0946023cb4aaa5a601a850231f7929a9aec6",
+      "sha256": "f03909ab013a8411074aa43e5dd367ec3d3c7e6b0634edce2052050fb8a915c6"
+    },
+    "🐄": {
+      "file": "journey-1f404.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f404.svg",
+      "sourceSHA256": "c6a3eb21b286da2f740fd9aac8c08e82b5beb2b01f9e038f7d88b4df50a3f155",
+      "sha256": "f7c07dbbcefb40c665e6ce8b837372996c0854ca71221ce30850f1acc7180f11"
+    },
+    "🐈": {
+      "file": "journey-1f408.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f408.svg",
+      "sourceSHA256": "dc0b31d27d4679846bd55d9e336462588e9cef76be1ee71b3c4ea2b3f34fd07c",
+      "sha256": "c7cfa50bc21e0b3559eded98cc112f3cade6ff31c2c1cf76bde11a6d70606459"
+    },
+    "🐎": {
+      "file": "journey-1f40e.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f40e.svg",
+      "sourceSHA256": "059a23d77bf07fb1335a4f76cc2f45448721e50e791673caffe1bb6d5c08fee5",
+      "sha256": "842f279b9c836dd16dbe69e3d547d0f3f81b9e0bd25585a378162194cc395721"
+    },
+    "🐕": {
+      "file": "journey-1f415.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f415.svg",
+      "sourceSHA256": "41a792ba44a54b753fbe53f10131426aa484b3b22b57d22f79f558adfd429da3",
+      "sha256": "e7e3205760f66ec288c89b6cf260f648cca8c4405d4c5c6b018b37586771327e"
+    },
+    "🐟": {
+      "file": "journey-1f41f.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f41f.svg",
+      "sourceSHA256": "bf89fbbd462068a856afd027333f883f4c44c820788a176240d2a8c5b7b5d02d",
+      "sha256": "8af14a54808f054c431825616e4be903e4313dbc6a6f29d6a962583dfdb11cbd"
+    },
+    "🐠": {
+      "file": "journey-1f420.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f420.svg",
+      "sourceSHA256": "0299e5cfc67c1ae545810c74d99a76ea86d7b2d4b025ef08d0182b81ddf1e618",
+      "sha256": "78ea0cd56c23a38a9aea40e31d6d70f492ddec2a3ed045222d5a303b7a080366"
+    },
+    "🐬": {
+      "file": "journey-1f42c.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f42c.svg",
+      "sourceSHA256": "ae5cd5aa6aef050c6f1a9ad2fc34be3fa71694747a97cd0e9ecf1df9429a1ca1",
+      "sha256": "f74349bcff7eb29a483b07860fe3c9013839fd5423c286f50b1710e54fd8ed07"
+    },
+    "🐾": {
+      "file": "journey-1f43e.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f43e.svg",
+      "sourceSHA256": "98b1c83f8f75757b2ed7c37bb1bf6b8dc286f7b97bebe5014762163f4a4f64ca",
+      "sha256": "e666724bed63422e62d70c9140931bc376cdcc8de8ae0f5e4f5652269276818d"
+    },
+    "👀": {
+      "file": "journey-1f440.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f440.svg",
+      "sourceSHA256": "16f27c96190d66fdb56a7e5250b795a96bdd30b95b91a88e7d36c8387b166249",
+      "sha256": "8aaec72cae2ad232bbdc24404615514dc3ee2eddfe837a703db483bd51843c13"
+    },
+    "👏": {
+      "file": "journey-1f44f.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f44f.svg",
+      "sourceSHA256": "34265e9431a758f6c4d3e88365b35a3e338cee0b1d84cfe9682a5779e52f452f",
+      "sha256": "96bbbdf9d3d32138fd9325adef27d96a8469fbfaf152919d38a137bab1d8be3d"
+    },
+    "💃": {
+      "file": "journey-1f483.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f483.svg",
+      "sourceSHA256": "5287efe16716cb6b0edf2cfabdee04c08e663837e904fee0bb0cc5c3484a4c36",
+      "sha256": "51e19294b5c0470cb0d42a7ffc249134cd5806358355b64138cb5bd88ccfdb23"
+    },
+    "💛": {
+      "file": "journey-1f49b.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f49b.svg",
+      "sourceSHA256": "9bfeb8f80bc9416353161b5c6a6a6ec91527d6e5de75ed44c344aed9691d3cb5",
+      "sha256": "ed48cced2288a3fcb8230fd871f08a8c7df4360e4446ee95d0f784d40fc39ab4"
+    },
+    "💦": {
+      "file": "journey-1f4a6.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f4a6.svg",
+      "sourceSHA256": "9cb646d47982c91dfad54a71e6be69f55b59422ad4e7742824a2f34fde238ecb",
+      "sha256": "e636f1d693ae3bd2c28554db38424d23802c4f599dd0e56ebc1bdb959958507a"
+    },
+    "💻": {
+      "file": "journey-1f4bb.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f4bb.svg",
+      "sourceSHA256": "70c8a1fe3fbb6d1cb6691994a848783ec373c75f211ef73ef504a04a5868219a",
+      "sha256": "c87cd3080af302f57d10ad55ad3765b41eeca012d4edac29db58aba53823493b"
+    },
+    "📖": {
+      "file": "journey-1f4d6.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f4d6.svg",
+      "sourceSHA256": "57c8932ae631000c13924155071b37e2a39022e9da7216321394db127c9f6af0",
+      "sha256": "e7d436b6804c84b085c2a7958ae9e8799ab7cd85b523f699d259af34dcc86966"
+    },
+    "📚": {
+      "file": "journey-1f4da.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f4da.svg",
+      "sourceSHA256": "f1fe8a3d8873ef3d84f076bda72ad9e88ebd692247d92a0b2dfb268c95dec56e",
+      "sha256": "f430e49ee0c56dfd130d6b80230afcf469d225e841adc6a6005c150a9ec91a48"
+    },
+    "📷": {
+      "file": "journey-1f4f7.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f4f7.svg",
+      "sourceSHA256": "7e0572c943b5a8d2b1e11ecebda3521f40dd37ae10578a9d9d59a8e5945a6895",
+      "sha256": "028a88d6b8e10efd946caa8ce619c99daaf936ba552d00ca0b0bbe678c818471"
+    },
+    "🔎": {
+      "file": "journey-1f50e.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f50e.svg",
+      "sourceSHA256": "15d032da90f398f3bcbbf86ed449bb5e22fe781fae8783f82a579a8eaa4085a4",
+      "sha256": "2840b353d33e16270d205a88c2f7e39f68602482059f40b03179d19bba4d405a"
+    },
+    "🔴": {
+      "file": "journey-1f534.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f534.svg",
+      "sourceSHA256": "6494a366d3d61b9dc364ce1470b7a0bfc6bfd3ec31b763c769a99f3bda8cbf68",
+      "modification": "Project color swatch, replacing a platform emoji",
+      "sha256": "9730a968774c99fe82e9db63bd9819feff616bccc95ef08a4225fa410107b200"
+    },
+    "🔵": {
+      "file": "journey-1f535.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f535.svg",
+      "sourceSHA256": "0357b9dca98a1fc5b7bb62e08824a59ea5c70fd4f6eddff3442a35c6eb1b2c44",
+      "modification": "Project color swatch, replacing a platform emoji",
+      "sha256": "387af9b8c0b8bc5cfcd025331ccae8428fbc8fb6071885bef74cd5ce4bdd8e14"
+    },
+    "🖌️": {
+      "file": "journey-1f58c.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f58c.svg",
+      "sourceSHA256": "d4428bf90b75da5f00a260a74833633be0f5abbc080bd3189c849b5f1b5961a9",
+      "sha256": "7760dc982608d0d9414fef030582aea359f63645f91131bc361e7fa60f3d6b9f"
+    },
+    "🖥️": {
+      "file": "journey-1f5a5.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f5a5.svg",
+      "sourceSHA256": "874d9c776bc7629f533cd5756b592ca3f6df1a8e1e9c5ee5c31cb38ed7362f82",
+      "sha256": "8d6463e6e768470509ae84f2c2322848b140aea832af801af526ab680b78691a"
+    },
+    "🖼️": {
+      "file": "journey-1f5bc.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f5bc.svg",
+      "sourceSHA256": "761f1fc8ae20fe2486b2aba64a8bce6b5ba35731d5612bfd241a25869287c85e",
+      "sha256": "f3457ab94421cb25c2749fce40b99ee6b0bfd4c757f9e55097ca518c1880e1c4"
+    },
+    "🗺️": {
+      "file": "journey-1f5fa.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f5fa.svg",
+      "sourceSHA256": "f7033f70dbd14a775ff943856babf2e43fd3869b06b4f003d0b9b6c40a9b7801",
+      "sha256": "afd49409878738d4de08e73a7afb6197e25db3b46109ead481fcbe74d50a2926"
+    },
+    "🗿": {
+      "file": "journey-1f5ff.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f5ff.svg",
+      "sourceSHA256": "53092864c2c530ea9eac64e1547694cf89a715a50f489af62fa629163b7c2ac4",
+      "sha256": "9a8fc34834f4163afeb9b98663bae91440f94432a303fa1265365b64bea3600c"
+    },
+    "🚂": {
+      "file": "journey-1f682.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f682.svg",
+      "sourceSHA256": "8183a56c64416f5c0d686ebdf317ed0557a8a9d9ec23f55d338e8e54c023d764",
+      "sha256": "9b0d08014f7675ebd7194b4645e9b7ad824d3c63ff3e6c3679da96e4fa081a18"
+    },
+    "🚉": {
+      "file": "journey-1f689.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f689.svg",
+      "sourceSHA256": "6d5c4b62b1ee286cf68656ada31d335eb119e7f90c3c26268f5dff29e900eecd",
+      "sha256": "d68502428b56ce7a4d0c0a732ad99408cdd735d93a39ff251fb65b8ab5bee42e"
+    },
+    "🚞": {
+      "file": "journey-1f69e.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f69e.svg",
+      "sourceSHA256": "0967b39212e81ad6a4e4a57acf5c3c85ef818bcc285a8d582af5d6fd869d29fc",
+      "sha256": "350426c69a10a357496ac6b226315f689421dbc8a7c387a5e939b733e3089043"
+    },
+    "🚲": {
+      "file": "journey-1f6b2.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f6b2.svg",
+      "sourceSHA256": "b42918679190172ef75e3a1f2efb5192b978c652de0a8eb45708858e3f95673e",
+      "sha256": "4160382439e962aac90797c4dbb831190feb8cde2294f9091a6d1689d9d453d7"
+    },
+    "🚴": {
+      "file": "journey-1f6b4.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f6b4.svg",
+      "sourceSHA256": "4845df92f8ca7186013e89e222350a9ca3b48a7601288d296901bf505db955e6",
+      "sha256": "31b1e513fca9b84fd0b8840d1dc4f754a5b44526db3d3ad889bd53eb319454a7"
+    },
+    "🚿": {
+      "file": "journey-1f6bf.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f6bf.svg",
+      "sourceSHA256": "e22d5f2465a34c370bb0e7714f273786ca1dc274be1b4ab850ba87b4549a9ef8",
+      "sha256": "906fb900ccec18c718a0837b12389624bfbe6961564e2854389580b10044f419"
+    },
+    "🛋️": {
+      "file": "journey-1f6cb.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f6cb.svg",
+      "sourceSHA256": "8c6444f7d6a82869d0606549a582f4d77c94edc890c9645dee9a0b16f1993857",
+      "sha256": "d773e99b3987ecaeb40c1e597128fe4f93b79f1768623a40127c1e0232e728a1"
+    },
+    "🛏️": {
+      "file": "journey-1f6cf.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f6cf.svg",
+      "sourceSHA256": "6061c5e7b16cb6cdc1f12451a3fdaf248676165a6333385dc79221735e83641a",
+      "sha256": "04eff44ebce174277c8cc92b35ac20d33f39daa92f96d4f11e1aca62deb4adfe"
+    },
+    "🛝": {
+      "file": "journey-1f6dd.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f6dd.svg",
+      "sourceSHA256": "e04da36538ea6a050af5d50c03d371058ef8778d17ffe4c16cb68841a4ff1255",
+      "sha256": "67daef3e3ab8bc7f6afd5657d65c72fd107985fb966bcc9e4f4c9a1ee5fd3867"
+    },
+    "🛞": {
+      "file": "journey-1f6de.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f6de.svg",
+      "sourceSHA256": "e283bcf4cd48ad5658349309e65471aa388a7997bdf25eb23857ca8745b02fbc",
+      "sha256": "796948831fb7ef4b5bf58c8774c40724b94745ddea45b61d06d03d44fa0623e8"
+    },
+    "🛟": {
+      "file": "journey-1f6df.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f6df.svg",
+      "sourceSHA256": "6d4f055fcd833859396def81e8376dbae8ff74dccf6bc90b4255409953b22148",
+      "sha256": "556fb1f4e4d61c62b081d6d6e68aac5e354b0d503ca97ed01d55010a2be07afc"
+    },
+    "🛤️": {
+      "file": "journey-1f6e4.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f6e4.svg",
+      "sourceSHA256": "f162939c535cc366ac0db900e3b47b395a7f3e47bcec8878e8625425d6956171",
+      "sha256": "ffaed13d95da1b929a2ec1d0a2049859de622152d6a1c837271dc76066de6a64"
+    },
+    "🟠": {
+      "file": "journey-1f7e0.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f7e0.svg",
+      "sourceSHA256": "dd670274379e988d4e58865552ec3eeb6983ab3c303b5364bf46e7eb709e970c",
+      "sha256": "586a4d71253c65c56cc361927c5a2dc750d7f14d702c74063f09ac4c66f084c1"
+    },
+    "🟡": {
+      "file": "journey-1f7e1.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f7e1.svg",
+      "sourceSHA256": "19bb61f38948339811d419008872317ec55ddc205e7c1cc6008fb6b09cb21f79",
+      "modification": "Project color swatch, replacing a platform emoji",
+      "sha256": "e2a197e3d67d891a8e6942f81e0c401aaf0663c164f53c6e6c47eba24b51781d"
+    },
+    "🟢": {
+      "file": "journey-1f7e2.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f7e2.svg",
+      "sourceSHA256": "c2908c90892eb4490f52f07e8b2697bc7c14b153119d24b494c6ef7ed9241c17",
+      "modification": "Project color swatch, replacing a platform emoji",
+      "sha256": "805fe0bcd9067562c3436f44cf9b5cd1eb2f4604fbeb37ebd92bfe05b4331b9c"
+    },
+    "🟣": {
+      "file": "journey-1f7e3.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f7e3.svg",
+      "sourceSHA256": "a17aa29dc4e9c3b1f5fcfe92002d78f481fd3a7d2f289c50c949b661f7553164",
+      "modification": "Project color swatch, replacing a platform emoji",
+      "sha256": "e4cd574c086a123df67ad19295e4474a1f611ba149dea384fcb5b49adc9e5a89"
+    },
+    "🤝": {
+      "file": "journey-1f91d.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f91d.svg",
+      "sourceSHA256": "f20707b7dcb0704be9b456d526aacb42c10acbb72e61fd8a69e2a64734029321",
+      "sha256": "3050328beec490a0fb9884b7d3fb364820f7ce1218a3352d48bb97b818ea0d34"
+    },
+    "🥁": {
+      "file": "journey-1f941.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f941.svg",
+      "sourceSHA256": "96d4b60d77be3fe5e56a0f2924f03395b12f82114cc2cf36b4e74de4f4c4b2f3",
+      "sha256": "b45e50b9ec58ae0452c1784ce2f3613bd4d834d5a0481ae5d57d49804b70ed6f"
+    },
+    "🥪": {
+      "file": "journey-1f96a.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f96a.svg",
+      "sourceSHA256": "6de1048f0f04b630118498e4c023445c0b64b4a7bce6bec4d010fc06d409d845",
+      "sha256": "b2f159bcf918d7709a196d77b9c9e5429d688fdc96479ab7fd851bef2653a602"
+    },
+    "🥾": {
+      "file": "journey-1f97e.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f97e.svg",
+      "sourceSHA256": "c013714f6511da3fd145ce18fc4a709453e6fa7721f86df8ac6e72d2de6fc9cb",
+      "sha256": "4258f3183aa467d42831ebaf5789f04f8c8c37956f268823c76578d16228baf8"
+    },
+    "🦋": {
+      "file": "journey-1f98b.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f98b.svg",
+      "sourceSHA256": "03a81ca88bd120c65c3ceafd770c036fe046ddc8ba1a992b220bb2ea56c826d7",
+      "sha256": "134bb9f5143db5c614d67f60db916e23bf37b0c338bc95ce18e0bbcb9946c3d7"
+    },
+    "🦌": {
+      "file": "journey-1f98c.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f98c.svg",
+      "sourceSHA256": "ee1bdbba6b0d6fb4aa9184172c6a5c71b00854c8741341cc4358fc67a9875ef3",
+      "sha256": "505b993e3700cd9d9198a877d18c3cd8ba04229c5c8c6a5cc249a19703381839"
+    },
+    "🦒": {
+      "file": "journey-1f992.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f992.svg",
+      "sourceSHA256": "acfa25a808f14e52fd37a073fc614c66c4fb052135e1f026128ac480d7965799",
+      "sha256": "27583d63c349028fa341151054d646e26deede9ab9917cf2d0501bb31a4a33f3"
+    },
+    "🧁": {
+      "file": "journey-1f9c1.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f9c1.svg",
+      "sourceSHA256": "eeaf49cb035f27d4d58a09e7d13615bd71493238442e20b686747b92c566ed8d",
+      "sha256": "e408c0bcaf7297a2fc675d62e2fce7c6283121157bdcd767d4ca35b1bbacfea2"
+    },
+    "🧩": {
+      "file": "journey-1f9e9.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f9e9.svg",
+      "sourceSHA256": "334f25f98c0440ec9035e05ae7da6bc7f04faac89440a9b31ecd22d0dd00f499",
+      "sha256": "edd43b21b3b1ab605a0e692f2be36d7fcf5824eda3c01fdf01606a15c72af420"
+    },
+    "🧰": {
+      "file": "journey-1f9f0.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f9f0.svg",
+      "sourceSHA256": "4818058c34483e427e069812fc1e0f4819e7b92b68aa25fed82ff53757a6fd3c",
+      "sha256": "2a601b857a9661955cb57265936bc00e049ec6b9a2bdd5ee8c0254e8d959fdef"
+    },
+    "🧱": {
+      "file": "journey-1f9f1.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f9f1.svg",
+      "sourceSHA256": "aab2d46f364b36bdc358ea9a69c423c0428bbfa349925388036027e723d94e8c",
+      "sha256": "b9a84716113c642b1e8ded5d36381c6a0ee388e2b1fbd2608cf297dc7ed9d3f5"
+    },
+    "🧸": {
+      "file": "journey-1f9f8.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f9f8.svg",
+      "sourceSHA256": "d38d58d5cfda9a40f2677d4787afe5c2762a10c9604c4a5c9e3c5839ce1d94a5",
+      "sha256": "1eb7fca7e39f5ebb9d8dc57a662acf2bc350d4f6bd3aef8d2322a067ef0200af"
+    },
+    "🧺": {
+      "file": "journey-1f9fa.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1f9fa.svg",
+      "sourceSHA256": "cb1e3bfdc585ca689a8da946474c959d17a86cc222bd90a61e0b923440f47cad",
+      "sha256": "6166ba7c7b902daa962a47a28a026a38e79b39ef9b6c252b39604de703864c23"
+    },
+    "🩷": {
+      "file": "journey-1fa77.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1fa77.svg",
+      "sourceSHA256": "9299d51482f0908aac34a8ce31742cc3af1878f6b82f3bde67ec24ed04137994",
+      "modification": "Project color swatch, replacing a platform emoji",
+      "sha256": "019e36ad55a8818ef790977ab2df9a2884b3079f7eb2bb0ac8c3ff4a78a1693a"
+    },
+    "🪐": {
+      "file": "journey-1fa90.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1fa90.svg",
+      "sourceSHA256": "104113a0c6541daa1dc60bd7b563123960b4a70f40b616c8cc11ad7c857788ba",
+      "sha256": "33d924477e24b329015a1c5a5310f3321dd3eae30173a54d906a508b95104809"
+    },
+    "🪜": {
+      "file": "journey-1fa9c.png",
+      "source": "https://raw.githubusercontent.com/googlefonts/noto-emoji/99701e07d3d1fe1bdbcdb14964547f0fd592966f/2D/svg/emoji_u1fa9c.svg",
+      "sourceSHA256": "1b5d42658bf8fbf935582fe7b83b552981483d6791d81bdb4cbd13b5e0755b47",
+      "sha256": "6184fc3c0a52aaa2f8f86122b8c5d49f26b8190025a8a14b2e50b8ff7c2c17f9"
+    }
+  },
+  "choices": {
+    "sporting-event-watch": "🏟️",
+    "sporting-event-cheer": "👏",
+    "sporting-event-play": "⚽",
+    "sporting-event-skills": "🎯",
+    "sporting-event-meet": "🤝",
+    "sporting-event-stadium": "🏟️",
+    "sporting-event-field": "🌳",
+    "sporting-event-court": "🏀",
+    "sporting-event-sports-day": "🏅",
+    "camp-explore": "🥾",
+    "camp-wildlife": "🦌",
+    "camp-stars": "🌌",
+    "camp-picnic": "🧺",
+    "camp-rest": "⛺",
+    "camp-yosemite": "🏞️",
+    "camp-forest": "🌲",
+    "camp-lake": "🏕️",
+    "camp-backyard": "⛺",
+    "athlete-meet": "🤝",
+    "athlete-practice": "⚽",
+    "athlete-watch": "👀",
+    "athlete-learn": "🎯",
+    "athlete-celebrate": "🏅",
+    "athlete-field": "🌳",
+    "athlete-court": "🏀",
+    "athlete-track": "🏃",
+    "athlete-training-room": "🏋️",
+    "vr-equipment-explore": "🌎",
+    "vr-equipment-create": "🎨",
+    "vr-equipment-play": "🎮",
+    "vr-equipment-learn": "🔎",
+    "vr-equipment-relax": "🌿",
+    "vr-equipment-space-world": "🪐",
+    "vr-equipment-underwater-world": "🐠",
+    "vr-equipment-creative-world": "🧱",
+    "vr-equipment-nature-world": "🌳",
+    "amusement-park-ride": "🎢",
+    "amusement-park-explore": "🎡",
+    "amusement-park-watch": "🎭",
+    "amusement-park-eat": "🍿",
+    "amusement-park-relax": "🌳",
+    "amusement-park-theme-park": "🎢",
+    "amusement-park-fairground": "🎡",
+    "amusement-park-family-park": "🎠",
+    "amusement-park-indoor-park": "🏰",
+    "school-learn": "📚",
+    "school-make": "✂️",
+    "school-play": "🧩",
+    "school-read": "📖",
+    "school-help": "💛",
+    "school-classroom": "🏫",
+    "school-library": "📚",
+    "school-learning-room": "🔎",
+    "school-school-garden": "🌻",
+    "celebrity-meet": "🤝",
+    "celebrity-watch": "🎭",
+    "celebrity-create": "🎨",
+    "celebrity-music": "🎵",
+    "celebrity-play": "🎮",
+    "celebrity-stage": "🎤",
+    "celebrity-studio": "🎬",
+    "celebrity-music-room": "🎹",
+    "celebrity-video-visit": "💻",
+    "art-paint": "🎨",
+    "art-draw": "✏️",
+    "art-build": "🗿",
+    "art-photo": "📷",
+    "art-craft": "✂️",
+    "art-art-studio": "🖌️",
+    "art-home-art-space": "🎨",
+    "art-museum": "🖼️",
+    "art-outdoor-art": "🌻",
+    "home-decorate": "🖼️",
+    "home-build": "🧱",
+    "home-play": "🧸",
+    "home-relax": "🛋️",
+    "home-garden": "🌱",
+    "home-bedroom": "🛏️",
+    "home-playroom": "🧸",
+    "home-backyard": "🌳",
+    "home-family-room": "🛋️",
+    "waterpark-splash": "💦",
+    "waterpark-slide": "🛝",
+    "waterpark-float": "🛟",
+    "waterpark-watch": "🌊",
+    "waterpark-relax": "🏖️",
+    "waterpark-outdoor-waterpark": "💦",
+    "waterpark-indoor-waterpark": "🏊",
+    "waterpark-splash-pad": "🚿",
+    "waterpark-quiet-pool": "🛟",
+    "animals-watch": "👀",
+    "animals-learn": "📖",
+    "animals-meet": "🐕",
+    "animals-care": "💛",
+    "animals-create": "🐾",
+    "animals-wildlife-place": "🦒",
+    "animals-farm": "🐄",
+    "animals-aquarium": "🐠",
+    "animals-pet-space": "🐕",
+    "bike-ride": "🚲",
+    "bike-explore": "🌳",
+    "bike-learn": "🛞",
+    "bike-decorate": "🎨",
+    "bike-ride-together": "🤝",
+    "bike-park-path": "🌳",
+    "bike-neighborhood": "🏡",
+    "bike-adaptive-bike": "🚲",
+    "bike-tandem-bike": "🚴",
+    "hospital-give": "🎁",
+    "hospital-create": "🎨",
+    "hospital-play": "🧸",
+    "hospital-music": "🎵",
+    "hospital-help": "💛",
+    "hospital-playroom": "🧸",
+    "hospital-art-wall": "🖼️",
+    "hospital-comfort-corner": "🛋️",
+    "hospital-garden": "🌻",
+    "party-dance": "💃",
+    "party-play": "🎈",
+    "party-music": "🎵",
+    "party-eat": "🧁",
+    "party-decorate": "🎨",
+    "party-backyard-party": "🌳",
+    "party-indoor-party": "🎈",
+    "party-picnic-party": "🧺",
+    "party-creative-party": "🎨",
+    "gift-build": "🧱",
+    "gift-create": "🎨",
+    "gift-play": "🎮",
+    "gift-learn": "📚",
+    "gift-share": "🎁",
+    "gift-custom-brick-build": "🧱",
+    "gift-creative-computer": "💻",
+    "gift-gaming-computer": "🖥️",
+    "gift-creative-kit": "🧰",
+    "train-ride": "🚂",
+    "train-watch": "👀",
+    "train-learn": "📖",
+    "train-build": "🧱",
+    "train-explore": "🚉",
+    "train-scenic-train": "🚞",
+    "train-heritage-train": "🚂",
+    "train-model-train": "🛤️",
+    "train-train-museum": "🚉",
+    "playground-swing": "🛝",
+    "playground-slide": "🛝",
+    "playground-climb": "🪜",
+    "playground-make": "🧱",
+    "playground-play-together": "🤝",
+    "playground-community-playground": "🌳",
+    "playground-backyard-playset": "🛝",
+    "playground-playhouse": "🏡",
+    "playground-indoor-playground": "🧸",
+    "music-listen": "🎧",
+    "music-play": "🎹",
+    "music-sing": "🎤",
+    "music-create": "🎼",
+    "music-dance": "💃",
+    "music-music-room": "🎹",
+    "music-small-stage": "🎤",
+    "music-recording-space": "🎙️",
+    "music-outdoor-music": "🌳",
+    "sensory-room-relax": "🛋️",
+    "sensory-room-lights": "✨",
+    "sensory-room-music": "🎵",
+    "sensory-room-textures": "🧸",
+    "sensory-room-move": "🟠",
+    "sensory-room-calm-room": "🛋️",
+    "sensory-room-play-room": "🧸",
+    "sensory-room-nature-space": "🌿",
+    "sensory-room-music-space": "🎵",
+    "fishing-fish": "🎣",
+    "fishing-watch": "🌊",
+    "fishing-learn": "🐟",
+    "fishing-picnic": "🧺",
+    "fishing-explore": "🔎",
+    "fishing-lake": "🏞️",
+    "fishing-river": "🏞️",
+    "fishing-pier": "🎣",
+    "fishing-pond": "🌿",
+    "favorite-color-blue": "🔵",
+    "favorite-color-pink": "🩷",
+    "favorite-color-purple": "🟣",
+    "favorite-color-green": "🟢",
+    "favorite-color-red": "🔴",
+    "favorite-color-yellow": "🟡",
+    "favorite-food-pizza": "🍕",
+    "favorite-food-fruit": "🍓",
+    "favorite-food-cake": "🧁",
+    "favorite-food-ice-cream": "🍦",
+    "favorite-food-popcorn": "🍿",
+    "favorite-food-sandwich": "🥪",
+    "favorite-animals-dog": "🐕",
+    "favorite-animals-cat": "🐈",
+    "favorite-animals-horse": "🐎",
+    "favorite-animals-giraffe": "🦒",
+    "favorite-animals-dolphin": "🐬",
+    "favorite-animals-butterfly": "🦋",
+    "favorite-music-gentle": "🎵",
+    "favorite-music-dance": "💃",
+    "favorite-music-drums": "🥁",
+    "favorite-music-piano": "🎹",
+    "favorite-music-guitar": "🎸",
+    "favorite-music-singing": "🎤",
+    "favorite-game-style-action-adventure": "🗺️",
+    "favorite-game-style-building": "🧱",
+    "favorite-game-style-racing": "🏎️",
+    "favorite-game-style-puzzles": "🧩",
+    "favorite-game-style-team": "🤝",
+    "favorite-game-style-exploring": "🔎",
+    "favorite-adventure-forest": "🌲",
+    "favorite-adventure-space": "🪐",
+    "favorite-adventure-ocean": "🌊",
+    "favorite-adventure-castle": "🏰",
+    "favorite-adventure-quiet": "🌿",
+    "favorite-adventure-colorful": "🌈"
+  }
+}

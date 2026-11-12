@@ -105,23 +105,41 @@ struct SpeechVoicePreferenceSection: View {
 
     var body: some View {
         let selected = store.voicePreset.availableVoice().map(SpeechVoiceOption.init(voice:))
-        Section("Speaking voice") {
-            Picker("Voice style", selection: $store.voicePreset) {
+        WishSettingsSection {
+            Text("Choose how the picture board and wish ideas sound. Selection stays quiet until you tap Preview voice.")
+            Text("Voice style").font(WishTheme.bodyFont(size: 16, weight: .bold))
+            LazyVGrid(columns: [GridItem(.flexible(), spacing: 8), GridItem(.flexible(), spacing: 8)], spacing: 8) {
                 ForEach(SpeechVoicePreference.allCases) { preference in
-                    Text(preference.label).tag(preference)
+                    Button { store.voicePreset = preference } label: {
+                        HStack(spacing: 10) {
+                            Text(preference.label).frame(maxWidth: .infinity, alignment: .leading)
+                            Circle().stroke(WishSettingsAppearance.ink, lineWidth: 1)
+                                .overlay { if store.voicePreset == preference { Circle().fill(WishSettingsAppearance.ink).padding(5) } }
+                                .frame(width: 22, height: 22)
+                        }
+                        .font(WishTheme.bodyFont(size: 16))
+                        .padding(.horizontal, 12).frame(minHeight: 56)
+                        .background(Color(red: 1, green: 246 / 255, blue: 232 / 255), in: RoundedRectangle(cornerRadius: 13))
+                        .overlay(RoundedRectangle(cornerRadius: 13).stroke(WishSettingsAppearance.outline, lineWidth: 1))
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("\(preference.label) voice")
+                    .accessibilityAddTraits(store.voicePreset == preference ? [.isSelected] : [])
                 }
             }
-            .pickerStyle(.segmented)
             LabeledContent("Available voice", value: selected?.summary ?? "Unavailable")
-            Text(store.voicePreset.styleExplanation).font(.footnote).foregroundStyle(.secondary)
+            Text(store.voicePreset.styleExplanation).font(WishTheme.bodyFont(size: 14)).foregroundStyle(WishSettingsAppearance.secondary)
             if let fallback = store.voicePreset.fallbackExplanation(for: selected) {
-                Text(fallback).font(.footnote).foregroundStyle(.secondary)
+                Text(fallback).font(WishTheme.bodyFont(size: 14)).foregroundStyle(WishSettingsAppearance.secondary)
             }
-            Button { store.previewVoice() } label: { Label("Preview voice", systemImage: "speaker.wave.2.fill") }
+            Button("Preview voice") { store.previewVoice() }
+                .buttonStyle(WishSettingsActionStyle(kind: .primary))
                 .disabled(selected == nil || !store.adultSessionActive)
-            Button { store.stopSpeaking() } label: { Label("Stop voice", systemImage: "speaker.slash.fill") }
+            Button { store.stopSpeaking() } label: {
+                HStack(spacing: 8) { WishUIIcon(name: "volume-off", size: 20); Text("Stop speaking") }
+            }.accessibilityLabel("Stop voice")
             Text("Uses Apple English voices already available on this iPad. Voice names and quality vary by device. Custom-provider, personal, and novelty voices are excluded. Choosing a style does not play audio; tap Preview voice to listen. This preference is saved on this iPad even when remembering wish choices is off.")
-                .font(.footnote).foregroundStyle(.secondary)
+                .font(WishTheme.bodyFont(size: 14)).foregroundStyle(WishSettingsAppearance.secondary)
         }
     }
 }

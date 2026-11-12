@@ -2,25 +2,27 @@ import SwiftUI
 
 struct FavoritesIntakeView: View {
     var body: some View {
-        VStack(alignment: .leading, spacing: 24) {
+        VStack(alignment: .leading, spacing: 26) {
             ScreenHeading(
                 eyebrow: "Things I love",
                 title: "What are your favorites?",
-                subtitle: "Choose up to ten pictures across all the groups. Every choice is optional."
+                subtitle: "Pick any pictures you like, up to ten. Every choice is optional."
             )
             FavoriteChoicesView()
-            VStack(spacing: 12) {
+            VStack(spacing: 10) {
                 ViewThatFits(in: .horizontal) {
-                    HStack(spacing: 20) { WishBackButton(); SaveFavoritesButton() }
-                    VStack(spacing: 16) { SaveFavoritesButton(); WishBackButton() }
+                    HStack(spacing: 12) { WishBackButton(); SaveFavoritesButton() }
+                    VStack(spacing: 12) { WishBackButton(); SaveFavoritesButton() }
                 }
                 Text("Save keeps these favorites with your ideas. A grown-up can use Remember choices in Settings to keep them on this iPad.")
-                    .font(.footnote)
+                    .font(WishTheme.bodyFont(size: 13, relativeTo: .footnote))
                     .foregroundStyle(WishTheme.secondary)
                     .multilineTextAlignment(.center)
+                    .lineSpacing(3)
+                    .frame(maxWidth: 620)
             }
             .frame(maxWidth: .infinity)
-            .padding(.top, 6)
+            .padding(.top, 8)
         }
     }
 }
@@ -31,11 +33,12 @@ struct SaveFavoritesButton: View {
     var body: some View {
         Button(action: store.finishFavoritesIntake) {
             Text("Save favorites")
-                .font(.headline)
+                .font(WishTheme.cardFont(size: 16, weight: .bold, relativeTo: .headline))
                 .foregroundStyle(WishTheme.ink)
-                .padding(.horizontal, 22).padding(.vertical, 12)
-                .frame(minHeight: 52)
-                .background(WishTheme.yellow, in: RoundedRectangle(cornerRadius: 16))
+                .padding(.horizontal, 20).padding(.vertical, 13)
+                .frame(minWidth: 210, minHeight: 50)
+                .background(WishTheme.yellow, in: RoundedRectangle(cornerRadius: 13))
+                .overlay(RoundedRectangle(cornerRadius: 13).stroke(WishTheme.line, lineWidth: 1.5))
         }
         .buttonStyle(.plain)
         .accessibilityHint("Keep these favorites with your ideas and choose a wish picture")
@@ -47,18 +50,18 @@ struct FavoriteChoicesView: View {
     @Environment(\.horizontalSizeClass) private var sizeClass
 
     private var columns: [GridItem] {
-        Array(repeating: GridItem(.flexible(), spacing: 14), count: sizeClass == .compact ? 2 : 4)
+        Array(repeating: GridItem(.flexible(), spacing: 8), count: sizeClass == .compact ? 2 : 4)
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 24) {
+        VStack(alignment: .leading, spacing: 26) {
             ForEach(JourneyCatalog.shared.favorites) { group in
-                VStack(alignment: .leading, spacing: 14) {
+                VStack(alignment: .leading, spacing: 12) {
                     Text(group.label)
-                        .font(.title2.weight(.bold))
+                        .font(WishTheme.cardFont(size: 20, weight: .bold, relativeTo: .title2))
                         .foregroundStyle(WishTheme.ink)
                         .accessibilityAddTraits(.isHeader)
-                    LazyVGrid(columns: columns, spacing: 14) {
+                    LazyVGrid(columns: columns, spacing: 8) {
                         ForEach(group.options) { choice in
                             JourneyChoiceTile(choice: choice, selected: store.draft.favoriteIDs.contains(choice.id)) {
                                 store.toggleFavorite(choice.id)
@@ -74,43 +77,35 @@ struct FavoriteChoicesView: View {
 
 struct FavoritesIntakeCard: View {
     @EnvironmentObject private var store: WishStore
+    private let symbols = ["🌈", "🍓", "🐾", "🎵", "🎮", "🗺️"]
 
     var body: some View {
         Button(action: store.openFavoritesIntake) {
-            HStack(spacing: 18) {
-                Image(systemName: "heart.fill")
-                    .font(.system(size: 30))
-                    .foregroundStyle(.pink)
-                    .frame(width: 64, height: 64)
-                    .background(.white.opacity(0.85), in: RoundedRectangle(cornerRadius: 18))
-                    .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("What are your favorites?")
-                        .font(.title2.weight(.bold))
-                    Text("Begin with colors, food, music and things you love")
-                        .font(.body)
-                    if !store.draft.favoriteIDs.isEmpty {
-                        Text("\(store.draft.favoriteIDs.count) selected")
-                            .font(.subheadline.weight(.semibold))
-                            .foregroundStyle(WishTheme.blue)
+            VStack(spacing: 10) {
+                Text("What are your favorites?")
+                    .font(WishTheme.cardFont(size: 21, weight: .bold, relativeTo: .title2))
+                HStack(spacing: 8) {
+                    ForEach(symbols, id: \.self) { symbol in
+                        JourneyArtwork(symbol: symbol).frame(width: 28, height: 28)
                     }
                 }
-                .fixedSize(horizontal: false, vertical: true)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                Image(systemName: "chevron.right")
-                    .font(.headline)
-                    .accessibilityHidden(true)
+                .accessibilityHidden(true)
+                Text("Choose colors, food, animals, music, games, and adventures.")
+                    .font(WishTheme.bodyFont(size: 15, relativeTo: .body))
+                    .lineSpacing(3)
             }
             .foregroundStyle(WishTheme.ink)
-            .padding(24)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(WishTheme.yellow.opacity(0.25), in: RoundedRectangle(cornerRadius: 24))
-            .overlay(RoundedRectangle(cornerRadius: 24).stroke(WishTheme.blue.opacity(0.25), lineWidth: 1))
+            .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(.horizontal, 14).padding(.vertical, 18)
+            .frame(maxWidth: .infinity, minHeight: 132)
+            .background(WishTheme.intake, in: RoundedRectangle(cornerRadius: 13))
+            .overlay(RoundedRectangle(cornerRadius: 13).stroke(WishTheme.line, lineWidth: 1.5))
         }
         .buttonStyle(.plain)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("What are your favorites?")
         .accessibilityValue("\(store.draft.favoriteIDs.count) favorites selected")
-        .accessibilityHint("Begin with colors, food, music and things you love")
+        .accessibilityHint("Choose colors, food, animals, music, games, and adventures")
     }
 }

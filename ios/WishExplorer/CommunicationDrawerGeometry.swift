@@ -1,7 +1,7 @@
 import Foundation
 
 enum CommunicationDrawerGeometry {
-    static let collapsedHeight: CGFloat = 48
+    static let collapsedHeight: CGFloat = 44
 
     static func clampedHeight(_ height: CGFloat, expandedHeight: CGFloat) -> CGFloat {
         min(max(height, collapsedHeight), max(collapsedHeight, expandedHeight))

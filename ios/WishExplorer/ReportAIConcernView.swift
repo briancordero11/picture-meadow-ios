@@ -7,39 +7,42 @@ struct ReportAIConcernView: View {
     @State private var contactMessage: String?
 
     var body: some View {
-        Form {
-            Section("Tell the publisher about a concern") {
+        WishSettingsPage(title: topic == .privacy ? "Privacy question" : "Report an AI picture", backTitle: "Back") {
+            WishSettingsSection("Tell the publisher about a concern") {
                 Text("If an AI picture feels unsuitable, discard it and keep using your chosen pictures offline. A grown-up can prepare an email to the publisher here.")
                 Picker("Concern", selection: $topic) {
                     ForEach(AIConcernTopic.allCases) { item in Text(item.rawValue).tag(item) }
                 }
+                .pickerStyle(.menu)
+                .padding(10).frame(maxWidth: .infinity, minHeight: 50)
+                .background(WishSettingsAppearance.cream, in: RoundedRectangle(cornerRadius: 13))
+                .overlay(RoundedRectangle(cornerRadius: 13).stroke(WishSettingsAppearance.outline, lineWidth: 1))
                 Text("This draft includes only the selected concern and the app version. No picture, wish choices, child's identity, medical information, service access code, or talking-board sentence is attached or shared automatically.")
-                    .font(.footnote)
+                    .font(WishTheme.bodyFont(size: 14))
             }
-            Section("Contact the publisher") {
+            WishSettingsSection("Contact the publisher") {
                 if let email = store.configuration.supportEmail {
                     Text(verbatim: email).textSelection(.enabled)
                     Button("Prepare an email report") { prepareReport(to: email) }
                         .disabled(!store.adultSessionActive)
                     Text("Your email app opens a draft. Review it and choose whether to send it. Your email app may include your email address. Please leave out private information about your Super Star.")
-                        .font(.footnote).foregroundStyle(.secondary)
+                        .font(WishTheme.bodyFont(size: 14)).foregroundStyle(WishSettingsAppearance.secondary)
                     if !store.adultSessionActive {
                         Text("Open grown-up settings before preparing a report.")
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(WishSettingsAppearance.secondary)
                     }
                 } else {
                     Text("Reporting by email is not connected in this prototype. The publisher's support address has not been configured, so this app cannot prepare or send a report yet.")
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(WishSettingsAppearance.secondary)
                     Text("You can still discard the AI picture and continue with the offline picture board.")
                 }
                 Text("The publisher is responsible for reviewing reports and responding to concerns in a timely way. This screen does not send the concern to the AI provider.")
-                    .font(.footnote).foregroundStyle(.secondary)
+                    .font(WishTheme.bodyFont(size: 14)).foregroundStyle(WishSettingsAppearance.secondary)
                 if let message = contactMessage {
                     Text(message).accessibilityAddTraits(.updatesFrequently)
                 }
             }
         }
-        .navigationTitle(topic == .privacy ? "Privacy question" : "Report an AI picture")
     }
 
     private func prepareReport(to email: String) {

@@ -2,7 +2,13 @@ import SwiftUI
 
 /// A typeset heading with an original arch and star; it does not embed an official logo.
 struct WishWordmark: View {
-    @ScaledMetric(relativeTo: .largeTitle) private var ornamentScale: CGFloat = 40
+    private let fontSize: CGFloat
+    @ScaledMetric(relativeTo: .largeTitle) private var ornamentScale: CGFloat
+
+    init(fontSize: CGFloat = 38) {
+        self.fontSize = fontSize
+        _ornamentScale = ScaledMetric(wrappedValue: fontSize, relativeTo: .largeTitle)
+    }
 
     var body: some View {
         ViewThatFits(in: .horizontal) {
@@ -15,9 +21,9 @@ struct WishWordmark: View {
                 wish
             }.multilineTextAlignment(.center)
         }
-        .font(.custom("Georgia-Bold", size: 40, relativeTo: .largeTitle))
-        .foregroundStyle(WishTheme.blue)
-        .padding(.top, ornamentScale * 0.35)
+        .font(.custom("Georgia-Bold", size: fontSize, relativeTo: .largeTitle))
+        .foregroundStyle(WishTheme.wordmarkBlue)
+        .padding(.top, ornamentScale * 0.1)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Create your wish")
         .accessibilityAddTraits(.isHeader)
@@ -28,10 +34,10 @@ struct WishWordmark: View {
             .overlay(alignment: .topLeading) {
                 GeometryReader { geometry in
                     WishWordmarkArch()
-                        .stroke(WishTheme.blue, style: StrokeStyle(lineWidth: max(1.8, ornamentScale * 0.05), lineCap: .round))
+                        .stroke(WishTheme.wordmarkBlue, style: StrokeStyle(lineWidth: max(1.8, ornamentScale * 0.05), lineCap: .round))
                         .frame(width: geometry.size.width * 1.12, height: ornamentScale * 0.45)
                         .offset(x: -geometry.size.width * 0.06, y: -ornamentScale * 0.26)
-                    WishStar().fill(WishTheme.blue)
+                    WishStar().fill(WishTheme.wordmarkBlue)
                         .frame(width: ornamentScale * 0.25, height: ornamentScale * 0.25)
                         .rotationEffect(.degrees(10))
                         .position(x: geometry.size.width * 1.01, y: -ornamentScale * 0.05)

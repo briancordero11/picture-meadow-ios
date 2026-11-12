@@ -27,16 +27,16 @@ struct CommunicationBoardView: View {
                 Spacer(minLength: 0)
             }
             .frame(height: CommunicationDrawerGeometry.collapsedHeight)
-            VStack(spacing: 14) {
+            VStack(spacing: 12) {
                 phraseBar
                 ScrollView {
                     VStack(spacing: 0) {
-                        LazyVGrid(columns: Array(repeating: GridItem(.flexible(minimum: 44), spacing: 0), count: 5), spacing: 0) {
+                        LazyVGrid(columns: Array(repeating: GridItem(.flexible(minimum: 44), spacing: 1), count: 5), spacing: 1) {
                             ForEach(CommunicationWord.mainRows.flatMap { $0 }) { word in
                                 wordTile(word)
                             }
                         }
-                        LazyVGrid(columns: Array(repeating: GridItem(.flexible(minimum: 44), spacing: 0), count: 4), spacing: 0) {
+                        LazyVGrid(columns: Array(repeating: GridItem(.flexible(minimum: 44), spacing: 1), count: 4), spacing: 1) {
                             ForEach(CommunicationWord.phraseWords) { word in
                                 wordTile(word)
                             }
@@ -44,7 +44,7 @@ struct CommunicationBoardView: View {
                     }.padding(.bottom, 10)
                 }
             }
-            .padding(.horizontal, 22).padding(.top, 14).padding(.bottom, 10)
+            .padding(.horizontal, 12).padding(.top, 12).padding(.bottom, 15)
             .frame(height: fullHeight - CommunicationDrawerGeometry.collapsedHeight)
             .background(WishTheme.boardBackground)
             .allowsHitTesting(store.boardExpanded && !isDragging)
@@ -135,33 +135,31 @@ struct CommunicationBoardView: View {
     }
 
     private func tileColor(_ word: CommunicationWord) -> Color {
-        if word.label == "No / don't" { return Color(red: 0.98, green: 0.79, blue: 0.79) }
+        if word.label == "No / don't" { return Color(red: 245.0 / 255, green: 170.0 / 255, blue: 162.0 / 255) }
         if CommunicationWord.phraseWords.contains(where: { $0.id == word.id }) {
-            return Color(red: 0.96, green: 0.82, blue: 0.89)
+            return Color(red: 243.0 / 255, green: 191.0 / 255, blue: 209.0 / 255)
         }
-        if ["Yes", "Finished"].contains(word.label) { return Color(red: 0.80, green: 0.93, blue: 0.81) }
+        if ["Yes", "Finished"].contains(word.label) { return Color(red: 185.0 / 255, green: 223.0 / 255, blue: 141.0 / 255) }
         switch word.group {
-        case .people: return Color(red: 1, green: 0.94, blue: 0.68)
-        case .actions: return Color(red: 0.80, green: 0.93, blue: 0.81)
-        case .questions: return Color(red: 0.89, green: 0.83, blue: 0.95)
+        case .people: return Color(red: 1, green: 227.0 / 255, blue: 139.0 / 255)
+        case .actions: return Color(red: 185.0 / 255, green: 223.0 / 255, blue: 141.0 / 255)
+        case .questions: return WishTheme.lavender
         case .feelings:
-            if word.label == "Help" { return Color(red: 0.80, green: 0.93, blue: 0.81) }
-            return Color(red: 0.83, green: 0.92, blue: 0.98)
+            if word.label == "Help" { return Color(red: 185.0 / 255, green: 223.0 / 255, blue: 141.0 / 255) }
+            return WishTheme.sky
         }
     }
 
     /// A single visible handle is kept on screen while every word tile is tucked away.
     private var drawerTab: some View {
         Button { snap(to: !store.boardExpanded) } label: {
-            VStack(spacing: 7) {
-                Capsule().fill(WishTheme.ink.opacity(0.35)).frame(width: 38, height: 4)
-                Image(systemName: store.boardExpanded ? "chevron.down" : "chevron.up")
-                    .font(.system(size: 13, weight: .bold)).foregroundStyle(WishTheme.ink)
+            VStack(spacing: 1) {
+                Capsule().fill(Color(red: 154.0 / 255, green: 121.0 / 255, blue: 85.0 / 255)).frame(width: 30, height: 4)
+                WishUIIcon(name: store.boardExpanded ? "chevron-down" : "chevron-up", size: 22)
             }
-            .frame(width: 96, height: 32)
-            .background(WishTheme.boardBackground, in: RoundedRectangle(cornerRadius: 18))
-            .overlay(RoundedRectangle(cornerRadius: 18).stroke(WishTheme.ink.opacity(0.18), lineWidth: 1))
-            .frame(width: 120, height: 48, alignment: .bottom)
+            .frame(width: 90, height: 44)
+            .background(Color(red: 1, green: 232.0 / 255, blue: 199.0 / 255), in: UnevenRoundedRectangle(topLeadingRadius: 18, topTrailingRadius: 18))
+            .overlay(UnevenRoundedRectangle(topLeadingRadius: 18, topTrailingRadius: 18).stroke(WishTheme.line, lineWidth: 1.5))
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
@@ -183,32 +181,45 @@ struct CommunicationBoardView: View {
 
     private var phraseBar: some View {
         ViewThatFits(in: .horizontal) {
-            HStack(spacing: 12) { phraseText; phraseActions }
-            VStack(alignment: .leading, spacing: 10) { phraseText; HStack { Spacer(); phraseActions } }
+            HStack(spacing: 10) { phraseText; HStack(spacing: 4) { phraseActions } }
+            VStack(alignment: .leading, spacing: 10) { phraseText; HStack { Spacer(); HStack(spacing: 4) { phraseActions } } }
         }
-        .padding(.horizontal, 14).padding(.vertical, 6)
-        .background(.white, in: RoundedRectangle(cornerRadius: 16))
+        .padding(.horizontal, 9).padding(.vertical, 7)
+        .frame(minHeight: 58)
+        .background(Color(red: 1, green: 253.0 / 255, blue: 247.0 / 255), in: RoundedRectangle(cornerRadius: 10))
+        .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(red: 186.0 / 255, green: 168.0 / 255, blue: 142.0 / 255), lineWidth: 1))
+        .buttonStyle(BoardPhraseButtonStyle())
     }
 
     private var phraseText: some View {
-        Text(store.phrase.isEmpty ? "Tap pictures to say something" : store.phrase.joined(separator: " "))
-            .font(.body.weight(.medium)).foregroundStyle(.black)
+        Text(store.phrase.isEmpty ? "My words…" : store.phrase.joined(separator: " "))
+            .font(WishTheme.cardFont(size: 16)).foregroundStyle(WishTheme.ink)
             .frame(maxWidth: .infinity, alignment: .leading)
             .accessibilityLabel("Sentence: \(store.phrase.joined(separator: " "))")
     }
 
     @ViewBuilder private var phraseActions: some View {
         Button { store.say(store.phrase.joined(separator: " "), explicit: true) } label: {
-            Image(systemName: "speaker.wave.2.fill").font(.title2).padding(12)
+            WishUIIcon(name: "volume-2")
         }.disabled(store.phrase.isEmpty).accessibilityLabel("Speak sentence")
         Button { store.stopSpeaking() } label: {
-            Image(systemName: "speaker.slash.fill").font(.title2).padding(12)
-                .frame(minWidth: 44, minHeight: 44)
+            WishUIIcon(name: "volume-off")
         }.accessibilityLabel("Stop speaking")
         Button { if !store.phrase.isEmpty { store.phrase.removeLast() } } label: {
-            Image(systemName: "delete.left").font(.title2).padding(12)
+            WishUIIcon(name: "delete")
         }.disabled(store.phrase.isEmpty).accessibilityLabel("Remove last word")
-        Button("Clear") { store.phrase = [] }.font(.headline).padding(12).disabled(store.phrase.isEmpty)
+        Button("Clear") { store.phrase = [] }.font(WishTheme.cardFont(size: 13)).disabled(store.phrase.isEmpty)
+    }
+}
+
+private struct BoardPhraseButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .foregroundStyle(WishTheme.line)
+            .padding(8)
+            .frame(minWidth: 44, minHeight: 44)
+            .background(Color(red: 1, green: 240.0 / 255, blue: 210.0 / 255), in: RoundedRectangle(cornerRadius: 13))
+            .opacity(configuration.isPressed ? 0.85 : 1)
     }
 }
 

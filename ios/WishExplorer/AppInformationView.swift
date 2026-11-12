@@ -8,19 +8,19 @@ struct AppInformationView: View {
     @State private var contactMessage: String?
 
     var body: some View {
-        Form {
-            Section("About this app") {
+        WishSettingsPage(title: "App information & help") {
+            WishSettingsSection("About this app") {
                 Text("Explore ideas with your Super Star through pictures, actions, and favorites. A wish picture is an idea to discuss together; it does not confirm an event, item, or trip.")
                 LabeledContent("App", value: AppSupportContext.appName)
                 LabeledContent("Version", value: AppSupportContext.version)
                 LabeledContent("Build", value: AppSupportContext.build)
             }
-            Section("Publisher and help") {
+            WishSettingsSection("Publisher and help") {
                 if let publisher = store.configuration.publisherName {
                     Text(verbatim: publisher)
                 } else {
                     Text("Publisher details are not configured in this prototype.")
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(WishSettingsAppearance.secondary)
                 }
                 if let email = store.configuration.supportEmail {
                     Text(verbatim: email).textSelection(.enabled)
@@ -29,22 +29,22 @@ struct AppInformationView: View {
                     }.disabled(!store.adultSessionActive)
                 } else {
                     Text("Support email is not connected in this prototype. An email cannot be prepared here yet.")
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(WishSettingsAppearance.secondary)
                 }
                 if let url = store.configuration.supportURL {
                     Button("Open the support website") { openWebsite(url, title: "the support website") }
                 }
                 NavigationLink("Report an unsuitable AI picture") { ReportAIConcernView() }
                 Text("A grown-up chooses whether to send an email. The email app may include the sender's email address.")
-                    .font(.footnote).foregroundStyle(.secondary)
+                    .font(WishTheme.bodyFont(size: 14)).foregroundStyle(WishSettingsAppearance.secondary)
             }
-            Section("Privacy and your information") {
+            WishSettingsSection("Privacy and your information") {
                 Button("Privacy and data on this iPad") { privacyPresented = true }
                 if let url = store.configuration.privacyPolicyURL {
                     Button("Read the public privacy policy") { openWebsite(url, title: "the public privacy policy") }
                 } else {
                     Text("The public privacy policy link is not configured in this prototype.")
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(WishSettingsAppearance.secondary)
                 }
                 if let email = store.configuration.supportEmail {
                     Button("Prepare a privacy or deletion question") {
@@ -54,14 +54,13 @@ struct AppInformationView: View {
                 Text("This app does not create an account. Privacy includes a control to forget choices on this iPad. Clearing this iPad cannot recall information already processed by an online service.")
                 if !store.adultSessionActive {
                     Text("Open grown-up settings to prepare an email. External websites require a grown-up reading check.")
-                        .font(.footnote).foregroundStyle(.secondary)
+                        .font(WishTheme.bodyFont(size: 14)).foregroundStyle(WishSettingsAppearance.secondary)
                 }
             }
             if let message = contactMessage {
-                Section { Text(message).accessibilityAddTraits(.updatesFrequently) }
+                WishSettingsSection { Text(message).accessibilityAddTraits(.updatesFrequently) }
             }
         }
-        .navigationTitle("App information and help")
         .sheet(isPresented: $privacyPresented) { PrivacyNoticeView() }
         .sheet(item: $externalDestination) { ExternalLinkGate(destination: $0) }
     }

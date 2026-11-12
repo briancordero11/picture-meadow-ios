@@ -2,17 +2,37 @@ import SwiftUI
 
 enum WishTheme {
     static let launchBlue = Color("LaunchBackground")
-    static let ink = Color(red: 0.09, green: 0.18, blue: 0.31)
-    static let blue = Color(red: 0.03, green: 0.34, blue: 0.75)
-    static let sky = Color(red: 0.91, green: 0.96, blue: 1)
-    static let lavender = Color(red: 0.94, green: 0.92, blue: 1)
-    static let mint = Color(red: 0.90, green: 0.97, blue: 0.93)
-    static let peach = Color(red: 1, green: 0.94, blue: 0.87)
-    static let yellow = Color(red: 1, green: 0.80, blue: 0.25)
-    static let background = Color(red: 0.97, green: 0.98, blue: 1)
-    static let secondary = Color(red: 0.30, green: 0.37, blue: 0.47)
-    static let picturePeach = Color(red: 1, green: 0.85, blue: 0.77)
-    static let boardBackground = Color(red: 1, green: 0.96, blue: 0.92)
+    static let ink = color(hex: 0x211c18)
+    static let line = color(hex: 0x33251b)
+    static let blue = color(hex: 0x1167ad)
+    static let wordmarkBlue = color(hex: 0x0057b8)
+    static let sky = color(hex: 0xb6dded)
+    static let lavender = color(hex: 0xd9b9df)
+    static let mint = color(hex: 0xbce3a1)
+    static let peach = color(hex: 0xf8cea0)
+    static let yellow = color(hex: 0xffda45)
+    static let background = color(hex: 0xfffbf2)
+    static let secondary = color(hex: 0x5a493a)
+    static let picturePeach = peach
+    static let boardBackground = color(hex: 0xfff2d9)
+    static let control = color(hex: 0xfff0ce)
+    static let homeBackground = color(hex: 0xfff6e8)
+    static let homeLine = color(hex: 0xd4bea4)
+    static let headerLine = color(hex: 0xe0d1bd)
+    static let settingsInk = color(hex: 0x79521a)
+    static let intake = color(hex: 0xfff1ba)
+    static let collage = color(hex: 0xfff6e7)
+    static let collageLine = color(hex: 0xd2b690)
+    static let mostImportant = color(hex: 0x7d2447)
+    static let progressTrack = color(hex: 0xdce6eb)
+    static let outerBackground = color(hex: 0xeee9df)
+    static let frameLine = color(hex: 0xc9bba7)
+
+    private static func color(hex: UInt32) -> Color {
+        Color(red: Double((hex >> 16) & 0xff) / 255,
+              green: Double((hex >> 8) & 0xff) / 255,
+              blue: Double(hex & 0xff) / 255)
+    }
 
     static func color(for choice: CoasterColor) -> Color {
         switch choice {
@@ -31,12 +51,13 @@ struct PrimaryWishButton: View {
     var action: () -> Void
     var body: some View {
         Button(action: action) {
-            Label(title, systemImage: symbol)
-                .font(.title3.weight(.bold))
-                .padding(.horizontal, 26).padding(.vertical, 18)
-                .frame(minHeight: 64)
-                .foregroundStyle(.white)
-                .background(WishTheme.blue, in: RoundedRectangle(cornerRadius: 22))
+            Text(title)
+                .font(WishTheme.cardFont(size: 16, weight: .bold, relativeTo: .headline))
+                .padding(.horizontal, 20).padding(.vertical, 13)
+                .frame(minHeight: 50)
+                .foregroundStyle(WishTheme.line)
+                .background(WishTheme.mint, in: RoundedRectangle(cornerRadius: 13))
+                .overlay(RoundedRectangle(cornerRadius: 13).stroke(WishTheme.line, lineWidth: 1.5))
         }.buttonStyle(.plain)
     }
 }
@@ -49,9 +70,9 @@ struct ChoiceCard<Content: View>: View {
     var body: some View {
         Button(action: action) {
             content()
-                .padding(22)
-                .frame(maxWidth: .infinity, minHeight: 180)
-                .background(background, in: RoundedRectangle(cornerRadius: 28))
+                .padding(16)
+                .frame(maxWidth: .infinity, minHeight: 154)
+                .background(background, in: RoundedRectangle(cornerRadius: 13))
                 .overlay(alignment: .topTrailing) {
                     if selected {
                         Image(systemName: "checkmark.circle.fill")
@@ -59,7 +80,7 @@ struct ChoiceCard<Content: View>: View {
                             .accessibilityHidden(true)
                     }
                 }
-                .overlay(RoundedRectangle(cornerRadius: 28).stroke(selected ? WishTheme.blue : .clear, lineWidth: 4))
+                .overlay(RoundedRectangle(cornerRadius: 13).stroke(selected ? WishTheme.blue : WishTheme.line, lineWidth: selected ? 4 : 1.5))
         }
         .buttonStyle(.plain)
         .accessibilityAddTraits(selected ? [.isSelected] : [])
@@ -87,10 +108,16 @@ struct ScreenHeading: View {
     let title: String
     let subtitle: String
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text(eyebrow.uppercased()).font(.subheadline.weight(.bold)).tracking(2).foregroundStyle(WishTheme.blue)
-            Text(title).font(.largeTitle.weight(.bold)).foregroundStyle(WishTheme.ink).accessibilityAddTraits(.isHeader)
-            Text(subtitle).font(.title3).foregroundStyle(WishTheme.secondary)
-        }.frame(maxWidth: .infinity, alignment: .leading)
+        VStack(spacing: 12) {
+            Text(title)
+                .font(WishTheme.cardFont(size: 26, weight: .bold, relativeTo: .title))
+                .foregroundStyle(WishTheme.ink).accessibilityAddTraits(.isHeader)
+            Text(subtitle)
+                .font(WishTheme.bodyFont(size: 16, weight: .regular, relativeTo: .body))
+                .foregroundStyle(WishTheme.secondary)
+                .lineSpacing(4)
+        }
+        .multilineTextAlignment(.center)
+        .frame(maxWidth: .infinity)
     }
 }

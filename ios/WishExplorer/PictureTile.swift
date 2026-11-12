@@ -8,25 +8,34 @@ struct PictureTile: View {
     var backgroundColor: Color? = nil
     var action: () -> Void
 
+    private var phraseTile: Bool {
+        CommunicationWord.phraseWords.contains { $0.label == label }
+    }
+
     var body: some View {
         Button(action: action) {
-            VStack(spacing: compact ? 5 : 12) {
+            VStack(spacing: compact ? 3 : 9) {
                 Text(PictureCatalog.shared.item(label: label)?.label ?? label)
-                    .font(compact ? .system(.callout, design: .rounded, weight: .bold) : .system(.title3, design: .rounded, weight: .bold))
+                    .font(WishTheme.cardFont(size: compact ? 13 : 16, weight: .bold, relativeTo: compact ? .caption : .headline))
                     .multilineTextAlignment(.center)
-                    .foregroundStyle(.black)
+                    .foregroundStyle(WishTheme.ink)
                     .fixedSize(horizontal: false, vertical: true)
+                    .frame(minHeight: compact ? (phraseTile ? 34 : 20) : 35)
                 PictureSymbol(label: label)
-                    .frame(height: compact ? 50 : 105)
+                    .frame(maxWidth: compact ? 75 : 104)
+                    .frame(height: compact ? 51 : 82)
                     .accessibilityHidden(true)
             }
-            .padding(compact ? 5 : 16)
-            .frame(maxWidth: .infinity, minHeight: compact ? 96 : 174)
-            .background(backgroundColor ?? WishTheme.picturePeach, in: RoundedRectangle(cornerRadius: compact ? 12 : 16))
-            .overlay(RoundedRectangle(cornerRadius: compact ? 12 : 16).stroke(.black, lineWidth: selected ? 3 : compact ? 1 : 1.5))
-            .overlay(alignment: .topTrailing) {
+            .padding(.horizontal, compact ? 3 : 5.5)
+            .padding(.top, compact ? 3 : 8.5)
+            .padding(.bottom, compact ? 3 : 10.5)
+            .frame(maxWidth: .infinity, minHeight: compact ? (phraseTile ? 98 : 84) : 146)
+            .background(backgroundColor ?? WishTheme.picturePeach, in: RoundedRectangle(cornerRadius: 13))
+            .overlay(RoundedRectangle(cornerRadius: 13).stroke(selected ? WishTheme.blue : WishTheme.line, lineWidth: selected ? 4 : compact ? 1 : 1.5))
+            .overlay(alignment: .bottomTrailing) {
                 if selected {
-                    Image(systemName: "checkmark.circle.fill").foregroundStyle(.black, .white).padding(7).accessibilityHidden(true)
+                    Image(systemName: "checkmark.circle.fill").font(.system(size: 22))
+                        .foregroundStyle(WishTheme.blue, .white).padding(6).accessibilityHidden(true)
                 }
             }
         }

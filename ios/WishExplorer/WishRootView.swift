@@ -14,9 +14,13 @@ struct WishRootView: View {
 
     var body: some View {
         GeometryReader { geometry in
-            VStack(spacing: 0) {
+            let appWidth = min(820, max(0, geometry.size.width - 32))
+            let appHeight = min(1050, max(0, geometry.size.height - 56))
+            ZStack {
+                WishTheme.outerBackground.ignoresSafeArea()
+                VStack(spacing: 0) {
                 header
-                if store.step.progress > 0 && store.step != .journey {
+                if store.step == .destination || store.step == .color || store.step == .animals {
                     ProgressView(value: store.step.progress)
                         .tint(WishTheme.blue).padding(.horizontal, 30)
                         .accessibilityLabel("Wish journey progress")
@@ -32,20 +36,20 @@ struct WishRootView: View {
                     .task(id: backTransition?.startedAt) { await finishBackTransition() }
                 }
                 .environment(\.wishBack, WishBackAction(perform: { navigateBack() }))
+                .opacity(store.boardExpanded ? 0.38 : 1)
+                .allowsHitTesting(!store.boardExpanded)
+                .accessibilityHidden(store.boardExpanded)
             }
             .background(WishTheme.background)
-            .safeAreaInset(edge: .bottom, spacing: 0) {
-                CommunicationBoardView(expandedHeight: min(geometry.size.height, max(280, geometry.size.height * 0.82)))
+            .overlay(alignment: .bottom) {
+                CommunicationBoardView(expandedHeight: min(appHeight, max(280, appHeight * 0.82)))
             }
             .disabled(store.isPaused)
-            .accessibilityHidden(store.isPaused)
+            .accessibilityHidden(store.isPaused || store.caregiverPresented)
+            .allowsHitTesting(!store.caregiverPresented)
             .overlay {
                 if store.isPaused { PauseView() }
             }
-            .sheet(isPresented: $store.caregiverPresented, onDismiss: {
-                store.endAdultSession()
-                store.clearSettingsRequests()
-            }) { AdultSettingsPortal() }
             .onChange(of: pageLocation) { _, destination in
                 if let backTransition, backTransition.destination != destination { cancelBackTransition() }
             }
@@ -54,19 +58,28 @@ struct WishRootView: View {
             }
             .onChange(of: store.caregiverPresented) { _, presented in
                 if presented { cancelBackTransition() }
+                else { store.endAdultSession(); store.clearSettingsRequests() }
             }
             .onChange(of: scenePhase) { _, phase in
                 if phase != .active { cancelBackTransition() }
                 store.handleSceneActivity(phase == .active)
             }
             .onDisappear { cancelBackTransition() }
+            .frame(width: appWidth, height: appHeight)
+            .clipShape(RoundedRectangle(cornerRadius: 18))
+            .overlay(RoundedRectangle(cornerRadius: 18).stroke(WishTheme.frameLine, lineWidth: 1))
+            }
+            .frame(width: geometry.size.width, height: geometry.size.height)
+            .overlay {
+                if store.caregiverPresented { AdultSettingsPortal().zIndex(10) }
+            }
         }
     }
 
     private var pageContent: some View {
         Group {
             switch store.step {
-            case .welcome: WelcomeView()
+            case .welcome: InterestView()
             case .interests: InterestView()
             case .destination: DestinationView()
             case .color: CoasterColorView()
@@ -77,37 +90,58 @@ struct WishRootView: View {
             case .favoritesIntake: FavoritesIntakeView()
             }
         }
-        .padding(30)
-        .frame(maxWidth: 1100)
+        .padding(.horizontal, sizeClass == .compact ? 10 : 15)
+        .padding(.top, store.step == .interests || store.step == .welcome ? 15 : 27)
+        .padding(.bottom, 62)
+        .frame(maxWidth: 820)
         .frame(maxWidth: .infinity)
     }
 
     private var header: some View {
-        HStack(spacing: sizeClass == .compact ? 6 : 16) {
+        ZStack {
+            headerTitle
+                .padding(.horizontal, sizeClass == .compact ? 64 : 72)
+                .padding(.top, sizeClass == .compact ? 26 : 24)
+                .padding(.bottom, sizeClass == .compact ? 18 : 16)
+                .frame(maxWidth: .infinity)
+            HStack {
             Button {
                 cancelBackTransition()
                 store.goHome()
             } label: {
-                Image(systemName: "house.fill")
-                    .font(.title2)
+                WishUIIcon(name: "house", size: 25)
                     .frame(width: 48, height: 48)
-                    .background(.white, in: RoundedRectangle(cornerRadius: 16))
+                    .background(WishTheme.homeBackground, in: RoundedRectangle(cornerRadius: 13))
+                    .overlay(RoundedRectangle(cornerRadius: 13).stroke(WishTheme.homeLine, lineWidth: 1))
             }
             .buttonStyle(.plain)
-            .foregroundStyle(WishTheme.blue)
-            .disabled(store.step == .interests)
-            .opacity(store.step == .interests ? 0.45 : 1)
+            .foregroundStyle(WishTheme.line)
+            .disabled(store.step == .interests || store.step == .welcome)
+            .opacity(store.step == .interests || store.step == .welcome ? 0.45 : 1)
             .accessibilityLabel("Home")
             .accessibilityIdentifier("home-navigation")
-            .accessibilityIdentifier("home-navigation")
             .accessibilityHint("Return to wish pictures and keep your choices")
-            HStack(spacing: 9) {
-                WishStar().fill(WishTheme.yellow).frame(width: sizeClass == .compact ? 20 : 30, height: sizeClass == .compact ? 20 : 30).accessibilityHidden(true)
-                Text("wish explorer").font(sizeClass == .compact ? .headline : .title2.weight(.heavy)).foregroundStyle(WishTheme.ink)
-            }.accessibilityElement(children: .combine)
             Spacer(minLength: 4)
             SettingsStarButton { store.caregiverPresented = true }
-        }.padding(.horizontal, sizeClass == .compact ? 12 : 24).padding(.vertical, 16)
+            }
+            .padding(.horizontal, sizeClass == .compact ? 8 : 15)
+        }
+        .frame(minHeight: sizeClass == .compact ? 104 : 96)
+        .background(WishTheme.background)
+        .overlay(alignment: .bottom) { Rectangle().fill(WishTheme.headerLine).frame(height: 1) }
+    }
+
+    @ViewBuilder private var headerTitle: some View {
+        if store.step == .interests || store.step == .welcome {
+            WishWordmark(fontSize: sizeClass == .compact ? 23 : 38)
+        } else {
+            Text(store.step == .favoritesIntake ? "My favorites" : "My \(store.draft.interest?.label.lowercased() ?? "") wish")
+                .font(.custom("Georgia-Bold", size: sizeClass == .compact ? 23 : 38, relativeTo: .largeTitle))
+                .foregroundStyle(WishTheme.wordmarkBlue)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityAddTraits(.isHeader)
+        }
     }
 
     private func navigateBack() {
@@ -168,13 +202,16 @@ struct WishBackButton: View {
 
     var body: some View {
         Button { goBack() } label: {
-            Label("Back", systemImage: "arrow.left")
-                .font(.headline)
-                .foregroundStyle(WishTheme.blue)
-                .padding(.horizontal, 20).padding(.vertical, 14)
-                .frame(minHeight: 54)
-                .background(.white, in: RoundedRectangle(cornerRadius: 16))
-                .overlay(RoundedRectangle(cornerRadius: 16).stroke(WishTheme.blue.opacity(0.2), lineWidth: 1))
+            HStack(spacing: 8) {
+                WishUIIcon(name: "arrow-left", size: 20)
+                Text("Back")
+            }
+                .font(WishTheme.cardFont(size: 16, weight: .bold, relativeTo: .headline))
+                .foregroundStyle(WishTheme.line)
+                .padding(.horizontal, 20).padding(.vertical, 13)
+                .frame(minHeight: 50)
+                .background(WishTheme.control, in: RoundedRectangle(cornerRadius: 13))
+                .overlay(RoundedRectangle(cornerRadius: 13).stroke(WishTheme.line, lineWidth: 1.5))
         }
         .buttonStyle(.plain)
     }
@@ -185,12 +222,9 @@ private struct SettingsStarButton: View {
 
     var body: some View {
         Button(action: action) {
-            WishStar().fill(WishTheme.yellow)
-                .overlay(WishStar().stroke(WishTheme.ink, lineWidth: 1.5))
-                .frame(width: 32, height: 32)
-                .rotationEffect(.degrees(-8))
+            WishUIIcon(name: "star", size: 32)
                 .frame(width: 48, height: 48)
-                .background(.white, in: Circle())
+                .background(WishTheme.control, in: RoundedRectangle(cornerRadius: 13))
                 .contentShape(Rectangle())
                 .accessibilityHidden(true)
         }
@@ -231,17 +265,13 @@ struct WelcomeView: View {
 struct InterestView: View {
     @EnvironmentObject private var store: WishStore
     @Environment(\.horizontalSizeClass) private var sizeClass
-    private var columns: [GridItem] { Array(repeating: GridItem(.flexible(), spacing: 8), count: sizeClass == .compact ? 2 : 4) }
+    private var columns: [GridItem] { Array(repeating: GridItem(.flexible(), spacing: 1.5), count: sizeClass == .compact ? 2 : 4) }
     var body: some View {
-        VStack(spacing: 22) {
-            VStack(spacing: 9) {
-                WishWordmark()
-                Text("What would you like? Choose a picture.").font(.title3).foregroundStyle(WishTheme.secondary)
-            }.frame(maxWidth: .infinity)
+        VStack(spacing: 18) {
             FavoritesIntakeCard()
-            LazyVGrid(columns: columns, spacing: 8) {
+            LazyVGrid(columns: columns, spacing: 1.5) {
                 ForEach(InterestChoice.allCases) { interest in
-                    PictureTile(label: interest.label, selected: store.draft.interest == interest) {
+                    PictureTile(label: interest.label) {
                         store.chooseInterest(interest)
                     }
                     .accessibilityHint("Choose actions and favorites for this idea")

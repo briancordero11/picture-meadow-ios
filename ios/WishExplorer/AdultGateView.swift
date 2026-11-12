@@ -27,6 +27,7 @@ struct AdultGateChallenge: Equatable {
 
 struct AdultGateView: View {
     let purpose: String
+    var onCancel: (() -> Void)?
     var onSuccess: () -> Void
     @Environment(\.dismiss) private var dismiss
     @Environment(\.scenePhase) private var scenePhase
@@ -35,25 +36,25 @@ struct AdultGateView: View {
     @State private var incorrect = false
     @FocusState private var answerIsFocused: Bool
 
-    init(purpose: String, onSuccess: @escaping () -> Void) {
+    init(purpose: String, onCancel: (() -> Void)? = nil, onSuccess: @escaping () -> Void) {
         self.purpose = purpose
+        self.onCancel = onCancel
         self.onSuccess = onSuccess
     }
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 24) {
-                    Text("Ask a grown-up").font(.largeTitle.weight(.bold)).accessibilityAddTraits(.isHeader)
-                    Text(purpose).font(.title3)
+            WishSettingsPage(title: "Ask a grown-up", showsBack: false, showsDone: false, onClose: cancel) {
+                VStack(alignment: .leading, spacing: 16) {
+                    Text(purpose)
                     Text("A grown-up can enter these four digits:")
-                    Text(challenge.prompt).font(.title2.weight(.semibold))
+                    Text(challenge.prompt).font(WishTheme.bodyFont(size: 18, weight: .bold))
                         .accessibilityLabel("Code in words: \(challenge.prompt)")
                     TextField("Four-digit code", text: $answer)
                         .focused($answerIsFocused)
                         .keyboardType(.numberPad)
                         .textInputAutocapitalization(.never).autocorrectionDisabled()
-                        .textFieldStyle(.roundedBorder).font(.title2)
+                        .textFieldStyle(WishSettingsTextFieldStyle())
                         .accessibilityLabel("Enter the four-digit code")
                         .privacySensitive()
                         .onChange(of: answer) { _, value in
@@ -64,14 +65,14 @@ struct AdultGateView: View {
                         Text("Let's try the new code shown above.")
                             .foregroundStyle(.red).accessibilityAddTraits(.updatesFrequently)
                     }
-                    PrimaryWishButton(title: "Continue", symbol: "arrow.right", action: submitCode)
+                    Button("Continue", action: submitCode)
+                        .buttonStyle(WishSettingsActionStyle(kind: .primary))
                         .disabled(answer.count != 4)
                     Text("This reading check keeps grown-up tasks separate. It does not verify identity or provide permission to share information.")
-                        .font(.footnote).foregroundStyle(.secondary)
-                }.padding(28)
+                        .font(WishTheme.bodyFont(size: 14)).foregroundStyle(WishSettingsAppearance.secondary)
+                }
             }
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) { Button("Cancel") { clear(); dismiss() } }
                 ToolbarItemGroup(placement: .keyboard) {
                     Spacer()
                     Button("Done entering code") { answerIsFocused = false }
@@ -79,7 +80,7 @@ struct AdultGateView: View {
             }
             .onDisappear { clear() }
             .onChange(of: scenePhase) { _, phase in
-                if phase != .active { clear(); dismiss() }
+                if phase != .active { cancel() }
             }
         }
     }
@@ -94,19 +95,23 @@ struct AdultGateView: View {
     }
 
     private func clear() { answerIsFocused = false; answer = ""; challenge.renew(); incorrect = false }
+    private func cancel() { clear(); if let onCancel { onCancel() } else { dismiss() } }
 }
 
 struct AdultSettingsPortal: View {
     @EnvironmentObject private var store: WishStore
     var body: some View {
-        ZStack {
-            if store.adultSessionActive { CaregiverView() }
-            else {
-                AdultGateView(purpose: "Open the grown-up settings.") { store.beginAdultSession() }
+        WishSettingsPanel(onClose: close) {
+            ZStack {
+                if store.adultSessionActive { CaregiverView() }
+                else {
+                    AdultGateView(purpose: "Open the grown-up settings.", onCancel: close) { store.beginAdultSession() }
+                }
             }
         }
-        .onDisappear { store.endAdultSession() }
+        .onDisappear { store.endAdultSession(); store.clearSettingsRequests() }
     }
+    private func close() { store.endAdultSession(); store.clearSettingsRequests(); store.caregiverPresented = false }
 }
 
 struct ExternalDestination: Identifiable {
