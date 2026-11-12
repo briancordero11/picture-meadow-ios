@@ -3,7 +3,7 @@ import SwiftUI
 /// A typeset heading with an original arch and star; it does not embed an official logo.
 struct WishWordmark: View {
     private let fontSize: CGFloat
-    @ScaledMetric(relativeTo: .largeTitle) private var ornamentScale: CGFloat
+    @ScaledMetric(relativeTo: .largeTitle) private var ornamentScale: CGFloat = 38
 
     init(fontSize: CGFloat = 38) {
         self.fontSize = fontSize

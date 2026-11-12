@@ -6,3 +6,7 @@
 *.png binary
 # Preserve recovered source wording and spacing verbatim.
 docs/original-brief.txt -whitespace
+# Preserve vendored artwork and license whitespace exactly as supplied.
+assets/visual/svg/*.svg -whitespace
+assets/visual/licenses/*.txt -whitespace
+ios/WishExplorer/Resources/Visual/*OFL.txt -whitespace
